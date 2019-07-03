@@ -1,0 +1,37 @@
+plugins {
+    id 'com.github.ben-manes.versions' version '0.21.0'
+    id 'com.gradle.build-scan' version '2.3'
+    id 'java-library'
+    id 'org.shipkit.java' version '2.2.5'
+}
+
+group = 'co.ipregistry'
+
+buildScan {
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
+    implementation 'com.google.guava:guava:28.0-jre'
+    implementation 'org.apache.httpcomponents:fluent-hc:4.5.9'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
+    testImplementation 'org.mockito:mockito-core:2.28.2'
+}
+
+sourceSets {
+    samples {
+        compileClasspath += main.output + main.compileClasspath
+        runtimeClasspath += main.output + main.runtimeClasspath
+    }
+}

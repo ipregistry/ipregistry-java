@@ -1,0 +1,73 @@
+shipkit {
+    gitHub.repository = 'ipregistry/ipregistry-java'
+    gitHub.readOnlyAuthToken = System.getenv('IPREGISTRY_GITHUB_READ_TOKEN')
+    gitHub.writeAuthToken = System.getenv('IPREGISTRY_GITHUB_WRITE_TOKEN')
+}
+
+allprojects {
+    plugins.withId('org.shipkit.bintray') {
+        bintray {
+            key = project.hasProperty('ipregistryBintrayKey') ? project.ipregistryBintrayKey : System.getenv('IPREGISTRY_BINTRAY_KEY')
+            publish = true
+            override = true
+
+            pkg {
+                desc = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
+                githubRepo = 'ipregistry/ipregistry-java'
+                issueTrackerUrl = 'https://github.com/ipregistry/ipregistry-java/issues'
+                labels = ['ip-geolocation', 'threat-intelligence', 'ipv4', 'ipv6', 'java']
+                licenses = ['Apache-2.0']
+                name = 'ipregistry-client'
+                repo = 'ipregistry'
+                user = 'lpellegr'
+                userOrg = 'ipregistry'
+                vcsUrl = 'https://github.com/ipregistry/ipregistry-java.git'
+                version {
+                    gpg {
+                        sign = true
+                        passphrase = project.hasProperty('ipregistrySigningPassword') ? project.ipregistrySigningPassword : System.getenv('IPREGISTRY_SIGNING_PASSWORD')
+                    }
+                    mavenCentralSync {
+                        sync = true
+                        user = project.hasProperty('ipregistryNexusUsername') ? project.ipregistryNexusUsername : System.getenv('IPREGISTRY_NEXUS_USERNAME')
+                        password = project.hasProperty('ipregistryNexusPassword') ? project.ipregistryNexusPassword : System.getenv('IPREGISTRY_NEXUS_PASSWORD')
+                        close = '1'
+                    }
+                }
+                websiteUrl = 'https://ipregistry.co'
+            }
+        }
+    }
+
+    plugins.withId('org.shipkit.java-publish') {
+        def pomConfig = {
+            developers {
+                developer {
+                    id 'lpellegr'
+                    name 'Laurent Pellegrino'
+                    email 'laurent.pellegrino@ipregistry.co'
+                }
+            }
+            inceptionYear '2019'
+            organization {
+                name 'Ipregistry'
+                url 'https://ipregistry.co'
+            }
+        }
+
+        publishing.publications.javaLibrary.pom.withXml {
+            def root = asNode()
+            root.licenses.replaceNode {
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+            }
+            root.appendNode('description', 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.')
+            root.children().last() + pomConfig
+        }
+    }
+}
