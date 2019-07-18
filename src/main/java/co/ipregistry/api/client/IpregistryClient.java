@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Ipregistry (https://ipregistry.co).
+ * Copyright 2019 IpregistryClient (https://ipregistry.co).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Ipregistry {
+public class IpregistryClient {
 
     private final IpregistryConfig config;
 
@@ -39,19 +39,19 @@ public class Ipregistry {
     private final DefaultRequestHandler requestHandler;
 
 
-    public Ipregistry(String apiKey) {
+    public IpregistryClient(String apiKey) {
         this(IpregistryConfig.builder().apiKey(apiKey).build());
     }
 
-    public Ipregistry(IpregistryConfig config) {
+    public IpregistryClient(IpregistryConfig config) {
         this(config, EmptyCache.getInstance());
     }
 
-    public Ipregistry(IpregistryConfig config, IpregistryCache cache) {
+    public IpregistryClient(IpregistryConfig config, IpregistryCache cache) {
         this(config, cache, new DefaultRequestHandler(config));
     }
 
-    public Ipregistry(IpregistryConfig config, IpregistryCache cache, DefaultRequestHandler requestHandler) {
+    public IpregistryClient(IpregistryConfig config, IpregistryCache cache, DefaultRequestHandler requestHandler) {
         this.config = config;
         this.cache = cache;
         this.requestHandler = requestHandler;

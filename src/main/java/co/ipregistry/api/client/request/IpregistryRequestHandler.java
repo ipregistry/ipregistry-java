@@ -9,7 +9,7 @@ public interface IpregistryRequestHandler {
 
     /**
      * Lookup IP data such as geolocation data, currency, timezone, threat information and more
-     * for the specified {@code ip} address by using the Ipregistry API.
+     * for the specified {@code ip} address by using the IpregistryClient API.
      *
      * @param ip      The IPv4 or IPv6 address to lookup information for, using respectively the dotted-decimal
      *                or the colon-hexadecimal notation.
@@ -23,7 +23,7 @@ public interface IpregistryRequestHandler {
 
     /**
      * Lookup IP data such as geolocation data, currency, timezone, threat information and more
-     * for the specified collection of {@code ips} addresses by using the Ipregistry API.
+     * for the specified collection of {@code ips} addresses by using the IpregistryClient API.
      *
      * @param ips     The IPv4 or IPv6 addresses to lookup information for. The IP address format must use
      *                the dotted-decimal or the colon-hexadecimal notation.

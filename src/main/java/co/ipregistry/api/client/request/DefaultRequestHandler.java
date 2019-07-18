@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Ipregistry (https://ipregistry.co).
+ * Copyright 2019 IpregistryClient (https://ipregistry.co).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import java.util.stream.StreamSupport;
 
 public class DefaultRequestHandler implements IpregistryRequestHandler {
 
-    private static final String USER_AGENT = "Ipregistry/Java/1.0.0";
+    private static final String USER_AGENT = "IpregistryClient/Java/1.0.0";
 
     private IpregistryConfig config;
 

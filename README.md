@@ -45,7 +45,7 @@ import co.ipregistry.api.client.model.IpData;
 public class SingleIpLookup {
 
     public static void main(String[] args) {
-        Ipregistry ipregistry = new Ipregistry("tryout");
+        IpregistryClient ipregistry = new IpregistryClient("tryout");
 
         try {
             // Lookup IP data for the current node and network interface used to execute this code
@@ -72,7 +72,7 @@ public class SingleIpLookup {
 #### Batch IP Lookup
 
 ```java
-import co.ipregistry.api.client.Ipregistry;
+import co.ipregistry.api.client.ipregistrygistry;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.exceptions.IpDataException;
@@ -84,7 +84,7 @@ import java.util.Arrays;
 public class BatchIpLookup {
 
     public static void main(String[] args) {
-        Ipregistry ipregistry = new Ipregistry("tryout");
+        IpregistryClient ipregistry = new IpregistryClient("tryout");
 
         try {
             IpDataList ipdataList =
@@ -123,7 +123,7 @@ IpregistryConfig config =
         IpregistryConfig.builder()
                 .apiKey("YOUR_API_KEY").build();
 
-Ipregistry ipregistry = new Ipregistry(config, DefaultCache.builder().build());
+IpregistryClient ipregistry = new IpregistryClient(config, DefaultCache.builder().build());
 ```
 
 By default, the last _1024_ successful and non already cached lookup results are stored in-memory.
@@ -143,6 +143,8 @@ DefaultCache cache =
 
 You can also provide your own cache implementation by implementing the _IpregistryCache_ interface.
 
+To disable caching, you can use the _NoCache_ class.
+
 ## Errors
 
 All Ipregistry exceptions inherit the _IpregistryException_ class.
@@ -159,7 +161,7 @@ A manner to proceed is to identify bots from the user agent. To ease this proces
 the library includes a utility method:
 
 ```java
-import co.ipregistry.api.client.Ipregistry;
+import co.ipregistry.api.client.ipregistrygistry;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.model.IpData;
@@ -168,7 +170,7 @@ import co.ipregistry.api.client.util.UserAgent;
 public class SingleIpLookupFilteringBots {
 
     public static void main(String[] args) {
-        Ipregistry ipregistry = new Ipregistry("tryout");
+        IpregistryClient ipregistry = new IpregistryClient("tryout");
 
         // For testing purposes, you can retrieve you current user agent from:
         // https://api.ipregistry.co/user_agent?key=tryout (look at the field named "header")

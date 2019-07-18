@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Ipregistry (https://ipregistry.co).
+ * Copyright 2019 IpregistryClient (https://ipregistry.co).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /*
- * Copyright 2019 Ipregistry (https://ipregistry.co).
+ * Copyright 2019 IpregistryClient (https://ipregistry.co).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,11 +46,11 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.List;
 
-class IpregistryTest {
+class IpregistryClientTest {
 
     @Test
     void testCachingDisabledByDefault() {
-        Ipregistry client = new Ipregistry("test");
+        IpregistryClient client = new IpregistryClient("test");
         Assertions.assertSame(client.getCache(), EmptyCache.getInstance());
     }
 
@@ -62,7 +62,7 @@ class IpregistryTest {
 
         IpregistryCache cache = Mockito.spy(new DefaultCache());
         DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
-        Ipregistry client = new Ipregistry(config, cache, requestHandler);
+        IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
 
         IpData cachedIpdata = new IpData();
 
@@ -89,11 +89,11 @@ class IpregistryTest {
 
         Mockito.doReturn(ipdata).when(requestHandler).lookup("8.8.8.8");
 
-        Ipregistry client = new Ipregistry(config, cache, requestHandler);
+        IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
 
         IpData ipdataLookupResponse = client.lookup("8.8.8.8");
 
-        Mockito.verify(cache).put("8.8.8.8", ipdata);
+        Mockito.verify(cache).put(ipdata.getIp(), ipdata);
         Mockito.verify(cache).get(Mockito.anyString());
         Mockito.verify(requestHandler).lookup("8.8.8.8");
 
@@ -115,7 +115,7 @@ class IpregistryTest {
 
         cache.put("1.1.1.1", ipdata1111);
 
-        Ipregistry client = new Ipregistry(config, cache, requestHandler);
+        IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
 
         List<String> ips = Arrays.asList("8.8.8.8", "1.1.1.1", "8.8.4.4");
         Mockito.doReturn(new IpDataList(new Object[]{ipdata8888, ipdata8844}))

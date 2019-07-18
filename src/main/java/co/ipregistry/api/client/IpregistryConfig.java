@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Ipregistry (https://ipregistry.co).
+ * Copyright 2019 IpregistryClient (https://ipregistry.co).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,13 @@ import lombok.NonNull;
 public class IpregistryConfig {
 
     /**
-     * The Ipregistry API key used to authenticate calls.
+     * The IpregistryClient API key used to authenticate calls.
      */
     @NonNull
     private String apiKey;
 
     /**
-     * The Ipregistry API endpoint URL.
+     * The IpregistryClient API endpoint URL.
      */
     @Builder.Default
     private String apiUrl = "https://api.ipregistry.co";

@@ -1,6 +1,6 @@
 package co.ipregistry.api.client.samples;
 
-import co.ipregistry.api.client.Ipregistry;
+import co.ipregistry.api.client.IpregistryClient;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.exceptions.IpDataException;
@@ -12,11 +12,11 @@ import java.util.Arrays;
 public class BatchIpLookup {
 
     public static void main(String[] args) {
-        Ipregistry ipregistry = new Ipregistry("tryout");
+        IpregistryClient ipregistryClient = new IpregistryClient("tryout");
 
         try {
             IpDataList ipdataList =
-                    ipregistry.lookup(Arrays.asList("73.2.2.2", "8.8.8.8", "2001:67c:2e8:22::c100:68b"));
+                    ipregistryClient.lookup(Arrays.asList("73.2.2.2", "8.8.8.8", "2001:67c:2e8:22::c100:68b"));
 
             for (int i = 0; i < ipdataList.size(); i++) {
                 try {
