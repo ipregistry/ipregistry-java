@@ -53,7 +53,7 @@ public class DefaultCache implements IpregistryCache {
      *                         memory consumption.
      */
     @Builder
-    public DefaultCache(
+    protected DefaultCache(
             int concurrencyLevel,
             long expireAfter,
             int initialCapacity,
@@ -84,20 +84,20 @@ public class DefaultCache implements IpregistryCache {
         this.cache = cacheBuilder.build();
     }
 
-    public IpInfo get(String ip) {
-        return this.cache.getIfPresent(ip);
+    public IpInfo get(String key) {
+        return this.cache.getIfPresent(key);
     }
 
-    public void invalidate(String ip) {
-        this.cache.invalidate(ip);
+    public void invalidate(String key) {
+        this.cache.invalidate(key);
     }
 
     public void invalidateAll() {
         this.cache.invalidateAll();
     }
 
-    public void put(String ip, IpInfo response) {
-        this.cache.put(ip, response);
+    public void put(String key, IpInfo response) {
+        this.cache.put(key, response);
     }
 
 }

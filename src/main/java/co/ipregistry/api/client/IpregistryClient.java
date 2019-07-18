@@ -16,8 +16,8 @@
 
 package co.ipregistry.api.client;
 
-import co.ipregistry.api.client.cache.NoCache;
 import co.ipregistry.api.client.cache.IpregistryCache;
+import co.ipregistry.api.client.cache.NoCache;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.model.IpInfo;
@@ -70,17 +70,34 @@ public class IpregistryClient {
     }
 
     public IpInfo lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
-        IpInfo found = this.cache.get(ip);
+        String cacheKey = buildCacheKey(ip, options);
+        IpInfo cacheValue = this.cache.get(cacheKey);
 
-        if (found != null) {
-            return found;
+        if (cacheValue != null) {
+            return cacheValue;
         }
 
-        found = requestHandler.lookup(ip, options);
+        cacheValue = requestHandler.lookup(ip, options);
 
-        cache.put(found.getIp(), found);
+        cache.put(cacheKey, cacheValue);
 
-        return found;
+        return cacheValue;
+    }
+
+    private String buildCacheKey(String ip, IpregistryOption... options) {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append(ip);
+
+        if (options != null) {
+            for (IpregistryOption option : options) {
+                buffer.append(';');
+                buffer.append(option.getName());
+                buffer.append('=');
+                buffer.append(option.getValue());
+            }
+        }
+
+        return buffer.toString();
     }
 
     public IpInfoList lookup(List<String> ips, IpregistryOption... options) throws ApiException, ClientException {
@@ -89,10 +106,11 @@ public class IpregistryClient {
 
         for (int i = 0; i < ips.size(); i++) {
             String ip = ips.get(i);
-            IpInfo found = cache.get(ip);
+            String cacheKey = buildCacheKey(ip, options);
+            IpInfo cacheValue = cache.get(cacheKey);
 
-            if (found != null) {
-                sparseCache[i] = found;
+            if (cacheValue != null) {
+                sparseCache[i] = cacheValue;
             } else {
                 cacheMisses.add(ip);
             }
@@ -111,7 +129,7 @@ public class IpregistryClient {
 
                 if (result[i] instanceof IpInfo) {
                     IpInfo ipdata = (IpInfo) result[i];
-                    cache.put(ipdata.getIp(), ipdata);
+                    cache.put(buildCacheKey(ipdata.getIp(), options), ipdata);
                 }
 
                 j++;

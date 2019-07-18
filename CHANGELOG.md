@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename `EmptyCache` class to `NoCache`.
 - Rename `IpData`* classes to `IpInfo`*.
 - Rename `Ipregistry` class to `IpregistryClient`.
+- Use all lookup parameters (including options) to cache results.
 
 ### Removed
 - Remove docs/ folder.

@@ -35,17 +35,17 @@ public class NoCache implements IpregistryCache {
     }
 
     @Override
-    public IpInfo get(String ip) {
+    public IpInfo get(String key) {
         return null;
     }
 
     @Override
-    public void put(String ip, IpInfo response) {
+    public void put(String key, IpInfo response) {
         // do nothing
     }
 
     @Override
-    public void invalidate(String ip) {
+    public void invalidate(String key) {
         // do nothing
     }
 

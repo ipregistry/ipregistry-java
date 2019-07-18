@@ -21,29 +21,28 @@ import co.ipregistry.api.client.model.IpInfo;
 public interface IpregistryCache {
 
     /**
-     * Returns the value associated with {@code ip} in this cache, or {@code null} if there is no
-     * cached value for {@code ip}.
+     * Returns the value associated with {@code key} in this cache, or {@code null} if there is no
+     * cached value for {@code key}.
      *
-     * @param ip An IP address using the dotted-decimal or the colon-hexadecimal notation.
+     * @param key a key.
      * @return the data found or {@code null} if no entry is present in the cache.
      */
-    IpInfo get(String ip);
+    IpInfo get(String key);
 
     /**
-     * Adds the specified {@link IpInfo} to the cache using the given {@code ip} as key.
+     * Adds the specified {@link IpInfo} to the cache using the given {@code key}.
      *
-     * @param ip   An IP address using the dotted-decimal or the colon-hexadecimal notation.
+     * @param key  a key.
      * @param data the data to cache.
      */
-    void put(String ip, IpInfo data);
+    void put(String key, IpInfo data);
 
     /**
-     * Removes the data cached for the specified {@code ip} from the cache.
+     * Removes the data cached for the specified {@code key} from the cache.
      *
-     * @param ip An IPv4 address using the dotted-decimal syntax or
-     *           an IPv6 address formatted with the colon-hexadecimal notation.
+     * @param key a key.
      */
-    void invalidate(String ip);
+    void invalidate(String key);
 
     /**
      * Clears the cache content (i.e. remove all entries).
