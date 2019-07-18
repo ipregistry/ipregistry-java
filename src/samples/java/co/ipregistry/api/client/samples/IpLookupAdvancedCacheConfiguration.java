@@ -6,7 +6,7 @@ import co.ipregistry.api.client.cache.DefaultCache;
 import co.ipregistry.api.client.cache.ValuesReferenceType;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.model.IpData;
+import co.ipregistry.api.client.model.IpInfo;
 
 public class IpLookupAdvancedCacheConfiguration {
 
@@ -24,12 +24,12 @@ public class IpLookupAdvancedCacheConfiguration {
                         .referenceType(ValuesReferenceType.WEAK)
                         .build();
 
-        IpregistryClient ipregistryClient = new IpregistryClient(config, cache);
+        IpregistryClient client = new IpregistryClient(config, cache);
 
         try {
-            IpData ipdata = ipregistryClient.lookup("8.8.8.8");
+            IpInfo ipInfo = client.lookup("8.8.8.8");
             // Here is an example to print out the country name associated with the IP address
-            System.out.println(ipdata.getLocation().getCountry().getName());
+            System.out.println(ipInfo.getLocation().getCountry().getName());
         } catch (ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();

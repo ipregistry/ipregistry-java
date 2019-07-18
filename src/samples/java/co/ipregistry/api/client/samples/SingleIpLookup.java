@@ -3,24 +3,24 @@ package co.ipregistry.api.client.samples;
 import co.ipregistry.api.client.IpregistryClient;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.model.IpData;
-import co.ipregistry.api.client.model.RequesterIpData;
+import co.ipregistry.api.client.model.IpInfo;
+import co.ipregistry.api.client.model.RequesterIpInfo;
 
 public class SingleIpLookup {
 
     public static void main(String[] args) {
-        IpregistryClient ipregistryClient = new IpregistryClient("tryout");
+        IpregistryClient client = new IpregistryClient("tryout");
 
         try {
             // Lookup IP data for the current node and network interface used to execute this code
-            RequesterIpData requesterIpData = ipregistryClient.lookup();
-            System.out.println(requesterIpData.getLocation().getCountry().getName());
-            System.out.println(requesterIpData);
+            RequesterIpInfo requesterIpInfo = client.lookup();
+            System.out.println(requesterIpInfo.getLocation().getCountry().getName());
+            System.out.println(requesterIpInfo);
 
             // Here is another example to lookup data for a given IP address
             // You may already have it or you can get the client IP from a request header
-            IpData ipData = ipregistryClient.lookup("54.85.132.205");
-            System.out.println(ipData);
+            IpInfo ipInfo = client.lookup("54.85.132.205");
+            System.out.println(ipInfo);
         } catch (ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();

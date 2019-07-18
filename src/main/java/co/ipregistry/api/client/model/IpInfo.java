@@ -25,7 +25,7 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @ToString
-public class IpData {
+public class IpInfo {
 
     @Builder.Default
     @JsonProperty("ip")

@@ -16,7 +16,7 @@
 
 package co.ipregistry.api.client.cache;
 
-import co.ipregistry.api.client.model.IpData;
+import co.ipregistry.api.client.model.IpInfo;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import lombok.Builder;
@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DefaultCache implements IpregistryCache {
 
-    private final Cache<String, IpData> cache;
+    private final Cache<String, IpInfo> cache;
 
     @Builder
     public DefaultCache() {
@@ -84,7 +84,7 @@ public class DefaultCache implements IpregistryCache {
         this.cache = cacheBuilder.build();
     }
 
-    public IpData get(String ip) {
+    public IpInfo get(String ip) {
         return this.cache.getIfPresent(ip);
     }
 
@@ -96,7 +96,7 @@ public class DefaultCache implements IpregistryCache {
         this.cache.invalidateAll();
     }
 
-    public void put(String ip, IpData response) {
+    public void put(String ip, IpInfo response) {
         this.cache.put(ip, response);
     }
 

@@ -8,12 +8,12 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString(callSuper = true)
-public class RequesterIpData extends IpData {
+public class RequesterIpInfo extends IpInfo {
 
     @JsonProperty("user_agent")
     private UserAgent userAgent;
 
-    public RequesterIpData(IpData ip, UserAgent userAgent) {
+    public RequesterIpInfo(IpInfo ip, UserAgent userAgent) {
         super();
 
         super.ip = ip.ip;

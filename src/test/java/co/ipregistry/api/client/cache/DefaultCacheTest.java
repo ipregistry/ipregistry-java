@@ -17,7 +17,7 @@
 package co.ipregistry.api.client.cache;
 
 
-import co.ipregistry.api.client.model.IpData;
+import co.ipregistry.api.client.model.IpInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -32,16 +32,16 @@ class DefaultCacheTest {
     @Test
     void testGetReturnNullIfEntryNotFound() {
         DefaultCache cache = new DefaultCache();
-        cache.put("1.1.1.1", new IpData());
+        cache.put("1.1.1.1", new IpInfo());
         Assertions.assertNull(cache.get("8.8.8.8"));
     }
 
     @Test
     void testGetReturnEntryIfFound() {
         DefaultCache cache = new DefaultCache();
-        IpData ipData = new IpData();
-        cache.put("8.8.8.8", ipData);
-        Assertions.assertSame(cache.get("8.8.8.8"), ipData);
+        IpInfo ipInfo = new IpInfo();
+        cache.put("8.8.8.8", ipInfo);
+        Assertions.assertSame(cache.get("8.8.8.8"), ipInfo);
     }
 
 }

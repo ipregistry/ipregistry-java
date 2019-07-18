@@ -16,7 +16,7 @@
 
 package co.ipregistry.api.client.cache;
 
-import co.ipregistry.api.client.model.IpData;
+import co.ipregistry.api.client.model.IpInfo;
 
 public interface IpregistryCache {
 
@@ -27,15 +27,15 @@ public interface IpregistryCache {
      * @param ip An IP address using the dotted-decimal or the colon-hexadecimal notation.
      * @return the data found or {@code null} if no entry is present in the cache.
      */
-    IpData get(String ip);
+    IpInfo get(String ip);
 
     /**
-     * Adds the specified {@link IpData} to the cache using the given {@code ip} as key.
+     * Adds the specified {@link IpInfo} to the cache using the given {@code ip} as key.
      *
      * @param ip   An IP address using the dotted-decimal or the colon-hexadecimal notation.
      * @param data the data to cache.
      */
-    void put(String ip, IpData data);
+    void put(String ip, IpInfo data);
 
     /**
      * Removes the data cached for the specified {@code ip} from the cache.

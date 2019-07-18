@@ -20,9 +20,9 @@ import co.ipregistry.api.client.cache.EmptyCache;
 import co.ipregistry.api.client.cache.IpregistryCache;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.model.IpData;
-import co.ipregistry.api.client.model.IpDataList;
-import co.ipregistry.api.client.model.RequesterIpData;
+import co.ipregistry.api.client.model.IpInfo;
+import co.ipregistry.api.client.model.IpInfoList;
+import co.ipregistry.api.client.model.RequesterIpInfo;
 import co.ipregistry.api.client.options.IpregistryOption;
 import co.ipregistry.api.client.request.DefaultRequestHandler;
 
@@ -61,16 +61,16 @@ public class IpregistryClient {
         return cache;
     }
 
-    public RequesterIpData lookup(IpregistryOption... options) throws ApiException, ClientException {
-        return (RequesterIpData) lookup((String) null, options);
+    public RequesterIpInfo lookup(IpregistryOption... options) throws ApiException, ClientException {
+        return (RequesterIpInfo) lookup((String) null, options);
     }
 
-    public IpData lookup(InetAddress ip, IpregistryOption... options) throws ApiException, ClientException {
+    public IpInfo lookup(InetAddress ip, IpregistryOption... options) throws ApiException, ClientException {
         return lookup(ip.toString(), options);
     }
 
-    public IpData lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
-        IpData found = this.cache.get(ip);
+    public IpInfo lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
+        IpInfo found = this.cache.get(ip);
 
         if (found != null) {
             return found;
@@ -83,13 +83,13 @@ public class IpregistryClient {
         return found;
     }
 
-    public IpDataList lookup(List<String> ips, IpregistryOption... options) throws ApiException, ClientException {
-        IpData[] sparseCache = new IpData[ips.size()];
+    public IpInfoList lookup(List<String> ips, IpregistryOption... options) throws ApiException, ClientException {
+        IpInfo[] sparseCache = new IpInfo[ips.size()];
         List<String> cacheMisses = new ArrayList<>(ips.size());
 
         for (int i = 0; i < ips.size(); i++) {
             String ip = ips.get(i);
-            IpData found = cache.get(ip);
+            IpInfo found = cache.get(ip);
 
             if (found != null) {
                 sparseCache[i] = found;
@@ -98,31 +98,31 @@ public class IpregistryClient {
             }
         }
 
-        IpDataList freshIpData = requestHandler.lookup(cacheMisses, options);
+        IpInfoList freshIpData = requestHandler.lookup(cacheMisses, options);
 
         Object[] result = new Object[ips.size()];
 
         int i = 0;
         int j = 0;
 
-        for (IpData cachedIpData : sparseCache) {
-            if (cachedIpData == null) {
+        for (IpInfo cachedIpInfo : sparseCache) {
+            if (cachedIpInfo == null) {
                 result[i] = freshIpData.unsafeGet(j);
 
-                if (result[i] instanceof IpData) {
-                    IpData ipdata = (IpData) result[i];
+                if (result[i] instanceof IpInfo) {
+                    IpInfo ipdata = (IpInfo) result[i];
                     cache.put(ipdata.getIp(), ipdata);
                 }
 
                 j++;
             } else {
-                result[i] = cachedIpData;
+                result[i] = cachedIpInfo;
             }
 
             i++;
         }
 
-        return new IpDataList(result);
+        return new IpInfoList(result);
     }
 
 }

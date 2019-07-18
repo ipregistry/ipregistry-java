@@ -19,9 +19,9 @@ package co.ipregistry.api.client.request;
 import co.ipregistry.api.client.IpregistryConfig;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.model.IpData;
-import co.ipregistry.api.client.model.IpDataList;
-import co.ipregistry.api.client.model.RequesterIpData;
+import co.ipregistry.api.client.model.IpInfo;
+import co.ipregistry.api.client.model.IpInfoList;
+import co.ipregistry.api.client.model.RequesterIpInfo;
 import co.ipregistry.api.client.model.error.LookupError;
 import co.ipregistry.api.client.options.IpregistryOption;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -49,9 +49,9 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     }
 
 
-    public IpData lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
+    public IpInfo lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
         try {
-            Class<? extends IpData> type = ip == null ? RequesterIpData.class : IpData.class;
+            Class<? extends IpInfo> type = ip == null ? RequesterIpInfo.class : IpInfo.class;
 
             Object result = Request.Get(buildApiUrl(ip, options))
                     .addHeader("User-Agent", USER_AGENT)
@@ -71,8 +71,8 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                         }
                     });
 
-            if (result instanceof IpData) {
-                return (IpData) result;
+            if (result instanceof IpInfo) {
+                return (IpInfo) result;
             }
 
             throw (ApiException) result;
@@ -113,7 +113,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         return result.toString();
     }
 
-    public IpDataList lookup(Iterable<String> ips, IpregistryOption... options) throws ApiException, ClientException {
+    public IpInfoList lookup(Iterable<String> ips, IpregistryOption... options) throws ApiException, ClientException {
         try {
             Object result = Request.Post(buildApiUrl("", options))
                     .bodyString(toJsonList(ips), ContentType.APPLICATION_JSON)
@@ -125,7 +125,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                                 return new ObjectMapper()
                                         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                                        .readValue(response.getEntity().getContent(), IpDataList.class);
+                                        .readValue(response.getEntity().getContent(), IpInfoList.class);
                             } else {
                                 return createCustomException(response);
                             }
@@ -134,8 +134,8 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                         }
                     });
 
-            if (result instanceof IpDataList) {
-                return (IpDataList) result;
+            if (result instanceof IpInfoList) {
+                return (IpInfoList) result;
             }
 
             throw (ApiException) result;

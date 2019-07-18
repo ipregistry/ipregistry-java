@@ -13,16 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package co.ipregistry.api.client.model;
 
-package co.ipregistry.api.client.exceptions;
 
-import lombok.Getter;
+import co.ipregistry.api.client.exceptions.IpInfoException;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-@Getter
-public class IpDataException extends ApiException {
+class IpInfoListTest {
 
-    public IpDataException(String errorCode, String message, String resolution) {
-        super(errorCode, message, resolution);
+    @Test
+    void testGetThrowsExceptionOnExceptionType() {
+        IpInfoList ipInfoList = new IpInfoList(new Object[]{new IpInfo(), new IpInfoException("test", "test", "test")});
+        Assertions.assertThrows(IpInfoException.class, () -> ipInfoList.get(1));
     }
 
 }

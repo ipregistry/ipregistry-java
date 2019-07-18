@@ -16,7 +16,7 @@
 
 package co.ipregistry.api.client.model;
 
-import co.ipregistry.api.client.exceptions.IpDataException;
+import co.ipregistry.api.client.exceptions.IpInfoException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.*;
@@ -24,23 +24,23 @@ import lombok.*;
 @AllArgsConstructor
 @EqualsAndHashCode
 @Getter
-@JsonDeserialize(using = IpDataListDeserializer.class)
+@JsonDeserialize(using = IpInfoListDeserializer.class)
 @NoArgsConstructor
 @ToString
-public class IpDataList {
+public class IpInfoList {
 
     @JsonProperty("results")
     Object[] ips = null;
 
 
-    public IpData get(int index) throws IpDataException {
+    public IpInfo get(int index) throws IpInfoException {
         Object object = ips[index];
 
-        if (object instanceof IpData) {
-            return (IpData) object;
+        if (object instanceof IpInfo) {
+            return (IpInfo) object;
         }
 
-        throw (IpDataException) object;
+        throw (IpInfoException) object;
     }
 
     public int size() {

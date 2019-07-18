@@ -17,7 +17,7 @@
 package co.ipregistry.api.client.cache;
 
 
-import co.ipregistry.api.client.model.IpData;
+import co.ipregistry.api.client.model.IpInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +28,7 @@ class EmptyCacheTest {
         EmptyCache emptyCache = new EmptyCache();
         Assertions.assertNull(emptyCache.get("1.1.1.1"));
 
-        emptyCache.put("1.1.1.1", new IpData());
+        emptyCache.put("1.1.1.1", new IpInfo());
         Assertions.assertNull(emptyCache.get("1.1.1.1"));
     }
 

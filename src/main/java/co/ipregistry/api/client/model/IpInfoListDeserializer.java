@@ -16,7 +16,7 @@
 
 package co.ipregistry.api.client.model;
 
-import co.ipregistry.api.client.exceptions.IpDataException;
+import co.ipregistry.api.client.exceptions.IpInfoException;
 import co.ipregistry.api.client.model.error.LookupError;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.ObjectCodec;
@@ -26,34 +26,34 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
 
-public class IpDataListDeserializer extends JsonDeserializer<Object> {
+public class IpInfoListDeserializer extends JsonDeserializer<Object> {
 
-    public IpDataListDeserializer() {
+    public IpInfoListDeserializer() {
         super();
     }
 
     @Override
-    public IpDataList deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+    public IpInfoList deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         ObjectCodec codec = p.getCodec();
         TreeNode treeNode = codec.readTree(p).get("results");
 
         Object[] objects = new Object[treeNode.size()];
 
         for (int i = 0; i < treeNode.size(); i++) {
-            TreeNode ipDataOrLookupError = treeNode.get(i);
+            TreeNode ipInfoOrLookupError = treeNode.get(i);
 
-            if (ipDataOrLookupError.get("code") == null) {
-                objects[i] = codec.treeToValue(ipDataOrLookupError, IpData.class);
+            if (ipInfoOrLookupError.get("code") == null) {
+                objects[i] = codec.treeToValue(ipInfoOrLookupError, IpInfo.class);
             } else {
-                LookupError lookupError = codec.treeToValue(ipDataOrLookupError, LookupError.class);
+                LookupError lookupError = codec.treeToValue(ipInfoOrLookupError, LookupError.class);
                 objects[i] =
-                        new IpDataException(
+                        new IpInfoException(
                                 lookupError.getCode(),
                                 lookupError.getMessage(),
                                 lookupError.getResolution());
             }
         }
 
-        return new IpDataList(objects);
+        return new IpInfoList(objects);
     }
 }

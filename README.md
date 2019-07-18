@@ -40,23 +40,23 @@ implementation 'co.ipregistry:ipregistry-client:1.0.0'
 ```java
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.model.IpData;
+import co.ipregistry.api.client.model.IpInfo;
 
 public class SingleIpLookup {
 
     public static void main(String[] args) {
-        IpregistryClient ipregistry = new IpregistryClient("tryout");
+        IpregistryClient client = new IpregistryClient("tryout");
 
         try {
             // Lookup IP data for the current node and network interface used to execute this code
-            RequesterIpData requesterIpData = ipregistry.lookup();
-            System.out.println(requesterIpData.getLocation().getCountry().getName());
-            System.out.println(requesterIpData);
+            RequesterIpInfo requesterIpInfo = client.lookup();
+            System.out.println(requesterIpInfo.getLocation().getCountry().getName());
+            System.out.println(requesterIpInfo);
 
             // Here is another example to lookup data for a given IP address
             // You may already have it or you can get the client IP from a request header
-            IpData ipData = ipregistry.lookup("54.85.132.205");
-            System.out.println(ipData);
+            IpInfo ipInfo = client.lookup("54.85.132.205");
+            System.out.println(ipInfo);
         } catch (ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();
@@ -75,27 +75,27 @@ public class SingleIpLookup {
 import co.ipregistry.api.client.ipregistrygistry;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.exceptions.IpDataException;
-import co.ipregistry.api.client.model.IpData;
-import co.ipregistry.api.client.model.IpDataList;
+import co.ipregistry.api.client.exceptions.IpInfoException;
+import co.ipregistry.api.client.model.IpInfo;
+import co.ipregistry.api.client.model.IpInfoList;
 
 import java.util.Arrays;
 
 public class BatchIpLookup {
 
     public static void main(String[] args) {
-        IpregistryClient ipregistry = new IpregistryClient("tryout");
+        IpregistryClient client = new IpregistryClient("tryout");
 
         try {
-            IpDataList ipdataList =
-                    ipregistry.lookup(Arrays.asList("73.2.2.2", "8.8.8.8", "2001:67c:2e8:22::c100:68b"));
+            IpInfoList ipInfoList =
+                    client.lookup(Arrays.asList("73.2.2.2", "8.8.8.8", "2001:67c:2e8:22::c100:68b"));
 
-            for (int i = 0; i < ipdataList.size(); i++) {
+            for (int i = 0; i < ipInfoList.size(); i++) {
                 try {
-                    IpData ipdata = ipdataList.get(i);
+                    IpInfo ipInfo = ipInfoList.get(i);
                     // Here is an example to print out the country name associated with each IP address
-                    System.out.println(ipdata.getLocation().getCountry().getName());
-                } catch (IpDataException e) {
+                    System.out.println(ipInfo.getLocation().getCountry().getName());
+                } catch (IpInfoException e) {
                     // Handle batch lookup error (e.g. invalid IP address) here
                     e.printStackTrace();
                 }
@@ -114,7 +114,7 @@ public class BatchIpLookup {
 
 ## Caching
 
-The Ipregistry client library has built-in support for in-memory caching. 
+The Ipregistry client library has built-in support for in-memory caching.
 
 To enable the default caching strategy, pass an instance of _DefaultCache_ to the Ipregistry client:
 
@@ -164,21 +164,21 @@ the library includes a utility method:
 import co.ipregistry.api.client.ipregistrygistry;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.model.IpData;
+import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.util.UserAgent;
 
 public class SingleIpLookupFilteringBots {
 
     public static void main(String[] args) {
-        IpregistryClient ipregistry = new IpregistryClient("tryout");
+        IpregistryClient client = new IpregistryClient("tryout");
 
         // For testing purposes, you can retrieve you current user agent from:
         // https://api.ipregistry.co/user_agent?key=tryout (look at the field named "header")
         if (UserAgent.isBot("TO_REPLACE_BY_USER_AGENT_RETRIEVED_FROM_REQUEST_HEADER")) {
             try {
-                IpData ipdata = ipregistry.lookup("8.8.8.8");
+                IpData ipInfo = client.lookup("8.8.8.8");
                 // Here is an example to print out the country name associated with the IP address
-                System.out.println(ipdata.getLocation().getCountry().getName());
+                System.out.println(ipInfo.getLocation().getCountry().getName());
             } catch (ApiException e) {
                 // Handle API errors (e.g. insufficient credits, throttling) here
                 e.printStackTrace();
