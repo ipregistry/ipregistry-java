@@ -16,10 +16,13 @@
 
 package co.ipregistry.api.client.options;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+
 public class FilterOption extends IpregistryOption {
 
     public FilterOption(String expression) {
-        super("fields", expression);
+        super("fields",  URLEncoder.encode(expression, StandardCharsets.UTF_8));
     }
 
 }
