@@ -62,7 +62,7 @@ public class IpregistryClient {
     }
 
     public RequesterIpInfo lookup(IpregistryOption... options) throws ApiException, ClientException {
-        return (RequesterIpInfo) lookup((String) null, options);
+        return (RequesterIpInfo) lookup("", options);
     }
 
     public IpInfo lookup(InetAddress ip, IpregistryOption... options) throws ApiException, ClientException {
