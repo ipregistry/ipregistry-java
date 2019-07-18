@@ -16,22 +16,10 @@
 
 package co.ipregistry.api.client.options;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 public class FilterOption extends IpregistryOption {
 
     public FilterOption(String expression) {
-        super("fields", encode(expression));
-    }
-
-    private static String encode(String expression) {
-        try {
-            return URLEncoder.encode(expression, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            return expression;
-        }
+        super("fields", expression);
     }
 
 }
