@@ -12,7 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Utility class `IpregistryOptions`.
 
 ### Changed
-- URL encode IpregistryOption value.
 - Rename `EmptyCache` class to `NoCache`.
 - Rename `IpData`* classes to `IpInfo`*.
 - Rename `Ipregistry` class to `IpregistryClient`.

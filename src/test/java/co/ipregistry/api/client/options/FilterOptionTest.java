@@ -26,16 +26,4 @@ class FilterOptionTest {
         Assertions.assertEquals(new FilterOption("test").name, "fields");
     }
 
-    @Test
-    void testFilterOption__noEncodedCharacters() {
-        FilterOption filterOption = new FilterOption("connection");
-        Assertions.assertEquals(filterOption.getValue(), "connection");
-    }
-
-    @Test
-    void testFilterOption__withEncodedCharacters() {
-        FilterOption filterOption = new FilterOption("location.country.[capital,code,name]");
-        Assertions.assertEquals(filterOption.getValue(), "location.country.%5Bcapital%2Ccode%2Cname%5D");
-    }
-
 }

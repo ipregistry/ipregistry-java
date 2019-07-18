@@ -18,10 +18,6 @@ package co.ipregistry.api.client.options;
 
 import lombok.Getter;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-
 @Getter
 public class IpregistryOption {
 
@@ -32,15 +28,7 @@ public class IpregistryOption {
 
     public IpregistryOption(String name, String value) {
         this.name = name;
-        this.value = encode(value);
-    }
-
-    protected static String encode(String expression) {
-        try {
-            return URLEncoder.encode(expression, StandardCharsets.UTF_8.name());
-        } catch (UnsupportedEncodingException e) {
-            return expression;
-        }
+        this.value = value;
     }
 
 }
