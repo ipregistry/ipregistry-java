@@ -16,7 +16,7 @@
 
 package co.ipregistry.api.client;
 
-import co.ipregistry.api.client.cache.EmptyCache;
+import co.ipregistry.api.client.cache.NoCache;
 import co.ipregistry.api.client.cache.IpregistryCache;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
@@ -44,7 +44,7 @@ public class IpregistryClient {
     }
 
     public IpregistryClient(IpregistryConfig config) {
-        this(config, EmptyCache.getInstance());
+        this(config, NoCache.getInstance());
     }
 
     public IpregistryClient(IpregistryConfig config, IpregistryCache cache) {

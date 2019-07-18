@@ -33,7 +33,7 @@ package co.ipregistry.api.client;
 
 
 import co.ipregistry.api.client.cache.DefaultCache;
-import co.ipregistry.api.client.cache.EmptyCache;
+import co.ipregistry.api.client.cache.NoCache;
 import co.ipregistry.api.client.cache.IpregistryCache;
 import co.ipregistry.api.client.exceptions.IpregistryException;
 import co.ipregistry.api.client.model.IpInfo;
@@ -51,7 +51,7 @@ class IpregistryClientTest {
     @Test
     void testCachingDisabledByDefault() {
         IpregistryClient client = new IpregistryClient("test");
-        Assertions.assertSame(client.getCache(), EmptyCache.getInstance());
+        Assertions.assertSame(client.getCache(), NoCache.getInstance());
     }
 
     @Test

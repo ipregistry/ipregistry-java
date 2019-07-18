@@ -16,20 +16,42 @@
 
 package co.ipregistry.api.client.cache;
 
-
 import co.ipregistry.api.client.model.IpInfo;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 
-class EmptyCacheTest {
+public class NoCache implements IpregistryCache {
 
-    @Test
-    void testGetAlwaysReturnNull() {
-        EmptyCache emptyCache = new EmptyCache();
-        Assertions.assertNull(emptyCache.get("1.1.1.1"));
+    private static class Holder {
 
-        emptyCache.put("1.1.1.1", new IpInfo());
-        Assertions.assertNull(emptyCache.get("1.1.1.1"));
+        static NoCache INSTANCE = new NoCache();
+    }
+
+    public static NoCache getInstance() {
+        return Holder.INSTANCE;
+    }
+
+
+    NoCache() {
+
+    }
+
+    @Override
+    public IpInfo get(String ip) {
+        return null;
+    }
+
+    @Override
+    public void put(String ip, IpInfo response) {
+        // do nothing
+    }
+
+    @Override
+    public void invalidate(String ip) {
+        // do nothing
+    }
+
+    @Override
+    public void invalidateAll() {
+        // do nothing
     }
 
 }
