@@ -40,7 +40,7 @@ import java.util.stream.StreamSupport;
 
 public class DefaultRequestHandler implements IpregistryRequestHandler {
 
-    private static final String USER_AGENT = "IpregistryClient/Java/1.0.0";
+    private static final String USER_AGENT = "IpregistryClient/Java/" + getVersion();
 
     private IpregistryConfig config;
 
@@ -149,6 +149,16 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                 .stream(ips.spliterator(), false)
                 .map(ip -> "\"" + ip + "\"")
                 .collect(Collectors.joining(",")) + ']';
+    }
+
+    private static String getVersion() {
+        Package classPackage = DefaultRequestHandler.class.getPackage();
+
+        if (classPackage.getSpecificationVersion() == null) {
+            return "dev";
+        }
+
+        return classPackage.getSpecificationVersion();
     }
 
 }
