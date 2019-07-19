@@ -21,7 +21,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum IpType {
 
     IPV4("IPv4"),
-    IPV6("IPv6");
+    IPV6("IPv6"),
+    UNKNOWN("Unknown");
 
     @JsonValue
     String name;
