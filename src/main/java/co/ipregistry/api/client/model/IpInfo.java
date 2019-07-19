@@ -27,12 +27,12 @@ import lombok.*;
 @ToString
 public class IpInfo {
 
-    @Builder.Default
     @JsonProperty("ip")
-    protected String ip = "0.0.0.0";
+    protected String ip;
 
+    @Builder.Default
     @JsonProperty("type")
-    protected IpType type;
+    protected IpType type = IpType.UNKNOWN;
 
     @JsonProperty("hostname")
     protected String hostname;
