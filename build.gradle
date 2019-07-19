@@ -1,7 +1,10 @@
+import java.text.SimpleDateFormat
+
 plugins {
     id 'com.github.ben-manes.versions' version '0.21.0'
     id 'com.gradle.build-scan' version '2.3'
     id 'java-library'
+    id 'net.nemerosa.versioning' version '2.6.1'
     id 'org.shipkit.java' version '2.2.5'
 }
 
@@ -19,6 +22,25 @@ repositories {
 configurations {
     integrationTestImplementation.extendsFrom implementation
     integrationTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
+jar {
+    manifest {
+        attributes(
+                'Built-By': System.properties['user.name'],
+                'Build-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+                'Build-Jdk': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
+                'Build-OS': "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
+                'Created-By': "Gradle ${gradle.gradleVersion}",
+                'Name': 'co/ipregistry/api/client/',
+                'Specification-Title': 'Ipregistry Client',
+                'Specification-Version': project.version,
+                'Specification-Vendor': 'Ipregistry',
+                'Implementation-Title': 'co.ipregistry.api.client',
+                'Implementation-Version': versioning.info.commit,
+                'Implementation-Vendor': 'Ipregistry',
+        )
+    }
 }
 
 dependencies {
