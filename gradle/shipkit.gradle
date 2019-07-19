@@ -2,6 +2,8 @@ shipkit {
     gitHub.repository = 'ipregistry/ipregistry-java'
     gitHub.readOnlyAuthToken = System.getenv('IPREGISTRY_GITHUB_READ_TOKEN')
     gitHub.writeAuthToken = System.getenv('IPREGISTRY_GITHUB_WRITE_TOKEN')
+
+    releaseNotes.file = "docs/release-notes/shipkit.md"
 }
 
 allprojects {

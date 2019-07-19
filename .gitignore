@@ -3,6 +3,5 @@
 
 # Ignore Gradle build output directory
 build/
-docs/
 out/
 

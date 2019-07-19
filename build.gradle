@@ -10,6 +10,9 @@ plugins {
 
 group = 'co.ipregistry'
 
+updateReleaseNotes.enabled = false
+updateReleaseNotesOnGitHub.enabled = false
+
 buildScan {
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
@@ -89,6 +92,3 @@ test {
 integrationTest {
     useJUnitPlatform()
 }
-
-updateReleaseNotes.enabled = false
-updateReleaseNotesOnGitHub.enabled = false
