@@ -16,6 +16,11 @@ repositories {
     jcenter()
 }
 
+configurations {
+    integrationTestImplementation.extendsFrom implementation
+    integrationTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
     compileOnly 'org.projectlombok:lombok:1.18.8'
@@ -27,11 +32,38 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
     testImplementation 'org.mockito:mockito-core:2.28.2'
+
+    integrationTestImplementation 'io.rest-assured:rest-assured:4.0.0'
+    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.5.0'
+    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.5.0'
 }
 
 sourceSets {
+    integrationTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
     samples {
         compileClasspath += main.output + main.compileClasspath
         runtimeClasspath += main.output + main.runtimeClasspath
     }
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+check.dependsOn integrationTest
+
+test {
+    useJUnitPlatform()
+}
+
+integrationTest {
+    useJUnitPlatform()
 }
