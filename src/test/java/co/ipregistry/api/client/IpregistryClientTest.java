@@ -93,7 +93,7 @@ class IpregistryClientTest {
 
         IpInfo ipdataLookupResponse = client.lookup("8.8.8.8");
 
-        Mockito.verify(cache).put(ipdata.getIp(), ipdata);
+        Mockito.verify(cache).put(Mockito.anyString(), Mockito.eq(ipdata));
         Mockito.verify(cache).get(Mockito.anyString());
         Mockito.verify(requestHandler).lookup("8.8.8.8");
 
