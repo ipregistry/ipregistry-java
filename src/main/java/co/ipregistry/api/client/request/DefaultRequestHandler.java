@@ -51,7 +51,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     public IpInfo lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
         try {
-            Class<? extends IpInfo> type = ip == null ? RequesterIpInfo.class : IpInfo.class;
+            Class<? extends IpInfo> type = "".equals(ip) || ip == null ? RequesterIpInfo.class : IpInfo.class;
 
             Object result = Request.Get(buildApiUrl(ip, options))
                     .addHeader("User-Agent", USER_AGENT)
