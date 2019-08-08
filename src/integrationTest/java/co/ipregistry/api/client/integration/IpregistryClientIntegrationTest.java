@@ -40,6 +40,8 @@ class IpregistryClientIntegrationTest {
         Assertions.assertNotNull(ipInfo.getLocation());
         Assertions.assertNotNull(ipInfo.getSecurity());
         Assertions.assertNotNull(ipInfo.getTimeZone());
+
+        System.out.println(ipInfo);
     }
 
     @Test
