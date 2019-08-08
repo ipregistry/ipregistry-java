@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [2.1.0] - 2019-07-19
 ### Added
 - Error code [FORBIDDEN_IP_ORIGIN](https://ipregistry.co/docs/errors#FORBIDDEN_IP_ORIGIN).
 - Carrier class and field.
@@ -46,7 +48,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v1.1.0...v2.0.0
 [1.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ipregistry/ipregistry-java/releases/tag/v1.0.0
