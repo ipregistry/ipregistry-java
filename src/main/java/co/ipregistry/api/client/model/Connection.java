@@ -31,6 +31,9 @@ public class Connection {
     @JsonProperty("asn")
     private Integer asn;
 
+    @JsonProperty("domain")
+    private String domain;
+
     @JsonProperty("organization")
     private String organization;
 
