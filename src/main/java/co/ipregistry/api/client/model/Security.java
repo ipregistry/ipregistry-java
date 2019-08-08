@@ -31,6 +31,9 @@ public class Security {
     @JsonProperty("is_bogon")
     private boolean bogon;
 
+    @JsonProperty("is_cloud_provider")
+    private boolean cloudProvider;
+
     @JsonProperty("is_tor")
     private boolean tor;
 

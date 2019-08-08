@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Carrier class.
 - Connection domain field.
 - Connection type field and enum.
+- Security is_cloud_provider field.
 
 ## [2.0.0] - 2019-07-19
 ### Added
