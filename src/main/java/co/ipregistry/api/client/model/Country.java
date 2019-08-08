@@ -17,14 +17,12 @@
 package co.ipregistry.api.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.List;
 
 @AllArgsConstructor
+@EqualsAndHashCode
 @Getter
 @NoArgsConstructor
 @ToString

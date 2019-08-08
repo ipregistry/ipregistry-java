@@ -21,6 +21,7 @@ import lombok.*;
 
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode
 @Getter
 @NoArgsConstructor
 @ToString

@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Connection type field and enum.
 - Security is_cloud_provider field.
 
+### Changed
+- Implement equals/hashCode in all IpInfo subfield classes.
+
 ## [2.0.0] - 2019-07-19
 ### Added
 - Changelog file.
