@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Error code [FORBIDDEN_IP_ORIGIN](https://ipregistry.co/docs/errors#FORBIDDEN_IP_ORIGIN).
-- Carrier class.
+- Carrier class and field.
 - Connection domain field.
 - Connection type field and enum.
 - Security is_cloud_provider field.
