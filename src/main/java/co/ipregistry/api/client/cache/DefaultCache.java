@@ -63,14 +63,8 @@ public class DefaultCache implements IpregistryCache {
         CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
         cacheBuilder.concurrencyLevel(concurrencyLevel);
         cacheBuilder.initialCapacity(initialCapacity);
-
-        if (expireAfter > 0) {
-            cacheBuilder.expireAfterWrite(expireAfter, TimeUnit.MILLISECONDS);
-        }
-
-        if (maximumSize > 0) {
-            cacheBuilder.maximumSize(maximumSize);
-        }
+        cacheBuilder.expireAfterWrite(expireAfter, TimeUnit.MILLISECONDS);
+        cacheBuilder.maximumSize(maximumSize);
 
         switch (referenceType) {
             case SOFT:
