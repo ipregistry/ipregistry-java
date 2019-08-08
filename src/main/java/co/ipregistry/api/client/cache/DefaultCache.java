@@ -31,7 +31,7 @@ public class DefaultCache implements IpregistryCache {
     public DefaultCache() {
         this(
                 Runtime.getRuntime().availableProcessors(),
-                0,
+                86400000, // 24 hours in milliseconds
                 1024,
                 8096,
                 ValuesReferenceType.STRONG);

@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Implement equals/hashCode in all IpInfo subfield classes.
+- Default cache implementation will expire entries older than 24 hours by default.
 
 ## [2.0.0] - 2019-07-19
 ### Added
