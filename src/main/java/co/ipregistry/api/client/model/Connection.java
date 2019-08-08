@@ -37,4 +37,7 @@ public class Connection {
     @JsonProperty("organization")
     private String organization;
 
+    @JsonProperty("type")
+    private ConnectionType type;
+
 }
