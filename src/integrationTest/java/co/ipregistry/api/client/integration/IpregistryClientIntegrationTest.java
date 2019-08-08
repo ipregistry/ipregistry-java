@@ -4,6 +4,7 @@ import co.ipregistry.api.client.IpregistryClient;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.exceptions.IpInfoException;
+import co.ipregistry.api.client.model.ConnectionType;
 import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
 import co.ipregistry.api.client.model.IpType;
@@ -127,6 +128,30 @@ class IpregistryClientIntegrationTest {
         Assertions.assertNull(ipInfo.getCarrier().getName());
         Assertions.assertNull(ipInfo.getCarrier().getMcc());
         Assertions.assertNull(ipInfo.getCarrier().getMnc());
+    }
+
+    @Test
+    void testSingleLookup_ConnectionType() throws ApiException, ClientException {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        IpInfo ipInfo = client.lookup("37.173.153.166");
+
+        Assertions.assertEquals(ipInfo.getConnection().getType(), ConnectionType.ISP);
+    }
+
+    @Test
+    void testSingleLookup_Domain() throws ApiException, ClientException {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        IpInfo ipInfo = client.lookup("37.173.153.166");
+
+        Assertions.assertEquals(ipInfo.getConnection().getDomain(), "mobile.free.fr");
+    }
+
+    @Test
+    void testSingleLookup_Security_IsCloudProvider() throws ApiException, ClientException {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        IpInfo ipInfo = client.lookup("34.67.189.189");
+
+        Assertions.assertTrue(ipInfo.getSecurity().isCloudProvider());
     }
 
     @Test
