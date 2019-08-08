@@ -44,10 +44,10 @@ public class Location {
     private String postal;
 
     @JsonProperty("latitude")
-    private double latitude;
+    private Double latitude;
 
     @JsonProperty("longitude")
-    private double longitude;
+    private Double longitude;
 
     @JsonProperty("language")
     private Language language;

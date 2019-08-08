@@ -29,7 +29,7 @@ import lombok.ToString;
 public class Connection {
 
     @JsonProperty("asn")
-    private int asn;
+    private Integer asn;
 
     @JsonProperty("organization")
     private String organization;
