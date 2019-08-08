@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [2.1.1] - 2019-07-19
+## [2.1.1] - 2019-08-08
 ### Fixed
 - Lombok warnings (equals not calling super and builder ignoring default value).
 
 
-## [2.1.0] - 2019-07-19
+## [2.1.0] - 2019-08-08
 ### Added
 - Error code [FORBIDDEN_IP_ORIGIN](https://ipregistry.co/docs/errors#FORBIDDEN_IP_ORIGIN).
 - Carrier class and field.
