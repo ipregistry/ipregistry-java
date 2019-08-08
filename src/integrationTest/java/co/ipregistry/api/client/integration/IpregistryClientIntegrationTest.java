@@ -105,6 +105,33 @@ class IpregistryClientIntegrationTest {
     }
 
     @Test
+    void testSingleLookup_CarrierData() throws ApiException, ClientException {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        IpInfo ipInfo = client.lookup("37.173.153.166");
+
+        Assertions.assertEquals(ipInfo.getIp(), "37.173.153.166");
+        Assertions.assertEquals(ipInfo.getType(), IpType.IPV4);
+        Assertions.assertNotNull(ipInfo.getCarrier());
+        Assertions.assertNotNull(ipInfo.getCarrier().getName());
+        Assertions.assertNotNull(ipInfo.getCarrier().getMcc());
+        Assertions.assertNotNull(ipInfo.getCarrier().getMnc());
+    }
+
+
+    @Test
+    void testSingleLookup_NoCarrierData() throws ApiException, ClientException {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        IpInfo ipInfo = client.lookup("1.1.1.1");
+
+        Assertions.assertEquals(ipInfo.getIp(), "1.1.1.1");
+        Assertions.assertEquals(ipInfo.getType(), IpType.IPV4);
+        Assertions.assertNotNull(ipInfo.getCarrier());
+        Assertions.assertNull(ipInfo.getCarrier().getName());
+        Assertions.assertNull(ipInfo.getCarrier().getMcc());
+        Assertions.assertNull(ipInfo.getCarrier().getMnc());
+    }
+
+    @Test
     void testBatchLookup() throws ApiException, ClientException {
         IpregistryClient client = new IpregistryClient(apiKey);
         List<String> ips = Lists.newArrayList("66.165.2.7", "1.1.1.1", "8.8.4.4");

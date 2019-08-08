@@ -37,6 +37,9 @@ public class IpInfo {
     @JsonProperty("hostname")
     protected String hostname;
 
+    @JsonProperty("carrier")
+    protected Carrier carrier = new Carrier();
+
     @Builder.Default
     @JsonProperty("connection")
     protected Connection connection = new Connection();
