@@ -9,7 +9,7 @@
 
 This is the official Java client library for the [Ipregistry](https://ipregistry.co) IP geolocation and threat data API, 
 allowing you to lookup your own IP address or specified ones. Responses include more than 50 data points including 
-location, currency, timezone, threat information, and more.
+location, currency, timezone, threat information, but also carrier, company data and more.
 
 ## Getting Started
 
@@ -23,14 +23,14 @@ You'll need an Ipregistry API key, which you can get along with 100,000 free loo
 <dependency>
     <groupId>co.ipregistry</groupId>
     <artifactId>ipregistry-client</artifactId>
-    <version>2.0.0</version>
+    <version>2.1.1</version>
 </dependency>
 ```
 
 #### Gradle
 
 ```
-implementation 'co.ipregistry:ipregistry-client:2.0.0'
+implementation 'co.ipregistry:ipregistry-client:2.1.1'
 ```
 
 ### Quick start
@@ -126,7 +126,7 @@ IpregistryConfig config =
 IpregistryClient ipregistry = new IpregistryClient(config, DefaultCache.builder().build());
 ```
 
-By default, the last _1024_ successful and non already cached lookup results are stored in-memory.
+By default, the last _8096_ successful lookup results are stored in-memory for 24h.
 
 The _DefaultCache_ implementation supports multiple eviction policies (i.e. size based, time based, memory consumption based):
 
