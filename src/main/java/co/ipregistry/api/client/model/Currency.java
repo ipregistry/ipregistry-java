@@ -32,8 +32,14 @@ public class Currency {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("name_native")
+    private String nameNative;
+
     @JsonProperty("plural")
     private String plural;
+
+    @JsonProperty("plural_native")
+    private String pluralNative;
 
     @JsonProperty("symbol")
     private String symbol;

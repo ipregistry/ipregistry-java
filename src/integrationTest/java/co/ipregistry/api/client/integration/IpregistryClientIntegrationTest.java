@@ -37,6 +37,9 @@ class IpregistryClientIntegrationTest {
         Assertions.assertEquals(ipInfo.getType(), IpType.IPV4);
         Assertions.assertNotNull(ipInfo.getConnection());
         Assertions.assertNotNull(ipInfo.getCurrency());
+        Assertions.assertNotNull(ipInfo.getCurrency().getNameNative());
+        Assertions.assertNotNull(ipInfo.getCurrency().getPluralNative());
+        Assertions.assertNotNull(ipInfo.getCurrency().getSymbolNative());
         Assertions.assertNull(ipInfo.getHostname());
         Assertions.assertNotNull(ipInfo.getLocation());
         Assertions.assertNotNull(ipInfo.getSecurity());
