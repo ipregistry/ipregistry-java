@@ -126,7 +126,7 @@ IpregistryConfig config =
 IpregistryClient ipregistry = new IpregistryClient(config, DefaultCache.builder().build());
 ```
 
-By default, the last _8096_ successful lookup results are stored in-memory for 24h.
+By default, the last _4096_ successful lookup results are stored in-memory for 10m.
 
 The _DefaultCache_ implementation supports multiple eviction policies (i.e. size based, time based, memory consumption based):
 
@@ -134,7 +134,7 @@ The _DefaultCache_ implementation supports multiple eviction policies (i.e. size
 DefaultCache cache =
         DefaultCache.builder()
                 .concurrencyLevel(16)
-                .expireAfter(3600000)
+                .expireAfter(600 * 1000)
                 .initialCapacity(512)
                 .maximumSize(4096)
                 .referenceType(ValuesReferenceType.WEAK)
