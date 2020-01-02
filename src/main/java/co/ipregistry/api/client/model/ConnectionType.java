@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum ConnectionType {
 
     BUSINESS("business"),
+    CDN("cdn"),
     EDUCATION("education"),
     HOSTING("hosting"),
     ISP("isp");
