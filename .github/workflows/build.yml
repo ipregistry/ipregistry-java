@@ -24,3 +24,5 @@ jobs:
       run: ./gradlew build
       env:
         IPREGISTRY_API_KEY:  ${{ secrets.IPREGISTRY_API_KEY }}
+        IPREGISTRY_GITHUB_READ_TOKEN: ${{ secrets.IPREGISTRY_GITHUB_READ_TOKEN }}
+        IPREGISTRY_GITHUB_WRITE_TOKEN: ${{ secrets.IPREGISTRY_GITHUB_WRITE_TOKEN }}
