@@ -35,6 +35,9 @@ public class Connection {
     @JsonProperty("organization")
     private String organization;
 
+    @JsonProperty("route")
+    private String route;
+
     @JsonProperty("type")
     private ConnectionType type;
 
