@@ -32,7 +32,7 @@ class IpregistryClientIntegrationTest {
     void testSingleLookupIpv4() throws ApiException, ClientException {
         IpregistryClient client = new IpregistryClient(apiKey);
         IpInfo ipInfo = client.lookup("8.8.8.8");
-
+        
         Assertions.assertEquals(ipInfo.getIp(), "8.8.8.8");
         Assertions.assertEquals(ipInfo.getType(), IpType.IPV4);
         Assertions.assertNotNull(ipInfo.getConnection());
@@ -191,7 +191,6 @@ class IpregistryClientIntegrationTest {
         IpInfo ipInfo = client.lookup();
 
         Assertions.assertNotNull(ipInfo.getIp());
-        Assertions.assertEquals(ipInfo.getType(), IpType.IPV4);
         Assertions.assertNotNull(ipInfo.getConnection());
         Assertions.assertNotNull(ipInfo.getCurrency());
         Assertions.assertNull(ipInfo.getHostname());
