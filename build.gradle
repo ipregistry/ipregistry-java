@@ -2,7 +2,6 @@ import java.text.SimpleDateFormat
 
 plugins {
     id 'com.github.ben-manes.versions' version '0.27.0'
-    id 'com.gradle.build-scan' version '3.0'
     id 'java-library'
     id 'net.nemerosa.versioning' version '2.9.0'
     id 'org.shipkit.java' version '2.2.5'
@@ -12,11 +11,6 @@ group = 'co.ipregistry'
 
 updateReleaseNotes.enabled = false
 updateReleaseNotesOnGitHub.enabled = false
-
-buildScan {
-    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
-    termsOfServiceAgree = 'yes'
-}
 
 repositories {
     jcenter()
