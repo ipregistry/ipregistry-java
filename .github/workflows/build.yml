@@ -1,0 +1,26 @@
+name: Java CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        java-version: [1.8, 1.11, 1.12, 1.13]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use JDK ${{ matrix.node-version }}
+      uses: actions/setup-java@v1
+      with:
+        java-version: ${{ matrix.java-version }}
+    - name: Build with Gradle
+      run: ./gradlew build
+      env:
+        IPREGISTRY_API_KEY:  ${{ secrets.IPREGISTRY_API_KEY }}
