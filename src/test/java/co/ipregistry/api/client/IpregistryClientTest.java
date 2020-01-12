@@ -71,7 +71,7 @@ class IpregistryClientTest {
         IpInfo ipdata = client.lookup("8.8.8.8");
 
         Mockito.verify(cache).get("8.8.8.8");
-        Mockito.verifyZeroInteractions(requestHandler);
+        Mockito.verifyNoInteractions(requestHandler);
 
         Assertions.assertSame(cachedIpdata, ipdata);
     }
