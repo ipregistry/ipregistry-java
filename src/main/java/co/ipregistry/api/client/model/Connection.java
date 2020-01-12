@@ -27,7 +27,7 @@ import lombok.*;
 public class Connection {
 
     @JsonProperty("asn")
-    private Integer asn;
+    private Long asn;
 
     @JsonProperty("domain")
     private String domain;

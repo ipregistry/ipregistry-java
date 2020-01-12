@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.3.0] - 2020-01-12
+### Added
 - Introduce new value `cdn` for field `connection.type`.
+### Fixed
+- Change type _Integer_ to _Long_ for Autonomous System number associated with field `connection.asn`.
 
 ## [2.2.0] - 2019-10-27
 ### Added
