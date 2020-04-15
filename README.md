@@ -2,7 +2,7 @@
 # Ipregistry Java Client Library
 
 [![License](http://img.shields.io/:license-apache-blue.svg)](LICENSE)
-[![Actions Status](https://github.com/ipregistry/ipregistry-java/workflows/Java CI/badge.svg)](https://github.com/ipregistry/ipregistry-java/actions)
+[![Actions Status](https://github.com/ipregistry/ipregistry-java/workflows/Java%20CI/badge.svg)](https://github.com/ipregistry/ipregistry-java/actions)
 [![Maven Central](https://img.shields.io/maven-central/v/co.ipregistry/ipregistry-client.svg)](https://search.maven.org/search?q=g:co.ipregistry%20AND%20a:ipregistry-client)
 [![Javadocs](https://www.javadoc.io/badge/co.ipregistry/ipregistry-client.svg)](https://www.javadoc.io/doc/co.ipregistry/ipregistry-client)
 
