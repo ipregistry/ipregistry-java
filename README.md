@@ -113,7 +113,7 @@ public class BatchIpLookup {
 
 ## Caching
 
-The Ipregistry client library has built-in support for in-memory caching.
+Although the Ipregistry client library has built-in support for in-memory caching, it is disabled by default to ensure data freshness.
 
 To enable in-memory caching, pass an instance of _InMemoryCache_ to the Ipregistry client:
 
@@ -139,8 +139,6 @@ InMemoryCache cache =
 ```
 
 You can also provide your own cache implementation by implementing the _IpregistryCache_ interface.
-
-Once enabled, you can disable caching by retrieving an instance of _NoCache_ with `NoCache.getInstance()`.
 
 ## Errors
 
