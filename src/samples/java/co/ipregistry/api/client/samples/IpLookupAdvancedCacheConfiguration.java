@@ -18,7 +18,7 @@ package co.ipregistry.api.client.samples;
 
 import co.ipregistry.api.client.IpregistryClient;
 import co.ipregistry.api.client.IpregistryConfig;
-import co.ipregistry.api.client.cache.DefaultCache;
+import co.ipregistry.api.client.cache.InMemoryCache;
 import co.ipregistry.api.client.cache.ValuesReferenceType;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
@@ -31,8 +31,8 @@ public class IpLookupAdvancedCacheConfiguration {
                 IpregistryConfig.builder()
                         .apiKey("tryout").build();
 
-        DefaultCache cache =
-                DefaultCache.builder()
+        InMemoryCache cache =
+                InMemoryCache.builder()
                         .concurrencyLevel(16)
                         .expireAfter(3600000)
                         .initialCapacity(512)

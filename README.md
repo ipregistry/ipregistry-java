@@ -115,23 +115,21 @@ public class BatchIpLookup {
 
 The Ipregistry client library has built-in support for in-memory caching.
 
-To enable the default caching strategy, pass an instance of _DefaultCache_ to the Ipregistry client:
+To enable in-memory caching, pass an instance of _InMemoryCache_ to the Ipregistry client:
 
 ```java
 IpregistryConfig config =
         IpregistryConfig.builder()
                 .apiKey("YOUR_API_KEY").build();
 
-IpregistryClient ipregistry = new IpregistryClient(config, DefaultCache.builder().build());
+IpregistryClient ipregistry = new IpregistryClient(config, InMemoryCache.builder().build());
 ```
 
-By default, the last _4096_ successful lookup results are stored in-memory for 10m.
-
-The _DefaultCache_ implementation supports multiple eviction policies (i.e. size based, time based, memory consumption based):
+The _InMemoryCache_ implementation supports multiple eviction policies (i.e. size based, time based):
 
 ```java
-DefaultCache cache =
-        DefaultCache.builder()
+InMemoryCache cache =
+        InMemoryCache.builder()
                 .concurrencyLevel(16)
                 .expireAfter(600 * 1000)
                 .initialCapacity(512)
@@ -142,7 +140,7 @@ DefaultCache cache =
 
 You can also provide your own cache implementation by implementing the _IpregistryCache_ interface.
 
-To disable caching, you can use the _NoCache_ class.
+Once enabled, you can disable caching by retrieving an instance of _NoCache_ with `NoCache.getInstance()`.
 
 ## Errors
 

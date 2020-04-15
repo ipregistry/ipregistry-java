@@ -18,7 +18,7 @@ package co.ipregistry.api.client.samples;
 
 import co.ipregistry.api.client.IpregistryClient;
 import co.ipregistry.api.client.IpregistryConfig;
-import co.ipregistry.api.client.cache.DefaultCache;
+import co.ipregistry.api.client.cache.InMemoryCache;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.model.IpInfo;
@@ -30,7 +30,7 @@ public class IpLookupCacheEnabled {
                 IpregistryConfig.builder()
                         .apiKey("tryout").build();
 
-        IpregistryClient client = new IpregistryClient(config, DefaultCache.builder().build());
+        IpregistryClient client = new IpregistryClient(config, InMemoryCache.builder().build());
 
         try {
             IpInfo ipInfo = client.lookup("8.8.8.8");

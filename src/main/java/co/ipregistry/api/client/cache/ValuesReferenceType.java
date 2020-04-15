@@ -17,7 +17,7 @@
 package co.ipregistry.api.client.cache;
 
 /**
- * Enum type used by @{@link DefaultCache} to specify with which type of memory reference values are stored.
+ * Enum type used by @{@link InMemoryCache} to specify with which type of memory reference values are stored.
  */
 public enum ValuesReferenceType {
 

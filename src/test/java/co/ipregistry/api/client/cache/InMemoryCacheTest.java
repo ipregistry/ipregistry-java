@@ -21,24 +21,24 @@ import co.ipregistry.api.client.model.IpInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class DefaultCacheTest {
+class InMemoryCacheTest {
 
     @Test
     void testGetReturnNullIfCacheEmpty() {
-        DefaultCache cache = new DefaultCache();
+        InMemoryCache cache = new InMemoryCache();
         Assertions.assertNull(cache.get("8.8.8.8"));
     }
 
     @Test
     void testGetReturnNullIfEntryNotFound() {
-        DefaultCache cache = new DefaultCache();
+        InMemoryCache cache = new InMemoryCache();
         cache.put("1.1.1.1", new IpInfo());
         Assertions.assertNull(cache.get("8.8.8.8"));
     }
 
     @Test
     void testGetReturnEntryIfFound() {
-        DefaultCache cache = new DefaultCache();
+        InMemoryCache cache = new InMemoryCache();
         IpInfo ipInfo = new IpInfo();
         cache.put("8.8.8.8", ipInfo);
         Assertions.assertSame(cache.get("8.8.8.8"), ipInfo);

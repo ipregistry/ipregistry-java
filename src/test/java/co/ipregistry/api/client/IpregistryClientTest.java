@@ -32,7 +32,7 @@
 package co.ipregistry.api.client;
 
 
-import co.ipregistry.api.client.cache.DefaultCache;
+import co.ipregistry.api.client.cache.InMemoryCache;
 import co.ipregistry.api.client.cache.NoCache;
 import co.ipregistry.api.client.cache.IpregistryCache;
 import co.ipregistry.api.client.exceptions.IpregistryException;
@@ -60,7 +60,7 @@ class IpregistryClientTest {
                 IpregistryConfig.builder()
                         .apiKey("test").build();
 
-        IpregistryCache cache = Mockito.spy(new DefaultCache());
+        IpregistryCache cache = Mockito.spy(new InMemoryCache());
         DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
         IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
 
@@ -82,7 +82,7 @@ class IpregistryClientTest {
                 IpregistryConfig.builder()
                         .apiKey("test").build();
 
-        IpregistryCache cache = Mockito.spy(new DefaultCache());
+        IpregistryCache cache = Mockito.spy(new InMemoryCache());
         DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
 
         IpInfo ipdata = new IpInfo();
@@ -106,7 +106,7 @@ class IpregistryClientTest {
                 IpregistryConfig.builder()
                         .apiKey("test").build();
 
-        IpregistryCache cache = Mockito.spy(new DefaultCache());
+        IpregistryCache cache = Mockito.spy(new InMemoryCache());
         DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
 
         IpInfo ipdata1111 = new IpInfo();

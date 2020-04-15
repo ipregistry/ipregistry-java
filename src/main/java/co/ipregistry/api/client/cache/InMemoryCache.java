@@ -23,12 +23,12 @@ import lombok.Builder;
 
 import java.util.concurrent.TimeUnit;
 
-public class DefaultCache implements IpregistryCache {
+public class InMemoryCache implements IpregistryCache {
 
     private final Cache<String, IpInfo> cache;
 
     @Builder
-    public DefaultCache() {
+    public InMemoryCache() {
         this(
                 Runtime.getRuntime().availableProcessors(),
                 600000, // 10 min in milliseconds
@@ -38,7 +38,7 @@ public class DefaultCache implements IpregistryCache {
     }
 
     /**
-     * Constructs a new {@code DefaultCache} instance with the specified properties.
+     * Constructs a new {@code InMemoryCache} instance with the specified properties.
      *
      * @param concurrencyLevel Guides the allowed concurrency among update operations.
      *                         The value is used as a hint for internal sizing
@@ -53,7 +53,7 @@ public class DefaultCache implements IpregistryCache {
      *                         memory consumption.
      */
     @Builder
-    protected DefaultCache(
+    protected InMemoryCache(
             int concurrencyLevel,
             long expireAfter,
             int initialCapacity,
