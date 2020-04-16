@@ -9,7 +9,7 @@ plugins {
 
 group = 'co.ipregistry'
 
-updateReleaseNotes.enabled = true
+updateReleaseNotes.enabled = false
 updateReleaseNotesOnGitHub.enabled = true
 
 repositories {
