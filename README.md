@@ -168,7 +168,7 @@ public class SingleIpLookupFilteringBots {
         IpregistryClient client = new IpregistryClient("tryout");
 
         // For testing purposes, you can retrieve you current user agent from:
-        // https://api.ipregistry.co/user_agent?key=tryout (look at the field named "header")
+        // https://api.ipregistry.co/user_agent?key=tryout (look at the field named "user_agent")
         if (UserAgent.isBot("TO_REPLACE_BY_USER_AGENT_RETRIEVED_FROM_REQUEST_HEADER")) {
             try {
                 IpData ipInfo = client.lookup("8.8.8.8");
