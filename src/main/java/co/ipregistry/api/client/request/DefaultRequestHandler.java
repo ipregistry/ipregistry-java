@@ -42,7 +42,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     private static final String USER_AGENT = "IpregistryClient/Java/" + getVersion();
 
-    private IpregistryConfig config;
+    private final IpregistryConfig config;
 
     public DefaultRequestHandler(IpregistryConfig config) {
         this.config = config;
@@ -75,7 +75,19 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                 return (IpInfo) result;
             }
 
-            throw (ApiException) result;
+            if (result instanceof ApiException) {
+                throw (ApiException) result;
+            }
+
+            if (result instanceof ClientException) {
+                throw (ClientException) result;
+            }
+
+            if (result instanceof Throwable) {
+                throw new ClientException((Throwable) result);
+            }
+
+            throw new ClientException("Unknown result type (" + result.getClass() + "). Check your input value.");
         } catch (IOException e) {
             throw new ClientException(e);
         }

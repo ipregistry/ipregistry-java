@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
-- Rename `DefaultCache` to `InMemoryCache` (BREAKING).
+- [BREAKING] Rename `DefaultCache` to `InMemoryCache`.
+### Fixed
+- Fix a `ClassCastException` that was raised when a valid remote resource is used as lookup input (e.g. robots.txt).
 
 ## [2.3.0] - 2020-01-12
 ### Added

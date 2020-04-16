@@ -32,7 +32,7 @@ class IpregistryClientIntegrationTest {
     void testSingleLookupIpv4() throws ApiException, ClientException {
         IpregistryClient client = new IpregistryClient(apiKey);
         IpInfo ipInfo = client.lookup("8.8.8.8");
-        
+
         Assertions.assertEquals(ipInfo.getIp(), "8.8.8.8");
         Assertions.assertEquals(ipInfo.getType(), IpType.IPV4);
         Assertions.assertNotNull(ipInfo.getConnection());
@@ -158,6 +158,18 @@ class IpregistryClientIntegrationTest {
     }
 
     @Test
+    void testSingleLookup_InvalidIp() {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        Assertions.assertThrows(ApiException.class, () -> client.lookup("oops"));
+    }
+
+    @Test
+    void testSingleLookup_InvalidIp_ValidResource() {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        Assertions.assertThrows(ClientException.class, () -> client.lookup("robots.txt"));
+    }
+
+    @Test
     void testBatchLookup() throws ApiException, ClientException {
         IpregistryClient client = new IpregistryClient(apiKey);
         List<String> ips = Lists.newArrayList("66.165.2.7", "1.1.1.1", "8.8.4.4");
@@ -182,6 +194,13 @@ class IpregistryClientIntegrationTest {
         IpregistryClient client = new IpregistryClient(apiKey);
         List<String> ips = Lists.newArrayList("66.165.2.OOPS");
         IpInfoList ipInfoList = client.lookup(ips);
+        Assertions.assertThrows(IpInfoException.class, () -> ipInfoList.get(0));
+    }
+
+    @Test
+    void testBatchLookup_InvalidIp_ValidResource() throws ClientException, ApiException {
+        IpregistryClient client = new IpregistryClient(apiKey);
+        final IpInfoList ipInfoList = client.lookup(List.of("robots.txt"));
         Assertions.assertThrows(IpInfoException.class, () -> ipInfoList.get(0));
     }
 
