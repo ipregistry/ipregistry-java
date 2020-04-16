@@ -125,7 +125,7 @@ IpregistryConfig config =
 IpregistryClient ipregistry = new IpregistryClient(config, InMemoryCache.builder().build());
 ```
 
-The _InMemoryCache_ implementation supports multiple eviction policies (i.e. size based, time based):
+The _InMemoryCache_ implementation supports multiple eviction policies (e.g. size based, time based):
 
 ```java
 InMemoryCache cache =
