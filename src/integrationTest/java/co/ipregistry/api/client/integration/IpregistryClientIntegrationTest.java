@@ -9,6 +9,7 @@ import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
 import co.ipregistry.api.client.model.IpType;
 import co.ipregistry.api.client.options.IpregistryOptions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.net.InetAddresses;
 import org.junit.jupiter.api.Assertions;
@@ -200,7 +201,7 @@ class IpregistryClientIntegrationTest {
     @Test
     void testBatchLookup_InvalidIp_ValidResource() throws ClientException, ApiException {
         IpregistryClient client = new IpregistryClient(apiKey);
-        final IpInfoList ipInfoList = client.lookup(List.of("robots.txt"));
+        final IpInfoList ipInfoList = client.lookup(ImmutableList.of("robots.txt"));
         Assertions.assertThrows(IpInfoException.class, () -> ipInfoList.get(0));
     }
 
