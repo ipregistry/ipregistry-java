@@ -3,7 +3,7 @@ shipkit {
     gitHub.readOnlyAuthToken = System.getenv('GH_PACKAGES_READ_TOKEN')
     gitHub.writeAuthToken = System.getenv('GH_PACKAGES_WRITE_TOKEN')
 
-    releaseNotes.file = "docs/release-notes/shipkit.md"
+    releaseNotes.file = "RELEASE-NOTES.md"
 }
 
 allprojects {
@@ -45,9 +45,9 @@ allprojects {
         def pomConfig = {
             developers {
                 developer {
-                    id 'lpellegr'
-                    name 'Laurent Pellegrino'
-                    email 'laurent.pellegrino@ipregistry.co'
+                    id 'ipregistry-team'
+                    name 'Ipregistry Team'
+                    email 'support@ipregistry.co'
                 }
             }
             inceptionYear '2019'

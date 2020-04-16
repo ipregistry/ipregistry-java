@@ -9,8 +9,8 @@ plugins {
 
 group = 'co.ipregistry'
 
-updateReleaseNotes.enabled = false
-updateReleaseNotesOnGitHub.enabled = false
+updateReleaseNotes.enabled = true
+updateReleaseNotesOnGitHub.enabled = true
 
 repositories {
     jcenter()
