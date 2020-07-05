@@ -7,12 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.1.0]
+## [3.1.0] - 2020-07-05
 ### Changed
 - Upgrade dependencies.
 - Increase default timeout values to 15s from 2s.
 
-## [3.0.0]
+## [3.0.0] - 2020-04-16
 ### Changed
 - [BREAKING] Rename `DefaultCache` to `InMemoryCache`.
 - Upgrade dependencies
