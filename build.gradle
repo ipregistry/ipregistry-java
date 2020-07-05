@@ -3,8 +3,8 @@ import java.text.SimpleDateFormat
 plugins {
     id 'com.github.ben-manes.versions' version '0.28.0'
     id 'java-library'
-    id 'net.nemerosa.versioning' version '2.12.1'
-    id 'org.shipkit.java' version '2.3.1'
+    id 'net.nemerosa.versioning' version '2.14.0'
+    id 'org.shipkit.java' version '2.3.4'
 }
 
 group = 'co.ipregistry'
@@ -44,8 +44,8 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.10.2'
-    implementation 'com.google.guava:guava:28.2-jre'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.0'
+    implementation 'com.google.guava:guava:29.0-jre'
     implementation 'org.apache.httpcomponents:fluent-hc:4.5.12'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
