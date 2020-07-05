@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0]
+### Changed
+- Upgrade dependencies.
+- Increase default timeout values to 15s from 2s.
+
 ## [3.0.0]
 ### Changed
 - [BREAKING] Rename `DefaultCache` to `InMemoryCache`.
@@ -76,7 +81,8 @@ https://github.com/ipregistry/ipregistry-java#caching
 
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v3.1.0...HEAD
+[3.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v2.3.0...v3.0.0
 [2.3.0]: https://github.com/ipregistry/ipregistry-java/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/ipregistry/ipregistry-java/compare/v2.1.1...v2.2.0

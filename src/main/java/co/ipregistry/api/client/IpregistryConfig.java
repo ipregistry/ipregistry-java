@@ -40,13 +40,13 @@ public class IpregistryConfig {
      * The time to wait in milliseconds until a connection is established.
      */
     @Builder.Default
-    private int connectionTimeout = 2000;
+    private int connectionTimeout = 15000;
 
     /**
      * The time to wait for data in milliseconds.
      * Said differently, the maximum period inactivity of between two consecutive data packets.
      */
     @Builder.Default
-    private int socketTimeout = 2000;
+    private int socketTimeout = 15000;
 
 }
