@@ -134,7 +134,6 @@ InMemoryCache cache =
                 .expireAfter(600 * 1000)
                 .initialCapacity(512)
                 .maximumSize(4096)
-                .referenceType(ValuesReferenceType.WEAK)
                 .build();
 ```
 
