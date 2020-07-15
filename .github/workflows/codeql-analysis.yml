@@ -35,6 +35,10 @@ jobs:
 
     - name: Build with Gradle
       run: ./gradlew build
+      env:
+        GH_PACKAGES_READ_TOKEN: ${{ secrets.GH_PACKAGES_READ_TOKEN }}
+        GH_PACKAGES_WRITE_TOKEN: ${{ secrets.GH_PACKAGES_WRITE_TOKEN }}
+        IPREGISTRY_API_KEY:  ${{ secrets.IPREGISTRY_API_KEY }}
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
