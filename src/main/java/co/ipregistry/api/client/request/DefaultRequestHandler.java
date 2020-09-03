@@ -26,10 +26,11 @@ import co.ipregistry.api.client.model.error.LookupError;
 import co.ipregistry.api.client.options.IpregistryOption;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.fluent.Request;
-import org.apache.http.entity.ContentType;
+import org.apache.hc.client5.http.fluent.Request;
+import org.apache.hc.core5.http.ClassicHttpResponse;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.util.Timeout;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -53,13 +54,13 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         try {
             Class<? extends IpInfo> type = "".equals(ip) || ip == null ? RequesterIpInfo.class : IpInfo.class;
 
-            Object result = Request.Get(buildApiUrl(ip, options))
+            Object result = Request.get(buildApiUrl(ip, options))
                     .addHeader("User-Agent", USER_AGENT)
-                    .connectTimeout(config.getConnectionTimeout())
-                    .socketTimeout(config.getSocketTimeout())
+                    .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
+                    .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
                     .execute().handleResponse(response -> {
                         try {
-                            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                            if (response.getCode() == HttpStatus.SC_OK) {
                                 return new ObjectMapper()
                                         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                                         .readValue(response.getEntity().getContent(), type);
@@ -93,7 +94,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         }
     }
 
-    private ApiException createCustomException(HttpResponse response) throws IOException {
+    private ApiException createCustomException(ClassicHttpResponse response) throws IOException {
         LookupError error = new ObjectMapper().readValue(response.getEntity().getContent(), LookupError.class);
         return new ApiException(error.getCode(), error.getMessage(), error.getResolution());
     }
@@ -127,14 +128,14 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     public IpInfoList lookup(Iterable<String> ips, IpregistryOption... options) throws ApiException, ClientException {
         try {
-            Object result = Request.Post(buildApiUrl("", options))
+            Object result = Request.post(buildApiUrl("", options))
                     .bodyString(toJsonList(ips), ContentType.APPLICATION_JSON)
                     .addHeader("User-Agent", USER_AGENT)
-                    .connectTimeout(config.getConnectionTimeout())
-                    .socketTimeout(config.getSocketTimeout())
+                    .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
+                    .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
                     .execute().handleResponse(response -> {
                         try {
-                            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
+                            if (response.getCode() == HttpStatus.SC_OK) {
                                 return new ObjectMapper()
                                         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                                         .readValue(response.getEntity().getContent(), IpInfoList.class);
