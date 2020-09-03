@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2020-09-03
+### Changed
+- Compatibility level is set to Java 8.
+### Fixed
+- Fix broken lookup when InetAddress is used as input parameter. 
+
 ## [3.1.0] - 2020-07-05
 ### Changed
 - Upgrade dependencies.
@@ -81,7 +87,8 @@ https://github.com/ipregistry/ipregistry-java#caching
 
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v3.1.0...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v3.1.1...HEAD
+[3.1.1]: https://github.com/ipregistry/ipregistry-java/compare/v3.0.0...v3.1.1
 [3.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.0.0...v3.1.0
 [3.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v2.3.0...v3.0.0
 [2.3.0]: https://github.com/ipregistry/ipregistry-java/compare/v2.2.0...v2.3.0
