@@ -21,6 +21,12 @@ configurations {
     integrationTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+
 jar {
     manifest {
         attributes(
