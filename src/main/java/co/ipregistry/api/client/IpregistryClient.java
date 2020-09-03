@@ -66,7 +66,7 @@ public class IpregistryClient {
     }
 
     public IpInfo lookup(InetAddress ip, IpregistryOption... options) throws ApiException, ClientException {
-        return lookup(ip.toString(), options);
+        return lookup(ip.getHostAddress(), options);
     }
 
     public IpInfo lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
