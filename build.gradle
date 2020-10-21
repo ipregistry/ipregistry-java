@@ -1,10 +1,10 @@
 import java.text.SimpleDateFormat
 
 plugins {
-    id 'com.github.ben-manes.versions' version '0.29.0'
+    id 'com.github.ben-manes.versions' version '0.33.0'
     id 'java-library'
     id 'net.nemerosa.versioning' version '2.14.0'
-    id 'org.shipkit.java' version '2.3.4'
+    id 'org.shipkit.java' version '2.3.5'
 }
 
 group = 'co.ipregistry'
@@ -47,20 +47,20 @@ jar {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.12'
-    compileOnly 'org.projectlombok:lombok:1.18.12'
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    compileOnly 'org.projectlombok:lombok:1.18.16'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.2'
-    implementation 'com.google.guava:guava:29.0-jre'
-    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.0.1'
+    implementation 'com.google.guava:guava:30.0-jre'
+    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.0.3'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
-    testImplementation 'org.mockito:mockito-core:3.5.9'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'org.mockito:mockito-core:3.5.15'
 
     integrationTestImplementation 'io.rest-assured:rest-assured:4.3.1'
-    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.1'
-    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.1'
+    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 sourceSets {
