@@ -25,12 +25,12 @@ class DefaultRequestHandlerTest {
 
     @Test
     void testBuildApiUrl_optionsEncoded() {
-        IpregistryConfig config =
+        final IpregistryConfig config =
                 IpregistryConfig.builder().apiKey("test").build();
-        DefaultRequestHandler requestHandler =
+        final DefaultRequestHandler requestHandler =
                 new DefaultRequestHandler(
                         config);
-        String url =
+        final String url =
                 requestHandler.buildApiUrl(
                         "8.8.8.8", new IpregistryOption("test", "[test]"));
         Assertions.assertEquals(config.getApiUrl() + "/8.8.8.8?key=test&test=%5Btest%5D", url);

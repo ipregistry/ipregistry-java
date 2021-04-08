@@ -43,23 +43,23 @@ import co.ipregistry.api.client.model.IpInfo;
 
 public class SingleIpLookup {
 
-    public static void main(String[] args) {
-        IpregistryClient client = new IpregistryClient("tryout");
+    public static void main(final String[] args) {
+        final IpregistryClient client = new IpregistryClient("tryout");
 
         try {
             // Lookup IP data for the current node and network interface used to execute this code
-            RequesterIpInfo requesterIpInfo = client.lookup();
+            final RequesterIpInfo requesterIpInfo = client.lookup();
             System.out.println(requesterIpInfo.getLocation().getCountry().getName());
             System.out.println(requesterIpInfo);
 
             // Here is another example to lookup data for a given IP address
             // You may already have it or you can get the client IP from a request header
-            IpInfo ipInfo = client.lookup("54.85.132.205");
+            final IpInfo ipInfo = client.lookup("54.85.132.205");
             System.out.println(ipInfo);
-        } catch (ApiException e) {
+        } catch (final ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();
-        } catch (ClientException e) {
+        } catch (final ClientException e) {
             // Handle client errors (e.g. network error) here
             e.printStackTrace();
         }
@@ -82,27 +82,27 @@ import java.util.Arrays;
 
 public class BatchIpLookup {
 
-    public static void main(String[] args) {
-        IpregistryClient client = new IpregistryClient("tryout");
+    public static void main(final String[] args) {
+        final IpregistryClient client = new IpregistryClient("tryout");
 
         try {
-            IpInfoList ipInfoList =
+            final IpInfoList ipInfoList =
                     client.lookup(Arrays.asList("73.2.2.2", "8.8.8.8", "2001:67c:2e8:22::c100:68b"));
 
             for (int i = 0; i < ipInfoList.size(); i++) {
                 try {
-                    IpInfo ipInfo = ipInfoList.get(i);
+                    final IpInfo ipInfo = ipInfoList.get(i);
                     // Here is an example to print out the country name associated with each IP address
                     System.out.println(ipInfo.getLocation().getCountry().getName());
-                } catch (IpInfoException e) {
+                } catch (final IpInfoException e) {
                     // Handle batch lookup error (e.g. invalid IP address) here
                     e.printStackTrace();
                 }
             }
-        } catch (ApiException e) {
+        } catch (final ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();
-        } catch(ClientException e) {
+        } catch(final ClientException e) {
             // Handle client errors (e.g. network error) here
             e.printStackTrace();
         }
@@ -161,22 +161,23 @@ import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.util.UserAgent;
 
+
 public class SingleIpLookupFilteringBots {
 
-    public static void main(String[] args) {
-        IpregistryClient client = new IpregistryClient("tryout");
+    public static void main(final String[] args) {
+        final IpregistryClient client = new IpregistryClient("tryout");
 
         // For testing purposes, you can retrieve you current user agent from:
         // https://api.ipregistry.co/user_agent?key=tryout (look at the field named "user_agent")
         if (UserAgent.isBot("TO_REPLACE_BY_USER_AGENT_RETRIEVED_FROM_REQUEST_HEADER")) {
             try {
-                IpData ipInfo = client.lookup("8.8.8.8");
+                final IpData ipInfo = client.lookup("8.8.8.8");
                 // Here is an example to print out the country name associated with the IP address
                 System.out.println(ipInfo.getLocation().getCountry().getName());
-            } catch (ApiException e) {
+            } catch (final ApiException e) {
                 // Handle API errors (e.g. insufficient credits, throttling) here
                 e.printStackTrace();
-            } catch (ClientException e) {
+            } catch (final ClientException e) {
                 // Handle client errors (e.g. network error) here
                 e.printStackTrace();
             }

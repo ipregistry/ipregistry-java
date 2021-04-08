@@ -18,7 +18,7 @@ package co.ipregistry.api.client.options;
 
 public class HostnameOption extends IpregistryOption {
 
-    public HostnameOption(boolean hostname) {
+    public HostnameOption(final boolean hostname) {
         super("hostname", Boolean.toString(hostname));
     }
 

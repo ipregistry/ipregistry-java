@@ -13,7 +13,7 @@ public enum ConnectionType {
     @JsonValue
     String name;
 
-    ConnectionType(String name) {
+    ConnectionType(final String name) {
         this.name = name;
     }
 

@@ -25,21 +25,21 @@ import co.ipregistry.api.client.model.IpInfo;
 
 public class IpLookupCacheEnabled {
 
-    public static void main(String[] args) {
-        IpregistryConfig config =
+    public static void main(final String[] args) {
+        final IpregistryConfig config =
                 IpregistryConfig.builder()
                         .apiKey("tryout").build();
 
-        IpregistryClient client = new IpregistryClient(config, InMemoryCache.builder().build());
+        final IpregistryClient client = new IpregistryClient(config, InMemoryCache.builder().build());
 
         try {
-            IpInfo ipInfo = client.lookup("8.8.8.8");
+            final IpInfo ipInfo = client.lookup("8.8.8.8");
             // Here is an example to print out the country name associated with the IP address
             System.out.println(ipInfo.getLocation().getCountry().getName());
-        } catch (ApiException e) {
+        } catch (final ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();
-        } catch (ClientException e) {
+        } catch (final ClientException e) {
             // Handle client errors (e.g. network error) here
             e.printStackTrace();
         }

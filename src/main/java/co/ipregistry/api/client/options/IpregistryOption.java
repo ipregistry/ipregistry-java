@@ -26,7 +26,7 @@ public class IpregistryOption {
     protected final String value;
 
 
-    public IpregistryOption(String name, String value) {
+    public IpregistryOption(final String name, final String value) {
         this.name = name;
         this.value = value;
     }

@@ -33,8 +33,8 @@ public class IpInfoList {
     Object[] ips = null;
 
 
-    public IpInfo get(int index) throws IpInfoException {
-        Object object = ips[index];
+    public IpInfo get(final int index) throws IpInfoException {
+        final Object object = ips[index];
 
         if (object instanceof IpInfo) {
             return (IpInfo) object;
@@ -51,7 +51,7 @@ public class IpInfoList {
         return ips.length;
     }
 
-    public Object unsafeGet(int index) {
+    public Object unsafeGet(final int index) {
         return ips[index];
     }
 

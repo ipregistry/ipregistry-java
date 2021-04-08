@@ -26,12 +26,12 @@ import co.ipregistry.api.client.model.IpInfo;
 
 public class IpLookupAdvancedCacheConfiguration {
 
-    public static void main(String[] args) {
-        IpregistryConfig config =
+    public static void main(final String[] args) {
+        final IpregistryConfig config =
                 IpregistryConfig.builder()
                         .apiKey("tryout").build();
 
-        InMemoryCache cache =
+        final InMemoryCache cache =
                 InMemoryCache.builder()
                         .concurrencyLevel(16)
                         .expireAfter(3600000)
@@ -40,16 +40,16 @@ public class IpLookupAdvancedCacheConfiguration {
                         .referenceType(ValuesReferenceType.WEAK)
                         .build();
 
-        IpregistryClient client = new IpregistryClient(config, cache);
+        final IpregistryClient client = new IpregistryClient(config, cache);
 
         try {
-            IpInfo ipInfo = client.lookup("8.8.8.8");
+            final IpInfo ipInfo = client.lookup("8.8.8.8");
             // Here is an example to print out the country name associated with the IP address
             System.out.println(ipInfo.getLocation().getCountry().getName());
-        } catch (ApiException e) {
+        } catch (final ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();
-        } catch (ClientException e) {
+        } catch (final ClientException e) {
             // Handle client errors (e.g. network error) here
             e.printStackTrace();
         }

@@ -25,7 +25,7 @@ class NoCacheTest {
 
     @Test
     void testGetAlwaysReturnNull() {
-        NoCache noCache = new NoCache();
+        final NoCache noCache = new NoCache();
         Assertions.assertNull(noCache.get("1.1.1.1"));
 
         noCache.put("1.1.1.1", new IpInfo());

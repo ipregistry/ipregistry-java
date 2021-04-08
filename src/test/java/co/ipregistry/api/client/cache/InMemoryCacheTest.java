@@ -25,21 +25,21 @@ class InMemoryCacheTest {
 
     @Test
     void testGetReturnNullIfCacheEmpty() {
-        InMemoryCache cache = new InMemoryCache();
+        final InMemoryCache cache = new InMemoryCache();
         Assertions.assertNull(cache.get("8.8.8.8"));
     }
 
     @Test
     void testGetReturnNullIfEntryNotFound() {
-        InMemoryCache cache = new InMemoryCache();
+        final InMemoryCache cache = new InMemoryCache();
         cache.put("1.1.1.1", new IpInfo());
         Assertions.assertNull(cache.get("8.8.8.8"));
     }
 
     @Test
     void testGetReturnEntryIfFound() {
-        InMemoryCache cache = new InMemoryCache();
-        IpInfo ipInfo = new IpInfo();
+        final InMemoryCache cache = new InMemoryCache();
+        final IpInfo ipInfo = new IpInfo();
         cache.put("8.8.8.8", ipInfo);
         Assertions.assertSame(cache.get("8.8.8.8"), ipInfo);
     }

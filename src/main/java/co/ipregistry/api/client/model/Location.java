@@ -27,13 +27,13 @@ import lombok.*;
 public class Location {
 
     @JsonProperty("continent")
-    private Continent continent = new Continent();
+    private final Continent continent = new Continent();
 
     @JsonProperty("country")
-    private Country country = new Country();
+    private final Country country = new Country();
 
     @JsonProperty("region")
-    private Region region = new Region();
+    private final Region region = new Region();
 
     @JsonProperty("city")
     private String city;

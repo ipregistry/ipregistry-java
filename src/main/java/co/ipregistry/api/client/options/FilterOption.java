@@ -18,7 +18,7 @@ package co.ipregistry.api.client.options;
 
 public class FilterOption extends IpregistryOption {
 
-    public FilterOption(String expression) {
+    public FilterOption(final String expression) {
         super("fields", expression);
     }
 

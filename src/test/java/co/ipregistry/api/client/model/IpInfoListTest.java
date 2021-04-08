@@ -24,7 +24,7 @@ class IpInfoListTest {
 
     @Test
     void testGetThrowsExceptionOnExceptionType() {
-        IpInfoList ipInfoList = new IpInfoList(new Object[]{new IpInfo(), new IpInfoException("test", "test", "test")});
+        final IpInfoList ipInfoList = new IpInfoList(new Object[]{new IpInfo(), new IpInfoException("test", "test", "test")});
         Assertions.assertThrows(IpInfoException.class, () -> ipInfoList.get(1));
     }
 

@@ -50,25 +50,25 @@ class IpregistryClientTest {
 
     @Test
     void testCachingDisabledByDefault() {
-        IpregistryClient client = new IpregistryClient("test");
+        final IpregistryClient client = new IpregistryClient("test");
         Assertions.assertSame(client.getCache(), NoCache.getInstance());
     }
 
     @Test
     void testSingleIpRequestUseCacheIfAvailable() throws IpregistryException {
-        IpregistryConfig config =
+        final IpregistryConfig config =
                 IpregistryConfig.builder()
                         .apiKey("test").build();
 
-        IpregistryCache cache = Mockito.spy(new InMemoryCache());
-        DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
-        IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
+        final IpregistryCache cache = Mockito.spy(new InMemoryCache());
+        final DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
+        final IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
 
-        IpInfo cachedIpdata = new IpInfo();
+        final IpInfo cachedIpdata = new IpInfo();
 
         cache.put("8.8.8.8", cachedIpdata);
 
-        IpInfo ipdata = client.lookup("8.8.8.8");
+        final IpInfo ipdata = client.lookup("8.8.8.8");
 
         Mockito.verify(cache).get("8.8.8.8");
         Mockito.verifyNoInteractions(requestHandler);
@@ -78,20 +78,20 @@ class IpregistryClientTest {
 
     @Test
     void testSingleIpRequestCallApiEndpointIfCacheMiss() throws IpregistryException {
-        IpregistryConfig config =
+        final IpregistryConfig config =
                 IpregistryConfig.builder()
                         .apiKey("test").build();
 
-        IpregistryCache cache = Mockito.spy(new InMemoryCache());
-        DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
+        final IpregistryCache cache = Mockito.spy(new InMemoryCache());
+        final DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
 
-        IpInfo ipdata = new IpInfo();
+        final IpInfo ipdata = new IpInfo();
 
         Mockito.doReturn(ipdata).when(requestHandler).lookup("8.8.8.8");
 
-        IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
+        final IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
 
-        IpInfo ipdataLookupResponse = client.lookup("8.8.8.8");
+        final IpInfo ipdataLookupResponse = client.lookup("8.8.8.8");
 
         Mockito.verify(cache).put(Mockito.anyString(), Mockito.eq(ipdata));
         Mockito.verify(cache).get(Mockito.anyString());
@@ -102,22 +102,22 @@ class IpregistryClientTest {
 
     @Test
     void testBatchRequestUseCache() throws IpregistryException {
-        IpregistryConfig config =
+        final IpregistryConfig config =
                 IpregistryConfig.builder()
                         .apiKey("test").build();
 
-        IpregistryCache cache = Mockito.spy(new InMemoryCache());
-        DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
+        final IpregistryCache cache = Mockito.spy(new InMemoryCache());
+        final DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
 
-        IpInfo ipdata1111 = new IpInfo();
-        IpInfo ipdata8888 = new IpInfo();
-        IpInfo ipdata8844 = new IpInfo();
+        final IpInfo ipdata1111 = new IpInfo();
+        final IpInfo ipdata8888 = new IpInfo();
+        final IpInfo ipdata8844 = new IpInfo();
 
         cache.put("1.1.1.1", ipdata1111);
 
-        IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
+        final IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
 
-        List<String> ips = Arrays.asList("8.8.8.8", "1.1.1.1", "8.8.4.4");
+        final List<String> ips = Arrays.asList("8.8.8.8", "1.1.1.1", "8.8.4.4");
         Mockito.doReturn(new IpInfoList(new Object[]{ipdata8888, ipdata8844}))
                 .when(requestHandler).lookup(Mockito.anyList());
 
@@ -125,7 +125,7 @@ class IpregistryClientTest {
         Assertions.assertNull(cache.get("8.8.8.8"));
         Assertions.assertNull(cache.get("8.8.4.4"));
 
-        IpInfoList batchLookupResponse = client.lookup(ips);
+        final IpInfoList batchLookupResponse = client.lookup(ips);
 
         Assertions.assertEquals(new IpInfoList(new Object[]{ipdata8888, ipdata1111, ipdata8844}), batchLookupResponse);
         Assertions.assertEquals(3, batchLookupResponse.size());

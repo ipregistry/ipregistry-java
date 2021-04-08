@@ -33,19 +33,19 @@ public class IpInfoListDeserializer extends JsonDeserializer<Object> {
     }
 
     @Override
-    public IpInfoList deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
-        ObjectCodec codec = p.getCodec();
-        TreeNode treeNode = codec.readTree(p).get("results");
+    public IpInfoList deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
+        final ObjectCodec codec = p.getCodec();
+        final TreeNode treeNode = codec.readTree(p).get("results");
 
-        Object[] objects = new Object[treeNode.size()];
+        final Object[] objects = new Object[treeNode.size()];
 
         for (int i = 0; i < treeNode.size(); i++) {
-            TreeNode ipInfoOrLookupError = treeNode.get(i);
+            final TreeNode ipInfoOrLookupError = treeNode.get(i);
 
             if (ipInfoOrLookupError.get("code") == null) {
                 objects[i] = codec.treeToValue(ipInfoOrLookupError, IpInfo.class);
             } else {
-                LookupError lookupError = codec.treeToValue(ipInfoOrLookupError, LookupError.class);
+                final LookupError lookupError = codec.treeToValue(ipInfoOrLookupError, LookupError.class);
                 objects[i] =
                         new IpInfoException(
                                 lookupError.getCode(),

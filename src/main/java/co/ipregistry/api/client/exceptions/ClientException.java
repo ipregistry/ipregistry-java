@@ -21,11 +21,11 @@ import lombok.Getter;
 @Getter
 public class ClientException extends IpregistryException {
 
-    public ClientException(String message) {
+    public ClientException(final String message) {
         super(message);
     }
 
-    public ClientException(Throwable e) {
+    public ClientException(final Throwable e) {
         super(e);
     }
 

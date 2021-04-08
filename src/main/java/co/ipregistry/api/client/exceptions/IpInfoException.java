@@ -21,7 +21,7 @@ import lombok.Getter;
 @Getter
 public class IpInfoException extends ApiException {
 
-    public IpInfoException(String errorCode, String message, String resolution) {
+    public IpInfoException(final String errorCode, final String message, final String resolution) {
         super(errorCode, message, resolution);
     }
 

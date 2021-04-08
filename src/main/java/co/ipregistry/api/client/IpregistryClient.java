@@ -39,19 +39,19 @@ public class IpregistryClient {
     private final DefaultRequestHandler requestHandler;
 
 
-    public IpregistryClient(String apiKey) {
+    public IpregistryClient(final String apiKey) {
         this(IpregistryConfig.builder().apiKey(apiKey).build());
     }
 
-    public IpregistryClient(IpregistryConfig config) {
+    public IpregistryClient(final IpregistryConfig config) {
         this(config, NoCache.getInstance());
     }
 
-    public IpregistryClient(IpregistryConfig config, IpregistryCache cache) {
+    public IpregistryClient(final IpregistryConfig config, final IpregistryCache cache) {
         this(config, cache, new DefaultRequestHandler(config));
     }
 
-    public IpregistryClient(IpregistryConfig config, IpregistryCache cache, DefaultRequestHandler requestHandler) {
+    public IpregistryClient(final IpregistryConfig config, final IpregistryCache cache, final DefaultRequestHandler requestHandler) {
         this.config = config;
         this.cache = cache;
         this.requestHandler = requestHandler;
@@ -61,16 +61,16 @@ public class IpregistryClient {
         return cache;
     }
 
-    public RequesterIpInfo lookup(IpregistryOption... options) throws ApiException, ClientException {
+    public RequesterIpInfo lookup(final IpregistryOption... options) throws ApiException, ClientException {
         return (RequesterIpInfo) lookup("", options);
     }
 
-    public IpInfo lookup(InetAddress ip, IpregistryOption... options) throws ApiException, ClientException {
+    public IpInfo lookup(final InetAddress ip, final IpregistryOption... options) throws ApiException, ClientException {
         return lookup(ip.getHostAddress(), options);
     }
 
-    public IpInfo lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
-        String cacheKey = buildCacheKey(ip, options);
+    public IpInfo lookup(final String ip, final IpregistryOption... options) throws ApiException, ClientException {
+        final String cacheKey = buildCacheKey(ip, options);
         IpInfo cacheValue = this.cache.get(cacheKey);
 
         if (cacheValue != null) {
@@ -84,12 +84,12 @@ public class IpregistryClient {
         return cacheValue;
     }
 
-    private String buildCacheKey(String ip, IpregistryOption... options) {
-        StringBuilder buffer = new StringBuilder();
+    private String buildCacheKey(final String ip, final IpregistryOption... options) {
+        final StringBuilder buffer = new StringBuilder();
         buffer.append(ip);
 
         if (options != null) {
-            for (IpregistryOption option : options) {
+            for (final IpregistryOption option : options) {
                 buffer.append(';');
                 buffer.append(option.getName());
                 buffer.append('=');
@@ -100,14 +100,14 @@ public class IpregistryClient {
         return buffer.toString();
     }
 
-    public IpInfoList lookup(List<String> ips, IpregistryOption... options) throws ApiException, ClientException {
-        IpInfo[] sparseCache = new IpInfo[ips.size()];
-        List<String> cacheMisses = new ArrayList<>(ips.size());
+    public IpInfoList lookup(final List<String> ips, final IpregistryOption... options) throws ApiException, ClientException {
+        final IpInfo[] sparseCache = new IpInfo[ips.size()];
+        final List<String> cacheMisses = new ArrayList<>(ips.size());
 
         for (int i = 0; i < ips.size(); i++) {
-            String ip = ips.get(i);
-            String cacheKey = buildCacheKey(ip, options);
-            IpInfo cacheValue = cache.get(cacheKey);
+            final String ip = ips.get(i);
+            final String cacheKey = buildCacheKey(ip, options);
+            final IpInfo cacheValue = cache.get(cacheKey);
 
             if (cacheValue != null) {
                 sparseCache[i] = cacheValue;
@@ -116,19 +116,19 @@ public class IpregistryClient {
             }
         }
 
-        IpInfoList freshIpData = requestHandler.lookup(cacheMisses, options);
+        final IpInfoList freshIpData = requestHandler.lookup(cacheMisses, options);
 
-        Object[] result = new Object[ips.size()];
+        final Object[] result = new Object[ips.size()];
 
         int i = 0;
         int j = 0;
 
-        for (IpInfo cachedIpInfo : sparseCache) {
+        for (final IpInfo cachedIpInfo : sparseCache) {
             if (cachedIpInfo == null) {
                 result[i] = freshIpData.unsafeGet(j);
 
                 if (result[i] instanceof IpInfo) {
-                    IpInfo ipdata = (IpInfo) result[i];
+                    final IpInfo ipdata = (IpInfo) result[i];
                     cache.put(buildCacheKey(ipdata.getIp(), options), ipdata);
                 }
 

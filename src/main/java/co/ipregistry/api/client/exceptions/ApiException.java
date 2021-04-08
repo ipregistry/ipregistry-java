@@ -21,14 +21,14 @@ import lombok.Getter;
 @Getter
 public class ApiException extends IpregistryException {
 
-    private String code;
+    private final String code;
 
-    private String message;
+    private final String message;
 
-    private String resolution;
+    private final String resolution;
 
 
-    public ApiException(String errorCode, String message, String resolution) {
+    public ApiException(final String errorCode, final String message, final String resolution) {
         super(message);
         this.code = errorCode;
         this.message = message;

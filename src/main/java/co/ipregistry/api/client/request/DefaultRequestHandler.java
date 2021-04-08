@@ -45,16 +45,16 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     private final IpregistryConfig config;
 
-    public DefaultRequestHandler(IpregistryConfig config) {
+    public DefaultRequestHandler(final IpregistryConfig config) {
         this.config = config;
     }
 
 
-    public IpInfo lookup(String ip, IpregistryOption... options) throws ApiException, ClientException {
+    public IpInfo lookup(final String ip, final IpregistryOption... options) throws ApiException, ClientException {
         try {
-            Class<? extends IpInfo> type = "".equals(ip) || ip == null ? RequesterIpInfo.class : IpInfo.class;
+            final Class<? extends IpInfo> type = "".equals(ip) || ip == null ? RequesterIpInfo.class : IpInfo.class;
 
-            Object result = Request.get(buildApiUrl(ip, options))
+            final Object result = Request.get(buildApiUrl(ip, options))
                     .addHeader("User-Agent", USER_AGENT)
                     .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
                     .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
@@ -67,7 +67,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                             } else {
                                 return createCustomException(response);
                             }
-                        } catch (IOException e) {
+                        } catch (final IOException e) {
                             return new ClientException(e);
                         }
                     });
@@ -89,18 +89,18 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
             }
 
             throw new ClientException("Unknown result type (" + result.getClass() + "). Check your input value.");
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new ClientException(e);
         }
     }
 
-    private ApiException createCustomException(ClassicHttpResponse response) throws IOException {
-        LookupError error = new ObjectMapper().readValue(response.getEntity().getContent(), LookupError.class);
+    private ApiException createCustomException(final ClassicHttpResponse response) throws IOException {
+        final LookupError error = new ObjectMapper().readValue(response.getEntity().getContent(), LookupError.class);
         return new ApiException(error.getCode(), error.getMessage(), error.getResolution());
     }
 
-    protected String buildApiUrl(String ip, IpregistryOption... options) {
-        StringBuilder result = new StringBuilder();
+    protected String buildApiUrl(final String ip, final IpregistryOption... options) {
+        final StringBuilder result = new StringBuilder();
 
         result.append(config.getApiUrl());
         result.append('/');
@@ -112,13 +112,13 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         result.append("?key=");
         result.append(config.getApiKey());
 
-        for (IpregistryOption option : options) {
+        for (final IpregistryOption option : options) {
             result.append('&');
             result.append(option.getName());
             result.append('=');
             try {
                 result.append(URLEncoder.encode(option.getValue(), StandardCharsets.UTF_8.name()));
-            } catch (UnsupportedEncodingException e) {
+            } catch (final UnsupportedEncodingException e) {
                 result.append(option.getValue());
             }
         }
@@ -126,9 +126,9 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         return result.toString();
     }
 
-    public IpInfoList lookup(Iterable<String> ips, IpregistryOption... options) throws ApiException, ClientException {
+    public IpInfoList lookup(final Iterable<String> ips, final IpregistryOption... options) throws ApiException, ClientException {
         try {
-            Object result = Request.post(buildApiUrl("", options))
+            final Object result = Request.post(buildApiUrl("", options))
                     .bodyString(toJsonList(ips), ContentType.APPLICATION_JSON)
                     .addHeader("User-Agent", USER_AGENT)
                     .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
@@ -142,7 +142,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                             } else {
                                 return createCustomException(response);
                             }
-                        } catch (IOException e) {
+                        } catch (final IOException e) {
                             return new ClientException(e);
                         }
                     });
@@ -152,12 +152,12 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
             }
 
             throw (ApiException) result;
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new ClientException(e);
         }
     }
 
-    private String toJsonList(Iterable<String> ips) {
+    private String toJsonList(final Iterable<String> ips) {
         return '[' + StreamSupport
                 .stream(ips.spliterator(), false)
                 .map(ip -> "\"" + ip + "\"")
@@ -165,7 +165,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     }
 
     private static String getVersion() {
-        Package classPackage = DefaultRequestHandler.class.getPackage();
+        final Package classPackage = DefaultRequestHandler.class.getPackage();
 
         if (classPackage.getSpecificationVersion() == null) {
             return "dev";

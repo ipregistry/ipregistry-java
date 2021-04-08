@@ -30,11 +30,11 @@ public class UserAgentList {
     Object[] userAgents = null;
 
 
-    public UserAgentList(int length) {
+    public UserAgentList(final int length) {
         this.userAgents = new Object[length];
     }
 
-    public void set(int index, Object o) {
+    public void set(final int index, final Object o) {
         userAgents[index] = o;
     }
 

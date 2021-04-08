@@ -56,13 +56,13 @@ public class InMemoryCache implements IpregistryCache {
      */
     @Builder
     protected InMemoryCache(
-            int concurrencyLevel,
-            long expireAfter,
-            int initialCapacity,
-            int maximumSize,
-            ValuesReferenceType referenceType) {
+            final int concurrencyLevel,
+            final long expireAfter,
+            final int initialCapacity,
+            final int maximumSize,
+            final ValuesReferenceType referenceType) {
 
-        CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
+        final CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
         cacheBuilder.concurrencyLevel(concurrencyLevel);
         cacheBuilder.initialCapacity(initialCapacity);
         cacheBuilder.expireAfterWrite(expireAfter, TimeUnit.MILLISECONDS);
@@ -80,11 +80,11 @@ public class InMemoryCache implements IpregistryCache {
         this.cache = cacheBuilder.build();
     }
 
-    public IpInfo get(String key) {
+    public IpInfo get(final String key) {
         return this.cache.getIfPresent(key);
     }
 
-    public void invalidate(String key) {
+    public void invalidate(final String key) {
         this.cache.invalidate(key);
     }
 
@@ -92,7 +92,7 @@ public class InMemoryCache implements IpregistryCache {
         this.cache.invalidateAll();
     }
 
-    public void put(String key, IpInfo response) {
+    public void put(final String key, final IpInfo response) {
         this.cache.put(key, response);
     }
 

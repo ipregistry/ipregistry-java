@@ -27,7 +27,7 @@ public enum IpType {
     @JsonValue
     String name;
 
-    IpType(String name) {
+    IpType(final String name) {
         this.name = name;
     }
 

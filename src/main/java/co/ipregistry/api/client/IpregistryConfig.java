@@ -28,25 +28,25 @@ public class IpregistryConfig {
      * The IpregistryClient API key used to authenticate calls.
      */
     @NonNull
-    private String apiKey;
+    private final String apiKey;
 
     /**
      * The IpregistryClient API endpoint URL.
      */
     @Builder.Default
-    private String apiUrl = "https://api.ipregistry.co";
+    private final String apiUrl = "https://api.ipregistry.co";
 
     /**
      * The time to wait in milliseconds until a connection is established.
      */
     @Builder.Default
-    private int connectionTimeout = 15000;
+    private final int connectionTimeout = 15000;
 
     /**
      * The time to wait for data in milliseconds.
      * Said differently, the maximum period inactivity of between two consecutive data packets.
      */
     @Builder.Default
-    private int socketTimeout = 15000;
+    private final int socketTimeout = 15000;
 
 }

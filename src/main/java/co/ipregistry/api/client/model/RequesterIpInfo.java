@@ -31,7 +31,7 @@ public class RequesterIpInfo extends IpInfo {
     @JsonProperty("user_agent")
     private UserAgent userAgent;
 
-    public RequesterIpInfo(IpInfo ip, UserAgent userAgent) {
+    public RequesterIpInfo(final IpInfo ip, final UserAgent userAgent) {
         super();
 
         super.ip = ip.ip;

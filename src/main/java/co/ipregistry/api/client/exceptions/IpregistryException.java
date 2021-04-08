@@ -18,11 +18,11 @@ package co.ipregistry.api.client.exceptions;
 
 public class IpregistryException extends Exception {
 
-    public IpregistryException(String message) {
+    public IpregistryException(final String message) {
         super(message);
     }
 
-    public IpregistryException(Throwable e) {
+    public IpregistryException(final Throwable e) {
         super(e);
     }
 
