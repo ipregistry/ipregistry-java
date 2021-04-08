@@ -97,6 +97,14 @@ publishing {
                 description = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
                 url = 'https://github.com/ipregistry/ipregistry-java'
 
+                developers {
+                    developer {
+                        id = 'ipregistry-team'
+                        name = 'Ipregistry Team'
+                        email = 'support@ipregistry.co'
+                    }
+                }
+
                 licenses {
                     license {
                         name = 'The Apache License, Version 2.0'
