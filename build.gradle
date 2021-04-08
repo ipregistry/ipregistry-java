@@ -3,17 +3,15 @@ import java.text.SimpleDateFormat
 plugins {
     id 'com.github.ben-manes.versions' version '0.38.0'
     id 'java-library'
-    id 'net.nemerosa.versioning' version '2.14.0'
-    id 'org.shipkit.java' version '2.3.5'
+    id 'maven-publish'
+    id 'signing'
 }
 
 group = 'co.ipregistry'
-
-updateReleaseNotes.enabled = false
-updateReleaseNotesOnGitHub.enabled = true
+version = '3.1.2'
 
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 configurations {
@@ -26,7 +24,6 @@ java {
     targetCompatibility = JavaVersion.VERSION_1_8
 }
 
-
 jar {
     manifest {
         attributes(
@@ -34,16 +31,32 @@ jar {
                 'Build-Timestamp': new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
                 'Build-Jdk': "${System.properties['java.version']} (${System.properties['java.vendor']} ${System.properties['java.vm.version']})",
                 'Build-OS': "${System.properties['os.name']} ${System.properties['os.arch']} ${System.properties['os.version']}",
-                'Created-By': "Gradle ${gradle.gradleVersion}",
+                'Created-By': 'Gradle ${gradle.gradleVersion}',
                 'Name': 'co/ipregistry/api/client/',
                 'Specification-Title': 'Ipregistry Client',
                 'Specification-Version': project.version,
                 'Specification-Vendor': 'Ipregistry',
                 'Implementation-Title': 'co.ipregistry.api.client',
-                'Implementation-Version': versioning.info.commit,
+                'Implementation-Version': project.version,
                 'Implementation-Vendor': 'Ipregistry',
         )
     }
+}
+
+task sourceJar(type: Jar) {
+    classifier "sources"
+    from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier "javadoc"
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives jar
+    archives sourceJar
+    archives javadocJar
 }
 
 dependencies {
@@ -61,6 +74,60 @@ dependencies {
     integrationTestImplementation 'io.rest-assured:rest-assured:4.3.3'
     integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
     integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            groupId = 'co.ipregistry'
+            artifactId = 'ipregistry-client'
+            version = project.version
+            from components.java
+
+            artifact(sourceJar) {
+                classifier = 'sources'
+            }
+            artifact(javadocJar) {
+                classifier = 'javadoc'
+            }
+
+            pom {
+                name = 'Ipregistry Java Client'
+                packaging = 'jar'
+                description = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
+                url = 'https://github.com/ipregistry/ipregistry-java'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git@github.com:ipregistry/ipregistry-java.git'
+                    developerConnection = 'scm:git:git@github.com:ipregistry/ipregistry-java.git'
+                    url = 'https://github.com/ipregistry/ipregistry-java.git'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = 'OSSRH'
+            def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
+            def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            credentials {
+                username = System.getenv('OSSRH_USERNAME')
+                password = System.getenv('OSSRH_PASSWORD')
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
 }
 
 sourceSets {
