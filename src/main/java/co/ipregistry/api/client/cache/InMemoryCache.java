@@ -21,7 +21,9 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import lombok.Builder;
 
+import java.time.Duration;
 import java.util.concurrent.TimeUnit;
+
 
 public class InMemoryCache implements IpregistryCache {
 
@@ -31,7 +33,7 @@ public class InMemoryCache implements IpregistryCache {
     public InMemoryCache() {
         this(
                 Runtime.getRuntime().availableProcessors(),
-                600000, // 10 min in milliseconds
+                Duration.ofMinutes(10).toMillis(),
                 1024,
                 4096,
                 ValuesReferenceType.STRONG);
