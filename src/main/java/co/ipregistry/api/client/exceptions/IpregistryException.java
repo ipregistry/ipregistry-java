@@ -16,6 +16,7 @@
 
 package co.ipregistry.api.client.exceptions;
 
+
 public class IpregistryException extends Exception {
 
     public IpregistryException(final String message) {
