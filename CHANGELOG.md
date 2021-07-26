@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Parsing of unknown connection type values fallbacks to `BUSINESS`.
 - Upgrade dependencies.
 ### Removed
-- Merge connection type `CDN` with `HOSTING.
+- Merge connection type `CDN` with `HOSTING`.
 
 ## [3.1.2] - 2021-04-08
 ### Changed
