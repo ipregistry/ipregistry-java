@@ -22,14 +22,14 @@ You'll need an Ipregistry API key, which you can get along with 100,000 free loo
 <dependency>
     <groupId>co.ipregistry</groupId>
     <artifactId>ipregistry-client</artifactId>
-    <version>3.1.2</version>
+    <version>3.2.0</version>
 </dependency>
 ```
 
 #### Gradle
 
 ```
-implementation 'co.ipregistry:ipregistry-client:3.1.2'
+implementation 'co.ipregistry:ipregistry-client:3.2.0'
 ```
 
 ### Quick start
