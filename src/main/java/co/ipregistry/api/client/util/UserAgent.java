@@ -24,7 +24,7 @@ public final class UserAgent {
 
     public static boolean isBot(String userAgent) {
         userAgent = userAgent.toLowerCase();
-        return userAgent.contains("spider") || userAgent.contains("bot");
+        return userAgent.contains("bot") || userAgent.contains("spider") || userAgent.contains("slurp");
     }
 
 }
