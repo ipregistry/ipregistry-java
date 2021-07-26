@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum ConnectionType {
 
     BUSINESS("business"),
-    CDN("cdn"),
     EDUCATION("education"),
     HOSTING("hosting"),
     ISP("isp");
@@ -27,8 +26,6 @@ public enum ConnectionType {
     @JsonCreator
     public static ConnectionType from(final String value) {
         switch (value) {
-            case "cdn":
-                return ConnectionType.CDN;
             case "education":
                 return ConnectionType.EDUCATION;
             case "hosting":
