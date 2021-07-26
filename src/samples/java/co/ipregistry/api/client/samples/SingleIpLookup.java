@@ -28,15 +28,16 @@ public class SingleIpLookup {
         final IpregistryClient client = new IpregistryClient("tryout");
 
         try {
-            // Lookup IP data for the current node and network interface used to execute this code
-            final RequesterIpInfo requesterIpInfo = client.lookup();
-            System.out.println(requesterIpInfo.getLocation().getCountry().getName());
-            System.out.println(requesterIpInfo);
-
-            // Here is another example to lookup data for a given IP address
-            // You may already have it or you can get the client IP from a request header
+            // Here is an example to lookup IP address data for a given IP address.
+            // The parameter to pass is an IPv4 or IPv6 address.
+            // On server-side, you need to retrieve the client IP from the request headers.
             final IpInfo ipInfo = client.lookup("54.85.132.205");
             System.out.println(ipInfo);
+
+            // If your purpose is to perform a lookup for the current node and network interface
+            // used to execute this code, then you don't even need to pass a parameter
+            final RequesterIpInfo requesterIpInfo = client.lookup();
+            System.out.println(requesterIpInfo);
         } catch (final ApiException e) {
             // Handle API errors (e.g. insufficient credits, throttling) here
             e.printStackTrace();
