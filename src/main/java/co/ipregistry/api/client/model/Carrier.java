@@ -17,15 +17,14 @@
 package co.ipregistry.api.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
-@EqualsAndHashCode
-@Getter
+
+@AllArgsConstructor
+@Data
 @NoArgsConstructor
-@ToString
 public final class Carrier {
 
     @JsonProperty("name")

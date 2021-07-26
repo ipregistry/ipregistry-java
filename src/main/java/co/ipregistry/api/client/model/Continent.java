@@ -17,14 +17,16 @@
 package co.ipregistry.api.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode
-@Getter
+@Data
 @NoArgsConstructor
-@ToString
 public class Continent {
 
     @JsonProperty("code")

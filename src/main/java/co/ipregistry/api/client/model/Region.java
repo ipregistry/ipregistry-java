@@ -19,11 +19,9 @@ package co.ipregistry.api.client.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+
 @AllArgsConstructor
-@EqualsAndHashCode
-@Getter
 @NoArgsConstructor
-@ToString
 public class Region {
 
     @JsonProperty("code")

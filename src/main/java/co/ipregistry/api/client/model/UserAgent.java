@@ -19,8 +19,8 @@ package co.ipregistry.api.client.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
+
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
 @Data
 @NoArgsConstructor

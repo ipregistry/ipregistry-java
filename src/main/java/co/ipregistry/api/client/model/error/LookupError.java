@@ -16,10 +16,12 @@
 
 package co.ipregistry.api.client.model.error;
 
-import lombok.Getter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-@Getter
+@Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class LookupError extends IpError {
 

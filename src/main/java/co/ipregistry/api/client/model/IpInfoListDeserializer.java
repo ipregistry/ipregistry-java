@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 
 import java.io.IOException;
 
+
 public class IpInfoListDeserializer extends JsonDeserializer<Object> {
 
     public IpInfoListDeserializer() {
@@ -56,4 +57,5 @@ public class IpInfoListDeserializer extends JsonDeserializer<Object> {
 
         return new IpInfoList(objects);
     }
+
 }

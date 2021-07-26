@@ -18,14 +18,15 @@ package co.ipregistry.api.client.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 
 @AllArgsConstructor
-@EqualsAndHashCode
-@Getter
+@Data
 @NoArgsConstructor
 @JsonPropertyOrder(alphabetic = true)
-@ToString
 public class Flag {
 
     @JsonProperty("emoji")
