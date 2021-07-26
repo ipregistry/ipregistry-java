@@ -8,6 +8,7 @@ public enum ConnectionType {
 
     BUSINESS("business"),
     EDUCATION("education"),
+    GOVERNMENT("government"),
     HOSTING("hosting"),
     ISP("isp");
 
@@ -28,6 +29,8 @@ public enum ConnectionType {
         switch (value) {
             case "education":
                 return ConnectionType.EDUCATION;
+            case "government":
+                return ConnectionType.GOVERNMENT;
             case "hosting":
                 return ConnectionType.HOSTING;
             case "isp":
