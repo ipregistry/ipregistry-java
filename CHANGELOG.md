@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.2.0] - 2021-07-26
+### Added
+- Add setters to all model classes.
+- New connection type `GOVERNMENT`.
+### Changed
+- Improve utility method to detect bots/crawlers/spiders based on user-agent value.
+- Parsing of unknown connection type values fallbacks to `BUSINESS`.
+- Upgrade dependencies.
+### Removed
+- Merge connection type `CDN` with `HOSTING.
+
 ## [3.1.2] - 2021-04-08
 ### Changed
 - Upgrade dependencies
@@ -91,7 +102,8 @@ https://github.com/ipregistry/ipregistry-java#caching
 
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v3.1.2...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v3.2.0...HEAD
+[3.2.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.1.2...v3.2.0
 [3.1.2]: https://github.com/ipregistry/ipregistry-java/compare/v3.1.1...v3.1.2
 [3.1.1]: https://github.com/ipregistry/ipregistry-java/compare/v3.0.0...v3.1.1
 [3.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.0.0...v3.1.0
