@@ -63,7 +63,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     compileOnly 'org.projectlombok:lombok:1.18.20'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
     implementation 'com.google.guava:guava:30.1.1-jre'
     implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.1'
 
