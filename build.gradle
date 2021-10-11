@@ -60,7 +60,7 @@ artifacts {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok:1.18.20'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
