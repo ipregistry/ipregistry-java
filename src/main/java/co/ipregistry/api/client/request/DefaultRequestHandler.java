@@ -55,7 +55,8 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
             final Class<? extends IpInfo> type = "".equals(ip) || ip == null ? RequesterIpInfo.class : IpInfo.class;
 
             final Object result = Request.get(buildApiUrl(ip, options))
-                    .addHeader("User-Agent", USER_AGENT)
+                    .addHeader("authorization", "ApiKey " + config.getApiKey())
+                    .addHeader("user-agent", USER_AGENT)
                     .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
                     .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
                     .execute().handleResponse(response -> {
@@ -109,11 +110,9 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
             result.append(ip);
         }
 
-        result.append("?key=");
-        result.append(config.getApiKey());
-
+        boolean firstOptionHandled = false;
         for (final IpregistryOption option : options) {
-            result.append('&');
+            result.append(!firstOptionHandled ? '?' : '&');
             result.append(option.getName());
             result.append('=');
             try {
@@ -121,6 +120,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
             } catch (final UnsupportedEncodingException e) {
                 result.append(option.getValue());
             }
+            firstOptionHandled = true;
         }
 
         return result.toString();
@@ -130,7 +130,8 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         try {
             final Object result = Request.post(buildApiUrl("", options))
                     .bodyString(toJsonList(ips), ContentType.APPLICATION_JSON)
-                    .addHeader("User-Agent", USER_AGENT)
+                    .addHeader("authorization", "ApiKey " + config.getApiKey())
+                    .addHeader("user-agent", USER_AGENT)
                     .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
                     .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
                     .execute().handleResponse(response -> {
