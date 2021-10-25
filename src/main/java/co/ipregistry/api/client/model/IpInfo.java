@@ -44,12 +44,12 @@ public class IpInfo {
     protected Carrier carrier = new Carrier();
 
     @Builder.Default
-    @JsonProperty("connection")
-    protected Connection connection = new Connection();
-
-    @Builder.Default
     @JsonProperty("company")
     protected Company company = new Company();
+
+    @Builder.Default
+    @JsonProperty("connection")
+    protected Connection connection = new Connection();
 
     @Builder.Default
     @JsonProperty("currency")
