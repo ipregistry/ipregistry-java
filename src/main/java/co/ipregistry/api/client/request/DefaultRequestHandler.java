@@ -39,16 +39,24 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+
 public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     private static final String USER_AGENT = "IpregistryClient/Java/" + getVersion();
 
     private final IpregistryConfig config;
 
+    private final ObjectMapper objectMapper;
+
+
     public DefaultRequestHandler(final IpregistryConfig config) {
-        this.config = config;
+        this(config, new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
     }
 
+    public DefaultRequestHandler(final IpregistryConfig config, final ObjectMapper objectMapper) {
+        this.config = config;
+        this.objectMapper = objectMapper;
+    }
 
     public IpInfo lookup(final String ip, final IpregistryOption... options) throws ApiException, ClientException {
         try {
@@ -62,9 +70,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                     .execute().handleResponse(response -> {
                         try {
                             if (response.getCode() == HttpStatus.SC_OK) {
-                                return new ObjectMapper()
-                                        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                                        .readValue(response.getEntity().getContent(), type);
+                                return objectMapper.readValue(response.getEntity().getContent(), type);
                             } else {
                                 return createCustomException(response);
                             }
@@ -96,7 +102,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     }
 
     private ApiException createCustomException(final ClassicHttpResponse response) throws IOException {
-        final LookupError error = new ObjectMapper().readValue(response.getEntity().getContent(), LookupError.class);
+        final LookupError error = objectMapper.readValue(response.getEntity().getContent(), LookupError.class);
         return new ApiException(error.getCode(), error.getMessage(), error.getResolution());
     }
 
@@ -137,9 +143,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                     .execute().handleResponse(response -> {
                         try {
                             if (response.getCode() == HttpStatus.SC_OK) {
-                                return new ObjectMapper()
-                                        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                                        .readValue(response.getEntity().getContent(), IpInfoList.class);
+                                return objectMapper.readValue(response.getEntity().getContent(), IpInfoList.class);
                             } else {
                                 return createCustomException(response);
                             }
