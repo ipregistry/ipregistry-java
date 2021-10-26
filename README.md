@@ -7,8 +7,8 @@
 [![Javadocs](https://www.javadoc.io/badge/co.ipregistry/ipregistry-client.svg)](https://www.javadoc.io/doc/co.ipregistry/ipregistry-client)
 
 This is the official Java client library for the [Ipregistry](https://ipregistry.co) IP geolocation and threat data API, 
-allowing you to lookup your own IP address or specified ones. Responses return up to 65 data points including 
-location, currency, timezone, threat information, and more.
+allowing you to lookup your own IP address or specified ones. Responses return multiple data points including 
+carrier, company, currency, location, timezone, threat information, and more.
 
 ## Getting Started
 
