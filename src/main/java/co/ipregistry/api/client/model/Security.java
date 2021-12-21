@@ -30,11 +30,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Security {
 
+    @JsonProperty("is_abuser")
+    private boolean abuser;
+
+    @JsonProperty("is_attacker")
+    private boolean attacker;
+
     @JsonProperty("is_bogon")
     private boolean bogon;
 
     @JsonProperty("is_cloud_provider")
     private boolean cloudProvider;
+
+    @JsonProperty("is_proxy")
+    private boolean proxy;
+
+    @JsonProperty("is_relay")
+    private boolean relay;
 
     @JsonProperty("is_tor")
     private boolean tor;
@@ -42,17 +54,8 @@ public class Security {
     @JsonProperty("is_tor_exit")
     private boolean torExitNode;
 
-    @JsonProperty("is_proxy")
-    private boolean proxy;
-
     @JsonProperty("is_anonymous")
     private boolean anonymous;
-
-    @JsonProperty("is_abuser")
-    private boolean abuser;
-
-    @JsonProperty("is_attacker")
-    private boolean attacker;
 
     @JsonProperty("is_threat")
     private boolean threat;
