@@ -22,6 +22,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps mobile carrier data (name, MCC, MNC) associated with an IP address.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

@@ -23,6 +23,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps user-agent os data associated with a user-agent header value.
+ */
 @AllArgsConstructor
 @Builder
 @Data

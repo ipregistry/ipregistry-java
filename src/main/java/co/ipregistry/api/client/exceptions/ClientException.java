@@ -18,15 +18,29 @@ package co.ipregistry.api.client.exceptions;
 
 import lombok.Getter;
 
+
+/**
+ * Base class for all client related exceptions.
+ */
 @Getter
 public class ClientException extends IpregistryException {
 
+    /**
+     * Creates a new client exception instance with the specified message.
+     *
+     * @param message a description of the exception.
+     */
     public ClientException(final String message) {
         super(message);
     }
 
-    public ClientException(final Throwable e) {
-        super(e);
+    /**
+     * Creates a new client exception instance from the specified throwable.
+     *
+     * @param throwable the throwable instance to wrap.
+     */
+    public ClientException(final Throwable throwable) {
+        super(throwable);
     }
 
 }

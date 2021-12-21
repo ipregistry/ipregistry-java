@@ -23,6 +23,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps flag data associated with an IP address.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

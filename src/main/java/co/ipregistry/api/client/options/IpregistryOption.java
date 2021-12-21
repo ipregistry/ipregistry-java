@@ -18,14 +18,30 @@ package co.ipregistry.api.client.options;
 
 import lombok.Getter;
 
+
+/**
+ * An option depicts an optional action, behavior or configuration to apply when invoking an Ipregistry resource.
+ */
 @Getter
 public class IpregistryOption {
 
+    /**
+     * The option name.
+     */
     protected final String name;
 
+    /**
+     * The option value.
+     */
     protected final String value;
 
 
+    /**
+     * Creates a new option with the specified {@code name} and {@code value}.
+     *
+     * @param name  the option name.
+     * @param value the option value.
+     */
     public IpregistryOption(final String name, final String value) {
         this.name = name;
         this.value = value;

@@ -23,6 +23,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps continent data associated with an IP address.
+ */
 @AllArgsConstructor
 @Builder
 @Data

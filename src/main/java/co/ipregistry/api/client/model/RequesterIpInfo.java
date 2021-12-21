@@ -23,6 +23,9 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
+/**
+ * This class is used to enrich IpInfo data with user-agent data when retrieving data for an origin lookup request.
+ */
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
@@ -32,6 +35,13 @@ public class RequesterIpInfo extends IpInfo {
     @JsonProperty("user_agent")
     private UserAgent userAgent;
 
+
+    /**
+     * Creates a new {@code RequesterIpInfo} instance with the specified {@code ip} and {@code userAgent} instances.
+     *
+     * @param ip        the IP info data.
+     * @param userAgent the user-agent instance.
+     */
     public RequesterIpInfo(final IpInfo ip, final UserAgent userAgent) {
         super();
 

@@ -18,6 +18,10 @@ package co.ipregistry.api.client.cache;
 
 import co.ipregistry.api.client.model.IpInfo;
 
+
+/**
+ * Defines methods common to all Ipregistry cache implementations.
+ */
 public interface IpregistryCache {
 
     /**

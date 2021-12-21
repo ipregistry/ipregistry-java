@@ -20,6 +20,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 
+/**
+ * Wraps user-agent data associated with a user-agent header value.
+ */
 @AllArgsConstructor
 @Builder
 @Data

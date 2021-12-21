@@ -22,6 +22,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps company data associated with an IP address.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

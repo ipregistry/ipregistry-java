@@ -16,8 +16,18 @@
 
 package co.ipregistry.api.client.options;
 
+/**
+ * An option to filter IP address data retrieved with a lookup.
+ */
 public class FilterOption extends IpregistryOption {
 
+    /**
+     * Creates a filter expression with the specified {@code expression}.
+     *
+     * @param expression a filter expression as explained in our docs}.
+     *
+     * @see <a href="https://ipregistry.co/docs/filtering">https://ipregistry.co/docs/filtering</a>
+     */
     public FilterOption(final String expression) {
         super("fields", expression);
     }

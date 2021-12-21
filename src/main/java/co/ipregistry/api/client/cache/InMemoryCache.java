@@ -25,10 +25,16 @@ import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
 
+/**
+ * Cache implementation storing IP lookup results in-memory.
+ */
 public class InMemoryCache implements IpregistryCache {
 
     private final Cache<String, IpInfo> cache;
 
+    /**
+     * Creates a new in-memory instance caching up to {@code 4096} results for 10 minutes
+     */
     @Builder
     public InMemoryCache() {
         this(

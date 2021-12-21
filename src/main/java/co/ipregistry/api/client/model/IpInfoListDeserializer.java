@@ -27,16 +27,22 @@ import com.fasterxml.jackson.databind.JsonDeserializer;
 import java.io.IOException;
 
 
+/**
+ * Implementation used to deserialize an {@link IpInfoList}.
+ */
 public class IpInfoListDeserializer extends JsonDeserializer<Object> {
 
+    /**
+     * Creates a new instance.
+     */
     public IpInfoListDeserializer() {
         super();
     }
 
     @Override
-    public IpInfoList deserialize(final JsonParser p, final DeserializationContext ctxt) throws IOException {
-        final ObjectCodec codec = p.getCodec();
-        final TreeNode treeNode = codec.readTree(p).get("results");
+    public IpInfoList deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
+        final ObjectCodec codec = parser.getCodec();
+        final TreeNode treeNode = codec.readTree(parser).get("results");
 
         final Object[] objects = new Object[treeNode.size()];
 

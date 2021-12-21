@@ -16,8 +16,16 @@
 
 package co.ipregistry.api.client.options;
 
+/**
+ * An option to perform hostname lookup with IP lookup.
+ */
 public class HostnameOption extends IpregistryOption {
 
+    /**
+     * Creates an option enabling hostname lookup or not.
+     *
+     * @param hostname whether hostname lookup must be performed or not.
+     */
     public HostnameOption(final boolean hostname) {
         super("hostname", Boolean.toString(hostname));
     }

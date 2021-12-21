@@ -20,6 +20,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
+/**
+ * Error data wrapper used with bulk operations.
+ */
 @Data
 @NoArgsConstructor
 public class Error {

@@ -24,6 +24,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps data associated with one or more IP addresses.
+ */
 @AllArgsConstructor
 @Data
 @JsonDeserialize(using = IpInfoListDeserializer.class)
@@ -34,6 +37,16 @@ public class IpInfoList {
     Object[] ips = null;
 
 
+    /**
+     * Returns data for the IP address at the specified {@code index}.
+     * If an exception was thrown while handling the associated request, this exception is rethrown when invoking this method.
+     * <p>
+     * The order is the one of the requests that have been inputted for dispatching.
+     *
+     * @param index the index of the list.
+     * @return IpInfo data at the specified index.
+     * @throws IpInfoException if an exception was thrown while handling the associated request.
+     */
     public IpInfo get(final int index) throws IpInfoException {
         final Object object = ips[index];
 
@@ -44,6 +57,11 @@ public class IpInfoList {
         throw (IpInfoException) object;
     }
 
+    /**
+     * Returns the list size.
+     *
+     * @return the number of entries available in the list.
+     */
     public int size() {
         if (ips == null) {
             return 0;
@@ -52,6 +70,15 @@ public class IpInfoList {
         return ips.length;
     }
 
+    /**
+     * Returns data for the IP address at the specified {@code index}.
+     * If an exception was thrown while handling the associated request, the return value is an exception. Otherwise, this is the IpInfo data.
+     * <p>
+     * The order is the one of the requests that have been inputted for dispatching.
+     *
+     * @param index the index of the list.
+     * @return IpInfo data at the specified index, or the exception thrown while dispatching the associated request.
+     */
     public Object unsafeGet(final int index) {
         return ips[index];
     }

@@ -20,13 +20,34 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 
+/**
+ * Enumerate all kinds of connection types.
+ */
 public enum ConnectionType {
 
+    /**
+     * General business purposes.
+     */
     BUSINESS("business"),
+    /**
+     * College, School, or University.
+     */
     EDUCATION("education"),
+    /**
+     * Municipality or larger governmental usage.
+     */
     GOVERNMENT("government"),
+    /**
+     * Content Delivery Network (CDN), Data Center or Web Hosting.
+     */
     HOSTING("hosting"),
+    /**
+     * Inactive in the sense there exists no recent BGP announcements involving this AS.
+     */
     INACTIVE("inactive"),
+    /**
+     * Fixed line or mobile ISP.
+     */
     ISP("isp");
 
     @JsonValue
@@ -41,6 +62,12 @@ public enum ConnectionType {
         return name;
     }
 
+    /**
+     * Returns an enum type from its name.
+     *
+     * @param value an enum name.
+     * @return an enum type from its name. If the specified value is unknown, the result fallbacks to {@link ConnectionType#BUSINESS}.
+     */
     @JsonCreator
     public static ConnectionType from(final String value) {
         for (final ConnectionType type : ConnectionType.values()) {

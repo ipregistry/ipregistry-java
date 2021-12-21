@@ -24,6 +24,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 
+/**
+ * Wraps country data associated with an IP address.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

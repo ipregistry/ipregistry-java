@@ -22,6 +22,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * A list of user-agent data as a result of a bulk parsing.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
@@ -31,12 +34,23 @@ public class UserAgentList {
     Object[] userAgents = null;
 
 
+    /**
+     * Creates a new list with the specified {@code length} capacity.
+     *
+     * @param length the initial capacity.
+     */
     public UserAgentList(final int length) {
         this.userAgents = new Object[length];
     }
 
-    public void set(final int index, final Object o) {
-        userAgents[index] = o;
+    /**
+     * Sets the specified value {@code value} at index {@code index}. It overrides the existing value.
+     *
+     * @param index the list index where to set the value.
+     * @param value the value to set.
+     */
+    public void set(final int index, final Object value) {
+        userAgents[index] = value;
     }
 
 }

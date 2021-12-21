@@ -17,14 +17,27 @@
 package co.ipregistry.api.client.exceptions;
 
 
+/**
+ * Base class for all Ipregistry exceptions.
+ */
 public class IpregistryException extends Exception {
 
+    /**
+     * Creates a new exception instance.
+     *
+     * @param message the message that describes the exception.
+     */
     public IpregistryException(final String message) {
         super(message);
     }
 
-    public IpregistryException(final Throwable e) {
-        super(e);
+    /**
+     * Creates a new exception instance.
+     *
+     * @param throwable the throwable instance to wrap.
+     */
+    public IpregistryException(final Throwable throwable) {
+        super(throwable);
     }
 
 }

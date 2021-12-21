@@ -20,6 +20,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
+
+/**
+ * Configuration options for {@link IpregistryClient}.
+ */
 @Builder
 @Getter
 public class IpregistryConfig {
@@ -51,7 +55,7 @@ public class IpregistryConfig {
 
 
     /**
-     * This method is deprecated. Use {@link IpregistryConfig#baseUrl(String)} baseUrl(String)} instead.
+     * This method is deprecated. Use {@link IpregistryConfig#baseUrl} instead.
      *
      * @param baseUrl the API base URL to use.
      * @return the configuration instance.

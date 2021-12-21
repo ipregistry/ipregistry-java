@@ -18,10 +18,23 @@ package co.ipregistry.api.client.model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
+
+/**
+ * Enumerates IP address types.
+ */
 public enum IpType {
 
+    /**
+     * IPv4 address.
+     */
     IPV4("IPv4"),
+    /**
+     * IPv6 address.
+     */
     IPV6("IPv6"),
+    /**
+     * Unknown IP address.
+     */
     UNKNOWN("Unknown");
 
     @JsonValue

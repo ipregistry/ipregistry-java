@@ -18,20 +18,23 @@ package co.ipregistry.api.client.cache;
 
 import co.ipregistry.api.client.model.IpInfo;
 
+
+/**
+ * A no-op implementation that caches nothing.
+ */
 public class NoCache implements IpregistryCache {
-
-    private static class Holder {
-
-        static NoCache INSTANCE = new NoCache();
-    }
-
-    public static NoCache getInstance() {
-        return Holder.INSTANCE;
-    }
-
 
     NoCache() {
 
+    }
+
+    /**
+     * Returns the class instance.
+     *
+     * @return the class instance.
+     */
+    public static NoCache getInstance() {
+        return Holder.INSTANCE;
     }
 
     @Override
@@ -52,6 +55,11 @@ public class NoCache implements IpregistryCache {
     @Override
     public void invalidateAll() {
         // do nothing
+    }
+
+    private static class Holder {
+
+        static NoCache INSTANCE = new NoCache();
     }
 
 }

@@ -30,45 +30,100 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IpregistryClient {
 
-    private final IpregistryConfig config;
+/**
+ * An {@code IpregistryClient} can be used to send requests to the Ipregistry API and retrieve their responses as objects.
+ */
+public class IpregistryClient {
 
     private final IpregistryCache cache;
 
     private final DefaultRequestHandler requestHandler;
 
 
+    /**
+     * Creates a new client instance using the specified {@code apiKey}.
+     *
+     * @param apiKey the API key to use.
+     */
     public IpregistryClient(final String apiKey) {
         this(IpregistryConfig.builder().apiKey(apiKey).build());
     }
 
+    /**
+     * Creates a new client instance using the specified {@code config} object.
+     *
+     * @param config the configuration instance to use.
+     */
     public IpregistryClient(final IpregistryConfig config) {
         this(config, NoCache.getInstance());
     }
 
+    /**
+     * Creates a new client instance using the specified {@code config} instance and {@code cache} implementation.
+     *
+     * @param config the configuration instance to use.
+     * @param cache  the cache instance to use.
+     */
     public IpregistryClient(final IpregistryConfig config, final IpregistryCache cache) {
         this(config, cache, new DefaultRequestHandler(config));
     }
 
+    /**
+     * Creates a new client instance using the specified {@code config}, {@code cache}, and {@code requestHandler} instances.
+     *
+     * @param config         the configuration instance to use.
+     * @param cache          the cache instance to use.
+     * @param requestHandler the request handler instance to use.
+     */
     public IpregistryClient(final IpregistryConfig config, final IpregistryCache cache, final DefaultRequestHandler requestHandler) {
-        this.config = config;
         this.cache = cache;
         this.requestHandler = requestHandler;
     }
 
+    /**
+     * Returns the cache instance used by the client.
+     *
+     * @return the cache instance used by the client.
+     */
     public IpregistryCache getCache() {
         return cache;
     }
 
+    /**
+     * Lookups the data behind the IP address your request is sent from. We call it origin IP lookup.
+     *
+     * @param options the options to use when dispatching the request.
+     * @return the data found for the origin IP address.
+     * @throws ApiException    if an API issue happens.
+     * @throws ClientException if a client issue happens.
+     */
     public RequesterIpInfo lookup(final IpregistryOption... options) throws ApiException, ClientException {
         return (RequesterIpInfo) lookup("", options);
     }
 
+    /**
+     * Lookups the data behind the IP address you input.
+     *
+     * @param ip      the IP address to lookup.
+     * @param options the options to use when dispatching the request.
+     * @return the data found for the origin IP address.
+     * @throws ApiException    if an API issue happens.
+     * @throws ClientException if a client issue happens.
+     */
     public IpInfo lookup(final InetAddress ip, final IpregistryOption... options) throws ApiException, ClientException {
         return lookup(ip.getHostAddress(), options);
     }
 
+    /**
+     * Lookups the data behind the IP address you input.
+     *
+     * @param ip      the IP address to lookup.
+     * @param options the options to use when dispatching the request.
+     * @return the data found for the origin IP address.
+     * @throws ApiException    if an API issue happens.
+     * @throws ClientException if a client issue happens.
+     */
     public IpInfo lookup(final String ip, final IpregistryOption... options) throws ApiException, ClientException {
         final String cacheKey = buildCacheKey(ip, options);
         IpInfo cacheValue = this.cache.get(cacheKey);
@@ -100,6 +155,15 @@ public class IpregistryClient {
         return buffer.toString();
     }
 
+    /**
+     * Lookups the data behind multiple IP addresses at once.
+     *
+     * @param ips     the IP addresses to lookup.
+     * @param options the options to use when dispatching the request.
+     * @return the data found for the origin IP address.
+     * @throws ApiException    if an API issue happens.
+     * @throws ClientException if a client issue happens.
+     */
     public IpInfoList lookup(final List<String> ips, final IpregistryOption... options) throws ApiException, ClientException {
         final IpInfo[] sparseCache = new IpInfo[ips.size()];
         final List<String> cacheMisses = new ArrayList<>(ips.size());

@@ -40,6 +40,9 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 
+/**
+ * The default Ipregistry request handler implementation.
+ */
 public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     private static final String USER_AGENT = "IpregistryClient/Java/" + getVersion();
@@ -49,13 +52,34 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     private final ObjectMapper objectMapper;
 
 
+    /**
+     * Creates a {@code DefaultRequestHandler} using the specified {@link IpregistryConfig} instance.
+     *
+     * @param config the configuration instance to use.
+     */
     public DefaultRequestHandler(final IpregistryConfig config) {
         this(config, new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
     }
 
+    /**
+     * Creates a {@code DefaultRequestHandler} using the specified {@link IpregistryConfig} and {@link ObjectMapper} instances.
+     *
+     * @param config       the configuration instance.
+     * @param objectMapper the object mapper instance used for unmarshalling responses.
+     */
     public DefaultRequestHandler(final IpregistryConfig config, final ObjectMapper objectMapper) {
         this.config = config;
         this.objectMapper = objectMapper;
+    }
+
+    private static String getVersion() {
+        final Package classPackage = DefaultRequestHandler.class.getPackage();
+
+        if (classPackage.getSpecificationVersion() == null) {
+            return "dev";
+        }
+
+        return classPackage.getSpecificationVersion();
     }
 
     public IpInfo lookup(final String ip, final IpregistryOption... options) throws ApiException, ClientException {
@@ -106,6 +130,13 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         return new ApiException(error.getCode(), error.getMessage(), error.getResolution());
     }
 
+    /**
+     * Crafts a new API URL for the specified {@code ip} and {@code options}.
+     *
+     * @param ip      the IP address to lookup.
+     * @param options the options to pass.
+     * @return an API URL for the specified input arguments.
+     */
     protected String buildApiUrl(final String ip, final IpregistryOption... options) {
         final StringBuilder result = new StringBuilder();
 
@@ -167,16 +198,6 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                 .stream(ips.spliterator(), false)
                 .map(ip -> "\"" + ip + "\"")
                 .collect(Collectors.joining(",")) + ']';
-    }
-
-    private static String getVersion() {
-        final Package classPackage = DefaultRequestHandler.class.getPackage();
-
-        if (classPackage.getSpecificationVersion() == null) {
-            return "dev";
-        }
-
-        return classPackage.getSpecificationVersion();
     }
 
 }

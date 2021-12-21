@@ -18,9 +18,20 @@ package co.ipregistry.api.client.exceptions;
 
 import lombok.Getter;
 
+
+/**
+ * IpInfo exception.
+ */
 @Getter
 public class IpInfoException extends ApiException {
 
+    /**
+     * Creates a new instance with the specified arguments.
+     *
+     * @param errorCode the error code.
+     * @param message the message describing the error.
+     * @param resolution a sentence explaining how to resolve the error.
+     */
     public IpInfoException(final String errorCode, final String message, final String resolution) {
         super(errorCode, message, resolution);
     }

@@ -18,16 +18,38 @@ package co.ipregistry.api.client.exceptions;
 
 import lombok.Getter;
 
+
+/**
+ * Base class for all API related exceptions.
+ */
 @Getter
 public class ApiException extends IpregistryException {
 
+    /**
+     * The API exception code.
+     */
     private final String code;
 
+    /**
+     * The API exception message.
+     */
     private final String message;
 
+    /**
+     * The API exception resolution description.
+     */
     private final String resolution;
 
 
+    /**
+     * Creates a new instance.
+     *
+     * @param errorCode an error code as described in our docs.
+     * @param message a message describing the error.
+     * @param resolution explanation about how to fix the error.
+     *
+     * @see <a href="https://ipregistry.co/docs/errors">https://ipregistry.co/docs/errors</a>.
+     */
     public ApiException(final String errorCode, final String message, final String resolution) {
         super(message);
         this.code = errorCode;

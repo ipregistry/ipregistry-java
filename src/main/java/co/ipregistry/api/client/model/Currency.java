@@ -22,6 +22,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps currency data associated with an IP address.
+ */
 @AllArgsConstructor
 @Data
 @NoArgsConstructor

@@ -20,6 +20,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+
+/**
+ * Lookup error.
+ */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor

@@ -21,6 +21,10 @@ import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
 import co.ipregistry.api.client.options.IpregistryOption;
 
+
+/**
+ * Defines methods common to all Ipregistry request handler implementations.
+ */
 public interface IpregistryRequestHandler {
 
     /**

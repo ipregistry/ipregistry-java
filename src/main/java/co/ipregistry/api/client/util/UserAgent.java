@@ -16,12 +16,21 @@
 
 package co.ipregistry.api.client.util;
 
+/**
+ * This class consists exclusively of static methods that operate on or with user-agent values.
+ */
 public final class UserAgent {
 
     private UserAgent() {
 
     }
 
+    /**
+     * Returns whether the specified user-agent depicts a bot or spider.
+     *
+     * @param userAgent the user-agent value to analyze. Usually retrieved from the {@code user-agent} header of a request received on a server.
+     * @return whether the specified user-agent depicts a bot or spider.
+     */
     public static boolean isBot(String userAgent) {
         userAgent = userAgent.toLowerCase();
         return userAgent.contains("bot") || userAgent.contains("spider") || userAgent.contains("slurp");

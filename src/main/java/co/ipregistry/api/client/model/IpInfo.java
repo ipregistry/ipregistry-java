@@ -23,46 +23,79 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
+/**
+ * Wraps data associated with an IP address.
+ */
 @AllArgsConstructor
 @Builder
 @Data
 @NoArgsConstructor
 public class IpInfo {
 
+    /**
+     * IP data found for the IP address.
+     */
     @JsonProperty("ip")
     protected String ip;
 
+    /**
+     * IP type found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("type")
     protected IpType type = IpType.UNKNOWN;
 
+    /**
+     * Hostname found for the IP address.
+     */
     @JsonProperty("hostname")
     protected String hostname;
 
+    /**
+     * Carrier data found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("carrier")
     protected Carrier carrier = new Carrier();
 
+    /**
+     * Company data found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("company")
     protected Company company = new Company();
 
+    /**
+     * Connection data found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("connection")
     protected Connection connection = new Connection();
 
+    /**
+     * Currency data found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("currency")
     protected Currency currency = new Currency();
 
+    /**
+     * Location data found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("location")
     protected Location location = new Location();
 
+    /**
+     * Security data found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("security")
     protected Security security = new Security();
 
+    /**
+     * Time zone data found for the IP address.
+     */
     @Builder.Default
     @JsonProperty("time_zone")
     protected TimeZone timeZone = new TimeZone();
