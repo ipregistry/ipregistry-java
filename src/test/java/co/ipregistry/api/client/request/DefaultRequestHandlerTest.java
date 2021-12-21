@@ -32,7 +32,7 @@ class DefaultRequestHandlerTest {
         final String url =
                 requestHandler.buildApiUrl(
                         "8.8.8.8", new IpregistryOption("test", "[test]"));
-        Assertions.assertEquals(config.getApiUrl() + "/8.8.8.8?test=%5Btest%5D", url);
+        Assertions.assertEquals(config.getBaseUrl() + "/8.8.8.8?test=%5Btest%5D", url);
     }
 
 }

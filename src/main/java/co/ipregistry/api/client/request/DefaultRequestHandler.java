@@ -109,7 +109,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     protected String buildApiUrl(final String ip, final IpregistryOption... options) {
         final StringBuilder result = new StringBuilder();
 
-        result.append(config.getApiUrl());
+        result.append(config.getBaseUrl());
         result.append('/');
 
         if (ip != null) {

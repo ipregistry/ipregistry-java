@@ -34,7 +34,7 @@ public class IpregistryConfig {
      * The IpregistryClient API endpoint URL.
      */
     @Builder.Default
-    private final String apiUrl = "https://api.ipregistry.co";
+    private String baseUrl = "https://api.ipregistry.co";
 
     /**
      * The time to wait in milliseconds until a connection is established.
@@ -48,5 +48,18 @@ public class IpregistryConfig {
      */
     @Builder.Default
     private final int socketTimeout = 15000;
+
+
+    /**
+     * This method is deprecated. Use {@link IpregistryConfig#baseUrl(String)} baseUrl(String)} instead.
+     *
+     * @param baseUrl the API base URL to use.
+     * @return the configuration instance.
+     */
+    @Deprecated
+    public IpregistryConfig apiUrl(final String baseUrl) {
+        this.baseUrl = baseUrl;
+        return this;
+    }
 
 }
