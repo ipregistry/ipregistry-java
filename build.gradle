@@ -8,7 +8,7 @@ plugins {
 }
 
 group = 'co.ipregistry'
-version = '3.4.0'
+version = '3.5.0'
 
 repositories {
     mavenCentral()
@@ -63,17 +63,17 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok:1.18.22'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.1'
     implementation 'com.google.guava:guava:31.0.1-jre'
-    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.1.1'
+    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.1.2'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    testImplementation 'org.mockito:mockito-core:4.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.mockito:mockito-core:4.2.0'
 
     integrationTestImplementation 'io.rest-assured:rest-assured:4.4.0'
-    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
 publishing {
