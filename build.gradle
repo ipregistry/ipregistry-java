@@ -71,7 +71,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     testImplementation 'org.mockito:mockito-core:4.3.1'
 
-    integrationTestImplementation 'io.rest-assured:rest-assured:4.5.1'
+    integrationTestImplementation 'io.rest-assured:rest-assured:5.0.1'
     integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
