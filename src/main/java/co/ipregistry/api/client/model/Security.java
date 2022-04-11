@@ -60,4 +60,7 @@ public class Security {
     @JsonProperty("is_threat")
     private boolean threat;
 
+    @JsonProperty("is_vpn")
+    private boolean vpn;
+
 }
