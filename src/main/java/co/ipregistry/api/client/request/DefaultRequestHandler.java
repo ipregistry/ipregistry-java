@@ -22,6 +22,7 @@ import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
 import co.ipregistry.api.client.model.RequesterIpInfo;
+import co.ipregistry.api.client.model.UserAgentList;
 import co.ipregistry.api.client.model.error.LookupError;
 import co.ipregistry.api.client.options.IpregistryOption;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -36,6 +37,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -86,7 +89,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         try {
             final Class<? extends IpInfo> type = "".equals(ip) || ip == null ? RequesterIpInfo.class : IpInfo.class;
 
-            final Object result = Request.get(buildApiUrl(ip, options))
+            final Object result = Request.get(buildIpLookupUrl(ip, options))
                     .addHeader("authorization", "ApiKey " + config.getApiKey())
                     .addHeader("user-agent", USER_AGENT)
                     .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
@@ -131,13 +134,13 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     }
 
     /**
-     * Crafts a new API URL for the specified {@code ip} and {@code options}.
+     * Crafts a new URL for the specified {@code ip} and {@code options}.
      *
      * @param ip      the IP address to lookup.
      * @param options the options to pass.
      * @return an API URL for the specified input arguments.
      */
-    protected String buildApiUrl(final String ip, final IpregistryOption... options) {
+    protected String buildIpLookupUrl(final String ip, final IpregistryOption... options) {
         final StringBuilder result = new StringBuilder();
 
         result.append(config.getBaseUrl());
@@ -165,7 +168,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     public IpInfoList lookup(final Iterable<String> ips, final IpregistryOption... options) throws ApiException, ClientException {
         try {
-            final Object result = Request.post(buildApiUrl("", options))
+            final Object result = Request.post(buildIpLookupUrl("", options))
                     .bodyString(toJsonList(ips), ContentType.APPLICATION_JSON)
                     .addHeader("authorization", "ApiKey " + config.getApiKey())
                     .addHeader("user-agent", USER_AGENT)
@@ -185,6 +188,47 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
             if (result instanceof IpInfoList) {
                 return (IpInfoList) result;
+            }
+
+            throw (ApiException) result;
+        } catch (final IOException e) {
+            throw new ClientException(e);
+        }
+    }
+
+    @Override
+    public UserAgentList parse(final String... userAgents) throws ApiException, ClientException {
+        final StringBuilder buffer = new StringBuilder();
+        final Iterator<String> iterator = Arrays.stream(userAgents).iterator();
+        while (iterator.hasNext()) {
+            buffer.append('"');
+            buffer.append(iterator.next());
+            buffer.append('"');
+            if (iterator.hasNext()) {
+                buffer.append(',');
+            }
+        }
+
+        try {
+            final Object result = Request.post(config.getBaseUrl() + "/user_agent")
+                    .bodyString("[" + buffer + "]", ContentType.APPLICATION_JSON)
+                    .addHeader("authorization", "ApiKey " + config.getApiKey())
+                    .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
+                    .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
+                    .execute().handleResponse(response -> {
+                        try {
+                            if (response.getCode() == HttpStatus.SC_OK) {
+                                return objectMapper.readValue(response.getEntity().getContent(), UserAgentList.class);
+                            } else {
+                                return createCustomException(response);
+                            }
+                        } catch (final IOException e) {
+                            return new ClientException(e);
+                        }
+                    });
+
+            if (result instanceof UserAgentList) {
+                return (UserAgentList) result;
             }
 
             throw (ApiException) result;

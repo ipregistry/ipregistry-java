@@ -30,7 +30,7 @@ class DefaultRequestHandlerTest {
         final DefaultRequestHandler requestHandler =
                 new DefaultRequestHandler(config);
         final String url =
-                requestHandler.buildApiUrl(
+                requestHandler.buildIpLookupUrl(
                         "8.8.8.8", new IpregistryOption("test", "[test]"));
         Assertions.assertEquals(config.getBaseUrl() + "/8.8.8.8?test=%5Btest%5D", url);
     }

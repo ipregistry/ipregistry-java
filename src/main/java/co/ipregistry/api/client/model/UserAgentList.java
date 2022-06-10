@@ -16,17 +16,21 @@
 
 package co.ipregistry.api.client.model;
 
+import co.ipregistry.api.client.exceptions.UserAgentException;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 /**
  * A list of user-agent data as a result of a bulk parsing.
  */
 @AllArgsConstructor
-@Data
+@JsonDeserialize(using = UserAgentListDeserializer.class)
+@Setter
 @NoArgsConstructor
 public class UserAgentList {
 
@@ -51,6 +55,33 @@ public class UserAgentList {
      */
     public void set(final int index, final Object value) {
         userAgents[index] = value;
+    }
+
+    public UserAgent get(final int index) throws UserAgentException {
+        final Object object = userAgents[index];
+
+        if (object instanceof UserAgent) {
+            return (UserAgent) object;
+        }
+
+        throw (UserAgentException) object;
+    }
+
+    /**
+     * Returns the list size.
+     *
+     * @return the number of entries available in the list.
+     */
+    public int size() {
+        if (userAgents == null) {
+            return 0;
+        }
+
+        return userAgents.length;
+    }
+
+    public Object unsafeGet(final int index) {
+        return userAgents[index];
     }
 
 }

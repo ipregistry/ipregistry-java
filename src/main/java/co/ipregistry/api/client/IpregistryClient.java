@@ -20,9 +20,8 @@ import co.ipregistry.api.client.cache.IpregistryCache;
 import co.ipregistry.api.client.cache.NoCache;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
-import co.ipregistry.api.client.model.IpInfo;
-import co.ipregistry.api.client.model.IpInfoList;
-import co.ipregistry.api.client.model.RequesterIpInfo;
+import co.ipregistry.api.client.exceptions.IpregistryException;
+import co.ipregistry.api.client.model.*;
 import co.ipregistry.api.client.options.IpregistryOption;
 import co.ipregistry.api.client.request.DefaultRequestHandler;
 
@@ -205,6 +204,10 @@ public class IpregistryClient {
         }
 
         return new IpInfoList(result);
+    }
+
+    public UserAgentList parse(final String... userAgents) throws ApiException, ClientException {
+        return requestHandler.parse(userAgents);
     }
 
 }

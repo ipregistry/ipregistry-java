@@ -16,9 +16,12 @@
 
 package co.ipregistry.api.client.request;
 
+import co.ipregistry.api.client.exceptions.ApiException;
+import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.exceptions.IpregistryException;
 import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
+import co.ipregistry.api.client.model.UserAgentList;
 import co.ipregistry.api.client.options.IpregistryOption;
 
 
@@ -54,5 +57,7 @@ public interface IpregistryRequestHandler {
      *                             or a {@link co.ipregistry.api.client.exceptions.ClientException}.
      */
     IpInfoList lookup(Iterable<String> ips, IpregistryOption... options) throws IpregistryException;
+
+    UserAgentList parse(String... userAgents) throws ApiException, ClientException;
 
 }

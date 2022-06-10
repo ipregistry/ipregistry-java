@@ -4,10 +4,7 @@ import co.ipregistry.api.client.IpregistryClient;
 import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.exceptions.IpInfoException;
-import co.ipregistry.api.client.model.ConnectionType;
-import co.ipregistry.api.client.model.IpInfo;
-import co.ipregistry.api.client.model.IpInfoList;
-import co.ipregistry.api.client.model.IpType;
+import co.ipregistry.api.client.model.*;
 import co.ipregistry.api.client.options.IpregistryOptions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -217,6 +214,24 @@ class IpregistryClientIntegrationTest {
         Assertions.assertNotNull(ipInfo.getLocation());
         Assertions.assertNotNull(ipInfo.getSecurity());
         Assertions.assertNotNull(ipInfo.getTimeZone());
+    }
+
+    @Test
+    void testUserAgentParsing() throws ApiException, ClientException {
+        final IpregistryClient client = new IpregistryClient(apiKey);
+        final UserAgentList userAgentList =
+                client.parse(
+                        "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/102.0.5005.63 Safari/537.36",
+                        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:64.0) Gecko/20100101 Firefox/64.0",
+                        "@@@");
+
+        Assertions.assertEquals(3, userAgentList.size());
+        Assertions.assertEquals("Chrome", userAgentList.get(0).getName());
+        Assertions.assertEquals("Linux", userAgentList.get(0).getOperatingSystem().getName());
+        Assertions.assertEquals("Firefox", userAgentList.get(1).getName());
+        Assertions.assertEquals("Windows NT", userAgentList.get(1).getOperatingSystem().getName());
+        Assertions.assertEquals("Hacker", userAgentList.get(2).getName());
+        Assertions.assertEquals("Hacker", userAgentList.get(2).getOperatingSystem().getName());
     }
 
 }
