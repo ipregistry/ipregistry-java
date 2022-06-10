@@ -16,8 +16,6 @@
 
 package co.ipregistry.api.client.request;
 
-import co.ipregistry.api.client.exceptions.ApiException;
-import co.ipregistry.api.client.exceptions.ClientException;
 import co.ipregistry.api.client.exceptions.IpregistryException;
 import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
@@ -58,6 +56,17 @@ public interface IpregistryRequestHandler {
      */
     IpInfoList lookup(Iterable<String> ips, IpregistryOption... options) throws IpregistryException;
 
-    UserAgentList parse(String... userAgents) throws ApiException, ClientException;
+    /**
+     * Parse the given {@code userAgents} values.
+     *
+     * @param userAgents the raw user-agent values.
+     *                   A typical raw user-agent value is the value you retrieve for the user-agent header
+     *                   from an incoming HTTP request.
+     * @return parsed data associated with incoming {@code userAgents}.
+     * @throws IpregistryException if an error happens when looking up data.
+     *                             It can be an {@link co.ipregistry.api.client.exceptions.ApiException}
+     *                             or a {@link co.ipregistry.api.client.exceptions.ClientException}.
+     */
+    UserAgentList parse(String... userAgents) throws IpregistryException;
 
 }

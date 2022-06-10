@@ -16,6 +16,7 @@
 
 package co.ipregistry.api.client.model;
 
+import co.ipregistry.api.client.exceptions.IpInfoException;
 import co.ipregistry.api.client.exceptions.UserAgentException;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -57,6 +58,16 @@ public class UserAgentList {
         userAgents[index] = value;
     }
 
+    /**
+     * Returns data for the user-agent at the specified {@code index}.
+     * If an exception was thrown while handling the associated request, this exception is rethrown when invoking this method.
+     * <p>
+     * The order is the one of the requests that have been inputted for dispatching.
+     *
+     * @param index the index of the list.
+     * @return UserAgent data at the specified index.
+     * @throws UserAgentException if an exception was thrown while handling the associated request.
+     */
     public UserAgent get(final int index) throws UserAgentException {
         final Object object = userAgents[index];
 
@@ -80,6 +91,15 @@ public class UserAgentList {
         return userAgents.length;
     }
 
+    /**
+     * Returns data for the user-agent at the specified {@code index}.
+     * If an exception was thrown while handling the associated request, the return value is an exception. Otherwise, this is the IpInfo data.
+     * <p>
+     * The order is the one of the requests that have been inputted for dispatching.
+     *
+     * @param index the index of the list.
+     * @return UserAgent data at the specified index, or the exception thrown while dispatching the associated request.
+     */
     public Object unsafeGet(final int index) {
         return userAgents[index];
     }

@@ -206,6 +206,16 @@ public class IpregistryClient {
         return new IpInfoList(result);
     }
 
+    /**
+     * Parse the given {@code userAgents} values.
+     *
+     * @param userAgents the raw user-agent values.
+     *                   A typical raw user-agent value is the value you retrieve for the user-agent header
+     *                   from an incoming HTTP request.
+     * @return parsed data associated with incoming {@code userAgents}.
+     * @throws ApiException    if an API issue happens.
+     * @throws ClientException if a client issue happens.
+     */
     public UserAgentList parse(final String... userAgents) throws ApiException, ClientException {
         return requestHandler.parse(userAgents);
     }
