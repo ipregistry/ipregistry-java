@@ -44,7 +44,7 @@ import co.ipregistry.api.client.model.IpInfo;
 public class SingleIpLookup {
 
     public static void main(final String[] args) {
-        final IpregistryClient client = new IpregistryClient("tryout");
+        final IpregistryClient client = new IpregistryClient("YOUR_API_KEY");
 
         try {
             // Here is an example to lookup IP address data for a given IP address.
@@ -84,7 +84,7 @@ import java.util.Arrays;
 public class BatchIpLookup {
 
     public static void main(final String[] args) {
-        final IpregistryClient client = new IpregistryClient("tryout");
+        final IpregistryClient client = new IpregistryClient("YOUR_API_KEY");
 
         try {
             final IpInfoList ipInfoList =
@@ -166,10 +166,10 @@ import co.ipregistry.api.client.util.UserAgent;
 public class SingleIpLookupFilteringBots {
 
     public static void main(final String[] args) {
-        final IpregistryClient client = new IpregistryClient("tryout");
+        final IpregistryClient client = new IpregistryClient("YOUR_API_KEY");
 
         // For testing purposes, you can retrieve you current user-agent value from:
-        // https://api.ipregistry.co/user_agent?key=tryout (look at the field named "user_agent")
+        // https://api.ipregistry.co/user_agent?key=YOUR_API_KEY (look at the field named "user_agent")
         if (UserAgent.isBot("TO_REPLACE_BY_USER_AGENT_RETRIEVED_FROM_REQUEST_HEADER")) {
             try {
                 final IpData ipInfo = client.lookup("8.8.8.8");
