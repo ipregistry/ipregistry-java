@@ -20,7 +20,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: java
 
@@ -30,6 +30,7 @@ jobs:
         GH_PACKAGES_READ_TOKEN: ${{ secrets.GH_PACKAGES_READ_TOKEN }}
         GH_PACKAGES_WRITE_TOKEN: ${{ secrets.GH_PACKAGES_WRITE_TOKEN }}
         IPREGISTRY_API_KEY:  ${{ secrets.IPREGISTRY_API_KEY }}
+        IPREGISTRY_DATASETS_SECRET_KEY: ${{ secrets.IPREGISTRY_DATASETS_SECRET_KEY }}
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
