@@ -58,12 +58,12 @@ dependencies {
     implementation 'com.maxmind.db:maxmind-db:3.0.0'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
     testImplementation 'org.mockito:mockito-core:4.6.1'
 
     integrationTestImplementation 'io.rest-assured:rest-assured:5.1.1'
     integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
 }
 
 publishing {
