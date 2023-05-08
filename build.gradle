@@ -20,8 +20,11 @@ configurations {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    withJavadocJar()
+    withSourcesJar()
+
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 jar {
@@ -43,21 +46,7 @@ jar {
     }
 }
 
-task sourceJar(type: Jar) {
-    classifier "sources"
-    from sourceSets.main.allJava
-}
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier "javadoc"
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives jar
-    archives sourceJar
-    archives javadocJar
-}
 
 dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
@@ -84,13 +73,6 @@ publishing {
             artifactId = 'ipregistry-client'
             version = project.version
             from components.java
-
-            artifact(sourceJar) {
-                classifier = 'sources'
-            }
-            artifact(javadocJar) {
-                classifier = 'javadoc'
-            }
 
             pom {
                 name = 'Ipregistry Java Client'

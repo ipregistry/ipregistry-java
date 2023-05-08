@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.8.0] - 2023-05-08
+## [4.0.0] - 2023-05-08
 ### Added
 - Add new `IpregistryGeolocationDataset` class for easy loading and query an Ipregistry Geolocation dataset offline.
+### Changed
+- Updated required Java version to Java 11 from Java 8.
 
 ## [3.7.0] - 2022-06-10
 ### Added
