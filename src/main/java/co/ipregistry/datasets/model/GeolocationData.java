@@ -6,11 +6,27 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
+/**
+ * Response associated to a lookup from a {@link co.ipregistry.datasets.IpregistryGeolocationDataset}.
+ */
 @Getter
 @EqualsAndHashCode
 @ToString
 public final class GeolocationData {
 
+    /**
+     * Creates a new {@code GeolocationData} instance using the given arguments.
+     *
+     * @param countryCode a country code in ISO 3166-1 format.
+     * @param countryName a country name.
+     * @param regionCode a region code in ISO 3166-2 format.
+     * @param regionName a region name.
+     * @param city a city name.
+     * @param postal a postal code.
+     * @param latitude a latitude.
+     * @param longitude a longitude.
+     * @param timeZone a time zone.
+     */
     @MaxMindDbConstructor
     public GeolocationData(
             @MaxMindDbParameter(name = "country_code") String countryCode,

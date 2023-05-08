@@ -15,16 +15,38 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * This class is an abstraction that defines methods and fields common to all datasets.
+ */
 @Getter
 public class IpregistryDataset implements Closeable {
 
+    /**
+     * The reader instance that knows how to lookup data from an IP address.
+     */
     protected final AtomicReference<Reader> reader;
 
+    /**
+     * The name of the dataset file on local when downloaded.
+     */
     protected final String remoteDatasetFileName;
 
+    /**
+     * Whether an update is in progress or not.
+     */
     protected final AtomicBoolean updating = new AtomicBoolean(false);
 
-    public IpregistryDataset(
+    /**
+     * Creates an instance with the given parameters.
+     *
+     * @param datasetPath           the path to the dataset file
+     * @param downloadPath          the path to the directory where new version are downloaded.
+     * @param loadingMode           the type of loading that depicts how data is loaded.
+     * @param secretKey             an Ipregistry Dataset secret key for automatic download of the latest version.
+     * @param remoteDatasetFileName the name of the file to download when automatic downloads is used.
+     * @throws IOException if an error occurs while downloading the latest version of the dataset.
+     */
+    protected IpregistryDataset(
             final Path datasetPath,
             final Path downloadPath,
             final LoadingMode loadingMode,
@@ -59,6 +81,11 @@ public class IpregistryDataset implements Closeable {
         }
     }
 
+    /**
+     * Returns when the dataset file in use was created.
+     *
+     * @return when the dataset file in use was created.
+     */
     public Date getBuildDate() {
         Reader readerInstance = reader.get();
         if (readerInstance != null) {
@@ -67,6 +94,14 @@ public class IpregistryDataset implements Closeable {
         return null;
     }
 
+    /**
+     * Creates a reader instance.
+     *
+     * @param mmdbFile    the MMDB file to load.
+     * @param loadingMode the loading mode to use.
+     * @return a reader instance.
+     * @throws IOException if an IO error occurs.
+     */
     protected Reader load(final File mmdbFile, LoadingMode loadingMode) throws IOException {
         return new Reader(
                 mmdbFile,
@@ -77,13 +112,35 @@ public class IpregistryDataset implements Closeable {
                                 Reader.FileMode.MEMORY);
     }
 
-    public void update(
+    /**
+     * Updates the current dataset by downloading the latest version automatically with the provided secret key.
+     * <p>
+     * The task is asynchronous. It runs in a dedicated thread. You can wait for the completion using the return value.
+     *
+     * @param secretKey   the Ipregistry datasets API key for downloading the latest version of the dataset automatically.
+     * @param loadingMode the loading mode to use when loading the new version.
+     * @return a future that you can use to wait for completion of the update.
+     * @throws IOException                      if an IO error occurs while updating.
+     * @throws UpdateAlreadyInProgressException if an update is already in progress.
+     */
+    public CompletableFuture<Void> update(
             final String secretKey,
             final LoadingMode loadingMode) throws IOException, UpdateAlreadyInProgressException {
 
-        update(secretKey, loadingMode, Paths.get(System.getProperty("java.io.tmpdir")));
+        return update(secretKey, loadingMode, Paths.get(System.getProperty("java.io.tmpdir")));
     }
 
+    /**
+     * Updates the current dataset by downloading the latest version automatically with the provided secret key.
+     * <p>
+     * The task is asynchronous. It runs in a dedicated thread. You can wait for the completion using the return value.
+     *
+     * @param secretKey       the Ipregistry datasets API key for downloading the latest version of the dataset automatically.
+     * @param loadingMode     the loading mode to use when loading the new version.
+     * @param outputDirectory the path where downloaded files are placed.
+     * @return a future that you can use to wait for completion of the update.
+     * @throws UpdateAlreadyInProgressException if an update is already in progress.
+     */
     public CompletableFuture<Void> update(
             final String secretKey,
             final LoadingMode loadingMode,
@@ -125,6 +182,13 @@ public class IpregistryDataset implements Closeable {
 
     }
 
+    /**
+     * Updates the current dataset instance to use the new MMDB file as provided in argument.
+     *
+     * @param mmdbFile    the new MMDB file to load and use.
+     * @param loadingMode the loading mode.
+     * @throws IOException if an IO error occurs.
+     */
     public void update(final Path mmdbFile, final LoadingMode loadingMode) throws IOException {
         this.reader.set(this.load(mmdbFile.toFile(), loadingMode));
     }
