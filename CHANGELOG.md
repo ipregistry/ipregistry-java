@@ -137,8 +137,8 @@ https://github.com/ipregistry/ipregistry-java#caching
 ## [1.0.0] - 2019-07-03
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v3.8.0...HEAD
-[3.7.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.7.0...v3.8.0
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v4.0.0...HEAD
+[4.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.7.0...v4.0.0
 [3.7.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.6.0...v3.7.0
 [3.6.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.5.0...v3.6.0
 [3.5.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.4.0...v3.5.0
