@@ -34,6 +34,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpStatus;
+import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
 
 import java.io.IOException;
@@ -82,6 +83,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
         final RequestConfig requestConfig =
                 RequestConfig.custom()
+                        .setConnectionKeepAlive(TimeValue.ofMilliseconds(config.getConnectionKeepAlive()))
                         .setConnectionRequestTimeout(config.getConnectionTimeout(), TimeUnit.MILLISECONDS)
                         .setResponseTimeout(config.getSocketTimeout(), TimeUnit.MILLISECONDS)
                         .build();

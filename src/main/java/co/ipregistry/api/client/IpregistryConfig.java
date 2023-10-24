@@ -41,6 +41,12 @@ public class IpregistryConfig {
     private String baseUrl = "https://api.ipregistry.co";
 
     /**
+     * The maximum amount of time that a connection to the server should be kept alive. This is useful for reducing the number of connections that need to be created, which can improve performance and reduce bandwidth usage.
+     */
+    @Builder.Default
+    private final int connectionKeepAlive = 15 * 60 * 1000;
+
+    /**
      * The time to wait in milliseconds until a connection is established.
      */
     @Builder.Default
