@@ -27,7 +27,10 @@ import co.ipregistry.api.client.model.error.LookupError;
 import co.ipregistry.api.client.options.IpregistryOption;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.fluent.Request;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.ClassicHttpResponse;
 import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpStatus;
@@ -39,6 +42,7 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -51,6 +55,8 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     private static final String USER_AGENT = "IpregistryClient/Java/" + getVersion();
 
     private final IpregistryConfig config;
+
+    private final CloseableHttpClient httpClient;
 
     private final ObjectMapper objectMapper;
 
@@ -73,6 +79,16 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     public DefaultRequestHandler(final IpregistryConfig config, final ObjectMapper objectMapper) {
         this.config = config;
         this.objectMapper = objectMapper;
+
+        final RequestConfig requestConfig =
+                RequestConfig.custom()
+                        .setConnectionRequestTimeout(config.getConnectionTimeout(), TimeUnit.MILLISECONDS)
+                        .setResponseTimeout(config.getSocketTimeout(), TimeUnit.MILLISECONDS)
+                        .build();
+
+        this.httpClient = HttpClients.custom()
+                .setDefaultRequestConfig(requestConfig)
+                .build();
     }
 
     private static String getVersion() {
@@ -92,9 +108,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
             final Object result = Request.get(buildIpLookupUrl(ip, options))
                     .addHeader("authorization", "ApiKey " + config.getApiKey())
                     .addHeader("user-agent", USER_AGENT)
-                    .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
-                    .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
-                    .execute().handleResponse(response -> {
+                    .execute(httpClient).handleResponse(response -> {
                         try {
                             if (response.getCode() == HttpStatus.SC_OK) {
                                 return objectMapper.readValue(response.getEntity().getContent(), type);
@@ -172,9 +186,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                     .bodyString(toJsonList(ips), ContentType.APPLICATION_JSON)
                     .addHeader("authorization", "ApiKey " + config.getApiKey())
                     .addHeader("user-agent", USER_AGENT)
-                    .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
-                    .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
-                    .execute().handleResponse(response -> {
+                    .execute(httpClient).handleResponse(response -> {
                         try {
                             if (response.getCode() == HttpStatus.SC_OK) {
                                 return objectMapper.readValue(response.getEntity().getContent(), IpInfoList.class);
@@ -215,7 +227,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                     .addHeader("authorization", "ApiKey " + config.getApiKey())
                     .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
                     .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
-                    .execute().handleResponse(response -> {
+                    .execute(httpClient).handleResponse(response -> {
                         try {
                             if (response.getCode() == HttpStatus.SC_OK) {
                                 return objectMapper.readValue(response.getEntity().getContent(), UserAgentList.class);
@@ -242,6 +254,11 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                 .stream(ips.spliterator(), false)
                 .map(ip -> "\"" + ip + "\"")
                 .collect(Collectors.joining(",")) + ']';
+    }
+
+    @Override
+    public void close() throws Exception {
+        httpClient.close();
     }
 
 }

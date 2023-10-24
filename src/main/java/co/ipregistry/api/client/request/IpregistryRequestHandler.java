@@ -26,7 +26,7 @@ import co.ipregistry.api.client.options.IpregistryOption;
 /**
  * Defines methods common to all Ipregistry request handler implementations.
  */
-public interface IpregistryRequestHandler {
+public interface IpregistryRequestHandler extends AutoCloseable {
 
     /**
      * Lookup IP data such as geolocation data, currency, timezone, threat information and more
