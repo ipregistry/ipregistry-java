@@ -33,7 +33,7 @@ public enum ErrorCode {
      */
     DISABLED_API_KEY,
     /**
-     * IP filtering is enabled for the API key in use and the user request is from an IP that you did not whitelist.
+     * IP filtering is enabled for the API key in use and the request is from an IP that you did not whitelist.
      */
     FORBIDDEN_IP,
     /**
@@ -57,6 +57,10 @@ public enum ErrorCode {
      */
     INVALID_API_KEY,
     /**
+     * The Autonomous System Number you entered is in the wrong format. It should begin with AS followed by a number, like AS173.
+     */
+    INVALID_ASN,
+    /**
      * The filter pattern you entered to select a subset of fields is invalid. Decompose your filter into smaller parts and test them incrementally.
      */
     INVALID_FILTER_SYNTAX,
@@ -69,9 +73,17 @@ public enum ErrorCode {
      */
     MISSING_API_KEY,
     /**
+     * You attempted to search for a private ASN. These ASNs are not visible on the global Internet. Please try with a public ASN instead.
+     */
+    RESERVED_ASN,
+    /**
      * The IP address that was searched is a reserved address (loopback, link-local, multicast, private, site-local or wildcard IP address). Such IP addresses cannot be used to deduce geolocation information.
      */
     RESERVED_IP_ADDRESS,
+    /**
+     * You've submitted a batch request with too many Autonomous System Numbers (ASNs). Ensure your batch request includes no more than 16 ASNs. Please reduce the number of ASNs and try again.
+     */
+    TOO_MANY_ASNS,
     /**
      * You made a batch request with too many IP addresses. Batch requests must not contain more than 256 IP addresses. Input less IP addresses.
      */
@@ -83,6 +95,10 @@ public enum ErrorCode {
     /**
      * You have specified too many user agents with the batch endpoint. Batch requests must not contain more than 256 user agents. Input fewer user agents.
      */
-    TOO_MANY_USER_AGENTS
+    TOO_MANY_USER_AGENTS,
+    /**
+     * No Autonomous System is currently announcing the specified IP address or IP prefix. This can happen with the Origin AS endpoint.
+     */
+    UNKNOWN_ASN
 
 }
