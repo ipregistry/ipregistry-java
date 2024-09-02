@@ -59,17 +59,4 @@ public class IpregistryConfig {
     @Builder.Default
     private final int socketTimeout = 15000;
 
-
-    /**
-     * This method is deprecated. Use {@link IpregistryConfig#baseUrl} instead.
-     *
-     * @param baseUrl the API base URL to use.
-     * @return the configuration instance.
-     */
-    @Deprecated
-    public IpregistryConfig apiUrl(final String baseUrl) {
-        this.baseUrl = baseUrl;
-        return this;
-    }
-
 }
