@@ -31,10 +31,10 @@ import lombok.NoArgsConstructor;
 public class CurrencyFormat {
 
     @JsonProperty("decimal_separator")
-    private CurrencyFormatPrefixSuffix decimalSeparator;
+    private String decimalSeparator;
 
     @JsonProperty("group_separator")
-    private CurrencyFormatPrefixSuffix groupSeparator;
+    private String groupSeparator;
 
     @JsonProperty("negative")
     private CurrencyFormatPrefixSuffix negative;
