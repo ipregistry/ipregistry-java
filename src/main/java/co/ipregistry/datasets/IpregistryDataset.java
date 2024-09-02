@@ -155,8 +155,6 @@ public class IpregistryDataset implements Closeable {
         outputDirectory2.toFile().mkdirs();
 
         return CompletableFuture.supplyAsync(() -> {
-
-
             final Path outputPath = outputDirectory2.resolve(remoteDatasetFileName + "_" + UUID.randomUUID());
 
             try (

@@ -38,7 +38,6 @@ import org.apache.hc.core5.util.TimeValue;
 import org.apache.hc.core5.util.Timeout;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
@@ -171,11 +170,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
             result.append(!firstOptionHandled ? '?' : '&');
             result.append(option.getName());
             result.append('=');
-            try {
-                result.append(URLEncoder.encode(option.getValue(), StandardCharsets.UTF_8.name()));
-            } catch (final UnsupportedEncodingException e) {
-                result.append(option.getValue());
-            }
+            result.append(URLEncoder.encode(option.getValue(), StandardCharsets.UTF_8));
             firstOptionHandled = true;
         }
 
