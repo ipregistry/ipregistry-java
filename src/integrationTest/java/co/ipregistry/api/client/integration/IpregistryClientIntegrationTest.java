@@ -164,7 +164,7 @@ class IpregistryClientIntegrationTest {
     @Test
     void testSingleLookup_InvalidIp_ValidResource() {
         final IpregistryClient client = new IpregistryClient(apiKey);
-        Assertions.assertThrows(ApiException.class, () -> client.lookup("robots.txt"));
+        Assertions.assertThrows(ApiException.class, () -> client.lookup("invalid"));
     }
 
     @Test
