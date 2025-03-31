@@ -48,8 +48,8 @@ jar {
 
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.36'
-    compileOnly 'org.projectlombok:lombok:1.18.36'
+    annotationProcessor 'org.projectlombok:lombok:1.18.38'
+    compileOnly 'org.projectlombok:lombok:1.18.38'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.18.3'
     implementation 'com.google.guava:guava:33.4.5-jre'
