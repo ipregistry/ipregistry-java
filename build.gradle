@@ -56,13 +56,13 @@ dependencies {
     implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.5'
     implementation 'com.maxmind.db:maxmind-db:3.2.0'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.3'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
     testImplementation 'org.mockito:mockito-core:5.18.0'
 
     integrationTestImplementation 'io.rest-assured:rest-assured:5.5.5'
-    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.3'
-    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.3'
+    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
+    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
 }
 
 publishing {
