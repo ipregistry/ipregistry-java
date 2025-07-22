@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         distribution: [ 'zulu' ]
-        java: [ '17', '21', '22' ]
+        java: [ '21', '22', '23', '24' ]
 
     steps:
       - uses: actions/checkout@v4
