@@ -24,18 +24,35 @@ import lombok.NoArgsConstructor;
 
 /**
  * Wraps company data associated with an IP address.
+ * Contains information about the organization that owns or operates
+ * the IP address, including company name, domain, and business type.
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Company {
 
+    /**
+     * Creates a new Company instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public Company() {
+    }
+
+    /**
+     * The name of the company or organization.
+     */
     @JsonProperty("name")
     private String name;
 
+    /**
+     * The primary domain name associated with the company.
+     */
     @JsonProperty("domain")
     private String domain;
 
+    /**
+     * The type/category of the company (e.g., business, education, government).
+     */
     @JsonProperty("type")
     private CompanyType type;
 

@@ -25,14 +25,31 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps data associated with one or more IP addresses.
+ * Represents a collection of IP address lookup results from batch operations.
+ * <p>
+ * This class holds the results of batch IP address lookups, where multiple IP addresses
+ * are queried in a single API call. Each entry in the list can be either successful
+ * {@link IpInfo} data or an exception if the lookup failed for that particular IP address.
+ * This allows for partial success in batch operations where some IPs succeed and others fail.
+ * </p>
  */
 @AllArgsConstructor
 @Data
 @JsonDeserialize(using = IpInfoListDeserializer.class)
-@NoArgsConstructor
 public class IpInfoList {
 
+    /**
+     * Creates a new IpInfoList instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public IpInfoList() {
+    }
+
+    /**
+     * Array containing the results for each IP address lookup.
+     * Each element is either an {@link IpInfo} object for successful lookups
+     * or an {@link IpInfoException} for failed lookups.
+     */
     @JsonProperty("results")
     Object[] ips = null;
 

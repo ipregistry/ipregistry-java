@@ -24,29 +24,65 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps flag data associated with an IP address.
+ * Represents flag imagery and representations for a country.
+ * <p>
+ * This class provides various formats and representations of a country's flag,
+ * including emoji versions and URLs to different graphical representations.
+ * These resources can be used for displaying country flags in applications,
+ * user interfaces, or documentation.
+ * </p>
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 @JsonPropertyOrder(alphabetic = true)
 public class Flag {
 
+    /**
+     * Creates a new Flag instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public Flag() {
+    }
+
+    /**
+     * The flag represented as an emoji character.
+     * Provides a simple text-based representation of the country flag.
+     */
     @JsonProperty("emoji")
     private String emoji;
 
+    /**
+     * The Unicode code point sequence for the flag emoji.
+     * Contains the Unicode representation that can be used to programmatically display the flag emoji.
+     */
     @JsonProperty("emoji_unicode")
     private String emojiUnicode;
 
+    /**
+     * URL to the EmojiTwo (now JoyPixels) style flag image.
+     * Provides a link to a stylized emoji-style flag image from the EmojiTwo collection.
+     */
     @JsonProperty("emojitwo")
     private String emojitwo;
 
+    /**
+     * URL to the Google Noto Color Emoji style flag image.
+     * Provides a link to a flag image in Google's Noto emoji style.
+     */
     @JsonProperty("noto")
     private String noto;
 
+    /**
+     * URL to the Twemoji (Twitter Emoji) style flag image.
+     * Provides a link to a flag image in Twitter's emoji style.
+     */
     @JsonProperty("twemoji")
     private String twemoji;
 
+    /**
+     * URL to the official flag image from Wikimedia Commons.
+     * Provides a link to an official, high-quality flag image from Wikimedia's collection.
+     */
     @JsonProperty("wikimedia")
     private String wikimedia;
 

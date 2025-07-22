@@ -22,18 +22,41 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Error data wrapper used with bulk operations.
+ * Represents error information returned by the Ipregistry API.
+ * <p>
+ * This class contains structured error data including error codes, human-readable
+ * messages, and suggested resolutions. It is primarily used in bulk operations
+ * where individual IP address lookups may fail while others succeed.
+ * </p>
  */
 @Data
-@NoArgsConstructor
 public class Error {
 
+    /**
+     * Creates a new Error instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public Error() {
+    }
+
+    /**
+     * The error code identifying the specific type of error that occurred.
+     * Error codes provide programmatic identification of error conditions for proper handling.
+     */
     @JsonProperty("code")
     private String code;
 
+    /**
+     * A human-readable error message describing what went wrong.
+     * Provides detailed information about the error for debugging and user display.
+     */
     @JsonProperty("message")
     private String message;
 
+    /**
+     * Suggested resolution or corrective action to fix the error.
+     * Provides guidance on how to resolve the issue that caused the error.
+     */
     @JsonProperty("resolution")
     private String resolution;
 

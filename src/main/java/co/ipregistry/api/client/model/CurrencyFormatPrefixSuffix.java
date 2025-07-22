@@ -23,16 +23,38 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps currency format prefix data associated with an IP address.
+ * Represents prefix and suffix formatting elements for currency display.
+ * <p>
+ * This class defines what characters or symbols should appear before (prefix)
+ * and after (suffix) a currency amount when displaying monetary values.
+ * Different locales and currencies have various conventions for symbol placement
+ * and negative number formatting.
+ * </p>
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class CurrencyFormatPrefixSuffix {
 
+    /**
+     * Creates a new CurrencyFormatPrefixSuffix instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public CurrencyFormatPrefixSuffix() {
+    }
+
+    /**
+     * Text or symbols to display before the currency amount.
+     * Examples include currency symbols ("$", "€"), negative indicators ("-", "("),
+     * or localized prefixes that appear before the numeric value.
+     */
     @JsonProperty("prefix")
     private String prefix;
 
+    /**
+     * Text or symbols to display after the currency amount.
+     * Examples include currency codes or symbols placed after the number,
+     * closing parentheses for negative amounts, or localized suffixes.
+     */
     @JsonProperty("suffix")
     private String suffix;
 

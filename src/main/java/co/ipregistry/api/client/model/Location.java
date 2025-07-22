@@ -23,37 +23,85 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps location data associated with an IP address.
+ * Represents geographical location information associated with an IP address.
+ * <p>
+ * This class contains comprehensive location data including continent, country, region,
+ * city information, geographical coordinates, primary language, and EU membership status.
+ * Location data is used for geolocation services and geographic targeting.
+ * </p>
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Location {
 
+    /**
+     * Creates a new Location instance with default values.
+     * All fields are initialized to their default values (empty objects or null).
+     * This constructor is primarily used for JSON deserialization.
+     */
+    public Location() {
+    }
+
+    /**
+     * Continent information where the IP address is located.
+     * Contains continent code and name details.
+     */
     @JsonProperty("continent")
     private Continent continent = new Continent();
 
+    /**
+     * Country information where the IP address is located.
+     * Contains country code, name, flag, and other country-specific details.
+     */
     @JsonProperty("country")
     private Country country = new Country();
 
+    /**
+     * Regional/state information where the IP address is located.
+     * Contains region code and name within the country.
+     */
     @JsonProperty("region")
     private Region region = new Region();
 
+    /**
+     * City name where the IP address is located.
+     * May be null if city information is not available.
+     */
     @JsonProperty("city")
     private String city;
 
+    /**
+     * Postal or ZIP code associated with the IP address location.
+     * May be null if postal code information is not available.
+     */
     @JsonProperty("postal")
     private String postal;
 
+    /**
+     * Geographical latitude coordinate of the IP address location.
+     * Expressed as a decimal degree value. May be null if coordinates are not available.
+     */
     @JsonProperty("latitude")
     private Double latitude;
 
+    /**
+     * Geographical longitude coordinate of the IP address location.
+     * Expressed as a decimal degree value. May be null if coordinates are not available.
+     */
     @JsonProperty("longitude")
     private Double longitude;
 
+    /**
+     * Primary language spoken in the location where the IP address is situated.
+     * Contains language code, name, and native name information.
+     */
     @JsonProperty("language")
     private Language language;
 
+    /**
+     * Indicates whether the IP address location is within the European Union.
+     * Returns true if the location is in an EU member country, false otherwise.
+     */
     @JsonProperty("in_eu")
     private boolean eu;
 

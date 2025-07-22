@@ -22,39 +22,74 @@ import lombok.NonNull;
 
 
 /**
- * Configuration options for {@link IpregistryClient}.
+ * Configuration settings for the Ipregistry API client.
+ * <p>
+ * This class provides configuration options for customizing the behavior of the
+ * {@link IpregistryClient}, including API authentication, endpoint URLs, and
+ * network timeout settings. Use the builder pattern to create instances with
+ * custom configuration values.
+ * </p>
+ * <p>
+ * Instances are created using the Builder pattern. The class uses Lombok's {@code @Builder} 
+ * annotation to generate a builder with proper constructor handling for required and optional fields.
+ * </p>
  */
 @Builder
 @Getter
 public class IpregistryConfig {
 
     /**
-     * The IpregistryClient API key used to authenticate calls.
+     * Creates a new IpregistryConfig with the specified parameters.
+     * This constructor is used internally by the Builder pattern.
+     *
+     * @param apiKey the API key for authentication
+     * @param baseUrl the base URL for the API
+     * @param connectionKeepAlive connection keep-alive timeout
+     * @param connectionTimeout connection timeout
+     * @param socketTimeout socket timeout
+     */
+    public IpregistryConfig(String apiKey, String baseUrl, int connectionKeepAlive, int connectionTimeout, int socketTimeout) {
+        this.apiKey = apiKey;
+        this.baseUrl = baseUrl;
+        this.connectionKeepAlive = connectionKeepAlive;
+        this.connectionTimeout = connectionTimeout;
+        this.socketTimeout = socketTimeout;
+    }
+
+    /**
+     * The API key used to authenticate requests to the Ipregistry API.
+     * This key is required and must be obtained from your Ipregistry account dashboard.
      */
     @NonNull
     private final String apiKey;
 
     /**
-     * The IpregistryClient API endpoint URL.
+     * The base URL for the Ipregistry API endpoint.
+     * Defaults to "https://api.ipregistry.co" but can be customized for testing or private deployments.
      */
     @Builder.Default
     private String baseUrl = "https://api.ipregistry.co";
 
     /**
-     * The maximum amount of time that a connection to the server should be kept alive. This is useful for reducing the number of connections that need to be created, which can improve performance and reduce bandwidth usage.
+     * The maximum time in milliseconds that HTTP connections should be kept alive for reuse.
+     * Keeping connections alive reduces overhead by reusing existing connections for multiple requests.
+     * Defaults to 15 minutes (900,000 milliseconds).
      */
     @Builder.Default
     private final int connectionKeepAlive = 15 * 60 * 1000;
 
     /**
-     * The time to wait in milliseconds until a connection is established.
+     * The maximum time in milliseconds to wait when establishing a connection to the server.
+     * If a connection cannot be established within this time, the request will fail.
+     * Defaults to 15 seconds (15,000 milliseconds).
      */
     @Builder.Default
     private final int connectionTimeout = 15000;
 
     /**
-     * The time to wait for data in milliseconds.
-     * Said differently, the maximum period inactivity of between two consecutive data packets.
+     * The maximum time in milliseconds to wait for data between consecutive data packets.
+     * This is the socket read timeout, which determines how long to wait for the server
+     * to send data after the connection is established. Defaults to 15 seconds (15,000 milliseconds).
      */
     @Builder.Default
     private final int socketTimeout = 15000;

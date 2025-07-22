@@ -24,24 +24,47 @@ import lombok.NoArgsConstructor;
 
 /**
  * Wraps connection data associated with an IP address.
+ * Contains network infrastructure information including ASN, organization,
+ * routing details, and connection type classification.
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Connection {
 
+    /**
+     * Creates a new Connection instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public Connection() {
+    }
+
+    /**
+     * The Autonomous System Number (ASN) that manages the IP address.
+     */
     @JsonProperty("asn")
     private Long asn;
 
+    /**
+     * The primary domain name associated with the organization.
+     */
     @JsonProperty("domain")
     private String domain;
 
+    /**
+     * The name of the organization or ISP that owns the IP address.
+     */
     @JsonProperty("organization")
     private String organization;
 
+    /**
+     * The IP route or subnet in CIDR notation.
+     */
     @JsonProperty("route")
     private String route;
 
+    /**
+     * The classification of the connection type (e.g., ISP, business, hosting).
+     */
     @JsonProperty("type")
     private ConnectionType type;
 

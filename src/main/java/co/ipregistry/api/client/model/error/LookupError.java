@@ -22,11 +22,22 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Lookup error.
+ * Represents a lookup error that occurred during IP address information retrieval.
+ * <p>
+ * This class extends {@link IpError} and is used to represent specific errors
+ * that occur when attempting to look up information for an IP address. It inherits
+ * error details from the parent class and includes the IP address that caused the error.
+ * </p>
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-@NoArgsConstructor
 public class LookupError extends IpError {
+
+    /**
+     * Creates a new LookupError instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public LookupError() {
+    }
 
 }

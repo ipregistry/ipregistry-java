@@ -24,23 +24,50 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps user-agent engine data associated with a user-agent header value.
+ * Represents browser engine information extracted from a user agent string.
+ * <p>
+ * This class contains information about the rendering engine used by the client browser
+ * or application. The engine is responsible for parsing HTML, CSS, and executing JavaScript.
+ * This information is useful for web compatibility checks and feature detection.
+ * </p>
  */
 @AllArgsConstructor
 @Builder
 @Data
-@NoArgsConstructor
 public class UserAgentEngine {
 
+    /**
+     * Creates a new UserAgentEngine instance with default values.
+     * This constructor is used for JSON deserialization and the Builder pattern.
+     */
+    public UserAgentEngine() {
+    }
+
+    /**
+     * The name of the rendering engine (e.g., "Blink", "WebKit", "Gecko", "Trident").
+     * Identifies the specific engine used for rendering web content.
+     */
     @JsonProperty("name")
     private String name;
 
+    /**
+     * The type or category of the engine (e.g., "browser", "webview").
+     * Classifies the engine into broad categories.
+     */
     @JsonProperty("type")
     private String type;
 
+    /**
+     * The full version string of the rendering engine (e.g., "91.0.4472.124").
+     * Provides complete version information for the engine.
+     */
     @JsonProperty("version")
     private String version;
 
+    /**
+     * The major version number of the rendering engine (e.g., "91").
+     * Provides just the major version for simplified compatibility checks.
+     */
     @JsonProperty("version_major")
     private String versionMajor;
 

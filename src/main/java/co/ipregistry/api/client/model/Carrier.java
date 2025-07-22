@@ -24,18 +24,35 @@ import lombok.NoArgsConstructor;
 
 /**
  * Wraps mobile carrier data (name, MCC, MNC) associated with an IP address.
+ * This class provides information about the mobile network operator that owns
+ * a mobile IP address, including the carrier name and network codes.
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public final class Carrier {
 
+    /**
+     * Creates a new Carrier instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public Carrier() {
+    }
+
+    /**
+     * The name of the mobile carrier/operator.
+     */
     @JsonProperty("name")
     private String name;
 
+    /**
+     * Mobile Country Code (MCC) - a 3-digit code identifying the country of the mobile network.
+     */
     @JsonProperty("mcc")
     private String mcc;
 
+    /**
+     * Mobile Network Code (MNC) - a 2-3 digit code identifying the mobile network within a country.
+     */
     @JsonProperty("mnc")
     private String mnc;
 

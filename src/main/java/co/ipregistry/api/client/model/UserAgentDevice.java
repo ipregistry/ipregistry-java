@@ -24,20 +24,43 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps user-agent device data associated with a user-agent header value.
+ * Represents device information extracted from a user agent string.
+ * <p>
+ * This class contains hardware-specific information about the device used by the client,
+ * including manufacturer, model name, and device category. This information is useful
+ * for device-specific optimizations, responsive design, and analytics.
+ * </p>
  */
 @AllArgsConstructor
 @Builder
 @Data
-@NoArgsConstructor
 public class UserAgentDevice {
 
+    /**
+     * Creates a new UserAgentDevice instance with default values.
+     * This constructor is used for JSON deserialization and the Builder pattern.
+     */
+    public UserAgentDevice() {
+    }
+
+    /**
+     * The manufacturer or brand of the device (e.g., "Apple", "Samsung", "Google").
+     * Identifies the company that manufactured the device hardware.
+     */
     @JsonProperty("brand")
     private String brand;
 
+    /**
+     * The specific model name or identifier of the device (e.g., "iPhone 12", "Galaxy S21", "Pixel 5").
+     * Provides the specific device model for detailed identification.
+     */
     @JsonProperty("name")
     private String name;
 
+    /**
+     * The category or type of device (e.g., "smartphone", "tablet", "desktop", "smart tv").
+     * Classifies the device into broad categories for easier handling.
+     */
     @JsonProperty("type")
     private String type;
 

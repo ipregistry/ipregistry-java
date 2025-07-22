@@ -23,34 +23,78 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps currency data associated with an IP address.
+ * Represents currency information associated with an IP address location.
+ * <p>
+ * This class contains comprehensive currency data for the country where the IP address
+ * is located, including currency codes, names in various languages, symbols, and
+ * formatting information. This data is useful for e-commerce applications, payment
+ * processing, and localization services.
+ * </p>
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Currency {
 
+    /**
+     * Creates a new Currency instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public Currency() {
+    }
+
+    /**
+     * The ISO 4217 three-letter currency code (e.g., "USD", "EUR", "GBP").
+     * This is the standard international currency code used in financial transactions.
+     */
     @JsonProperty("code")
     private String code;
 
+    /**
+     * The currency name in English (e.g., "US Dollar", "Euro", "British Pound").
+     * Provides the common English name for the currency.
+     */
     @JsonProperty("name")
     private String name;
 
+    /**
+     * The currency name in the local language and script.
+     * For example, "Доллар США" for US Dollar in Russian or "ユーロ" for Euro in Japanese.
+     */
     @JsonProperty("name_native")
     private String nameNative;
 
+    /**
+     * The plural form of the currency name in English (e.g., "US Dollars", "Euros").
+     * Used when referring to multiple units of the currency.
+     */
     @JsonProperty("plural")
     private String plural;
 
+    /**
+     * The plural form of the currency name in the local language and script.
+     * Used when referring to multiple units of the currency in the native language.
+     */
     @JsonProperty("plural_native")
     private String pluralNative;
 
+    /**
+     * The currency symbol commonly used in English contexts (e.g., "$", "€", "£").
+     * This is the symbol typically used in international contexts.
+     */
     @JsonProperty("symbol")
     private String symbol;
 
+    /**
+     * The currency symbol in the local format and script.
+     * This may be different from the international symbol and is used in local contexts.
+     */
     @JsonProperty("symbol_native")
     private String symbolNative;
 
+    /**
+     * Formatting information for displaying currency amounts.
+     * Contains details about decimal places, thousand separators, and symbol positioning.
+     */
     @JsonProperty("format")
     private CurrencyFormat format;
 

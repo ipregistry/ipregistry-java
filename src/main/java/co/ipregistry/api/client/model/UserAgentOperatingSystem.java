@@ -24,20 +24,43 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps user-agent os data associated with a user-agent header value.
+ * Represents operating system information extracted from a user agent string.
+ * <p>
+ * This class contains information about the operating system running on the client device.
+ * This includes the OS name, category, and version information, which is useful for
+ * compatibility checks, feature detection, and analytics.
+ * </p>
  */
 @AllArgsConstructor
 @Builder
 @Data
-@NoArgsConstructor
 public class UserAgentOperatingSystem {
 
+    /**
+     * Creates a new UserAgentOperatingSystem instance with default values.
+     * This constructor is used for JSON deserialization and the Builder pattern.
+     */
+    public UserAgentOperatingSystem() {
+    }
+
+    /**
+     * The name of the operating system (e.g., "Windows", "macOS", "iOS", "Android", "Linux").
+     * Identifies the specific operating system running on the client device.
+     */
     @JsonProperty("name")
     private String name;
 
+    /**
+     * The type or category of the operating system (e.g., "desktop", "mobile", "server").
+     * Classifies the OS into broad categories for easier handling.
+     */
     @JsonProperty("type")
     private String type;
 
+    /**
+     * The version string of the operating system (e.g., "10.0", "14.4", "11").
+     * Provides version information for the operating system, useful for compatibility checks.
+     */
     @JsonProperty("version")
     private String version;
 

@@ -24,13 +24,29 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps data associated with an IP address.
+ * Represents comprehensive information associated with an IP address.
+ * <p>
+ * This class serves as the primary data container for IP address lookup results,
+ * containing detailed information about the IP address including its type, hostname,
+ * geographical location, network carrier, company ownership, connection details,
+ * currency information, security analysis, and time zone data.
+ * </p>
+ * <p>
+ * The class uses the Builder pattern (via Lombok) for convenient object construction
+ * and provides default instances for complex nested objects to avoid null pointer exceptions.
+ * </p>
  */
 @AllArgsConstructor
 @Builder
 @Data
-@NoArgsConstructor
 public class IpInfo {
+
+    /**
+     * Creates a new IpInfo instance with default values.
+     * This constructor is used for JSON deserialization and the Builder pattern.
+     */
+    public IpInfo() {
+    }
 
     /**
      * IP data found for the IP address.

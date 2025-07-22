@@ -24,17 +24,36 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps continent data associated with an IP address.
+ * Represents continent information associated with an IP address location.
+ * <p>
+ * This class contains basic continent identification data, including the continent
+ * code and name. It provides geographical context at the continental level for
+ * IP address geolocation results.
+ * </p>
  */
 @AllArgsConstructor
 @Builder
 @Data
-@NoArgsConstructor
 public class Continent {
 
+    /**
+     * Creates a new Continent instance with default values.
+     * This constructor is used for JSON deserialization and the Builder pattern.
+     */
+    public Continent() {
+    }
+
+    /**
+     * The two-letter continent code (e.g., "NA" for North America, "EU" for Europe, "AS" for Asia).
+     * This follows standard continent abbreviation conventions used in geographical data.
+     */
     @JsonProperty("code")
     private String code;
 
+    /**
+     * The full English name of the continent (e.g., "North America", "Europe", "Asia").
+     * Provides the human-readable name for the continent.
+     */
     @JsonProperty("name")
     private String name;
 

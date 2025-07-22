@@ -23,16 +23,35 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps region data associated with an IP address.
+ * Represents regional or state information associated with an IP address location.
+ * <p>
+ * This class contains administrative region data at the state or province level
+ * within a country. It provides more specific geographical context than country-level
+ * information but broader than city-level data.
+ * </p>
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class Region {
 
+    /**
+     * Creates a new Region instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public Region() {
+    }
+
+    /**
+     * The region or state code, typically the ISO 3166-2 subdivision code.
+     * For example, "CA" for California in the US or "ON" for Ontario in Canada.
+     */
     @JsonProperty("code")
     private String code;
 
+    /**
+     * The full English name of the region or state (e.g., "California", "Ontario", "Bavaria").
+     * Provides the human-readable name for the administrative region.
+     */
     @JsonProperty("name")
     private String name;
 

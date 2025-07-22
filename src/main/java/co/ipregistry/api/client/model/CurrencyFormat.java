@@ -23,22 +23,50 @@ import lombok.NoArgsConstructor;
 
 
 /**
- * Wraps currency format data associated with an IP address.
+ * Represents currency formatting rules and conventions for displaying monetary amounts.
+ * <p>
+ * This class defines how currency values should be formatted according to local conventions,
+ * including decimal and thousand separators, and different formatting rules for positive
+ * and negative amounts. This information is essential for properly displaying prices
+ * and monetary values in localized applications.
+ * </p>
  */
 @AllArgsConstructor
 @Data
-@NoArgsConstructor
 public class CurrencyFormat {
 
+    /**
+     * Creates a new CurrencyFormat instance with default values.
+     * This constructor is primarily used for JSON deserialization and object initialization.
+     */
+    public CurrencyFormat() {
+    }
+
+    /**
+     * The character used as the decimal separator in currency amounts.
+     * Common examples include "." (dot) in English locales and "," (comma) in many European locales.
+     */
     @JsonProperty("decimal_separator")
     private String decimalSeparator;
 
+    /**
+     * The character used to separate groups of digits (thousands separator) in large amounts.
+     * Common examples include "," (comma) in English locales and "." (dot) or " " (space) in other locales.
+     */
     @JsonProperty("group_separator")
     private String groupSeparator;
 
+    /**
+     * Formatting rules for negative currency amounts.
+     * Contains prefix and suffix information for displaying negative values (e.g., parentheses, minus signs).
+     */
     @JsonProperty("negative")
     private CurrencyFormatPrefixSuffix negative;
 
+    /**
+     * Formatting rules for positive currency amounts.
+     * Contains prefix and suffix information for displaying positive values (e.g., currency symbol placement).
+     */
     @JsonProperty("positive")
     private CurrencyFormatPrefixSuffix positive;
 
