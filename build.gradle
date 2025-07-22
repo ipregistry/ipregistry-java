@@ -2,8 +2,7 @@ import java.text.SimpleDateFormat
 
 plugins {
     id 'java-library'
-    id 'maven-publish'
-    id 'signing'
+    id 'org.jreleaser' version '1.16.0'
 }
 
 group = 'co.ipregistry'
@@ -43,60 +42,7 @@ jar {
 
 
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            groupId = 'co.ipregistry'
-            artifactId = 'ipregistry-client'
-            version = project.version
-            from components.java
 
-            pom {
-                name = 'Ipregistry Java Client'
-                packaging = 'jar'
-                description = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
-                url = 'https://github.com/ipregistry/ipregistry-java'
-
-                developers {
-                    developer {
-                        id = 'ipregistry-team'
-                        name = 'Ipregistry Team'
-                        email = 'support@ipregistry.co'
-                    }
-                }
-
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
-
-                scm {
-                    connection = 'scm:git:git@github.com:ipregistry/ipregistry-java.git'
-                    developerConnection = 'scm:git:git@github.com:ipregistry/ipregistry-java.git'
-                    url = 'https://github.com/ipregistry/ipregistry-java.git'
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            name = 'OSSRH'
-            def releasesRepoUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2/'
-            def snapshotsRepoUrl = 'https://oss.sonatype.org/content/repositories/snapshots/'
-            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-            credentials {
-                username = System.getenv('OSSRH_USERNAME')
-                password = System.getenv('OSSRH_PASSWORD')
-            }
-        }
-    }
-}
-
-signing {
-    sign publishing.publications.mavenJava
-}
 
 javadoc {
     if(JavaVersion.current().isJava9Compatible()) {

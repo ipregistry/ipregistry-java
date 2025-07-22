@@ -1,0 +1,58 @@
+name: Test JReleaser Configuration
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: 'Test type to run'
+        required: true
+        default: 'both'
+        type: choice
+        options:
+        - both
+        - config
+        - prepare
+        - fullrelease
+
+jobs:
+  test-jreleaser:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: Test JReleaser Config
+      if: ${{ github.event.inputs.test_type == 'config' || github.event.inputs.test_type == 'both' }}
+      env:
+        JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir -p build/jreleaser
+        ./gradlew jreleaserConfig
+
+    - name: Test JReleaser Prepare
+      if: ${{ github.event.inputs.test_type == 'prepare' || github.event.inputs.test_type == 'both' }}
+      env:
+        JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir -p build/jreleaser
+        ./gradlew jreleaserPrepare
+
+    - name: Test JReleaser Full Release
+      if: ${{ github.event.inputs.test_type == 'fullrelease' }}
+      env:
+        JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir -p build/jreleaser
+        ./gradlew jreleaserFullRelease --dry-run

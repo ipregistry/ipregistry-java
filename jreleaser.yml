@@ -1,0 +1,55 @@
+project:
+  name: ipregistry-client
+  description: Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.
+  longDescription: |
+    Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.
+    Ipregistry provides accurate IP geolocation, threat intelligence, and network data.
+  authors:
+    - Ipregistry Team
+  license: Apache-2.0
+  inceptionYear: 2019
+  website: https://github.com/ipregistry/ipregistry-java
+  docsUrl: https://ipregistry.co/docs
+  copyright: 2019-2025 Ipregistry
+  vendor: Ipregistry
+
+release:
+  github:
+    owner: ipregistry
+    name: ipregistry-java
+    tagName: '{{projectVersion}}'
+    releaseName: '{{tagName}}'
+    overwrite: true
+    update:
+      enabled: true
+      sections:
+        - TITLE
+        - BODY
+    changelog:
+      enabled: true
+      formatted: ALWAYS
+      preset: conventional-commits
+
+deploy:
+  maven:
+    mavenCentral:
+      sonatype:
+        active: ALWAYS
+        url: https://central.sonatype.com/api/v1/publisher
+        stagingRepositories:
+          - build/staging-deploy
+        applyMavenCentralRules: true
+        closeRepository: true
+        releaseRepository: true
+
+distributions:
+  ipregistry-client:
+    type: JAVA_BINARY
+    artifacts:
+      - path: build/libs/{{distributionName}}-{{projectVersion}}.jar
+      - path: build/libs/{{distributionName}}-{{projectVersion}}-sources.jar
+      - path: build/libs/{{distributionName}}-{{projectVersion}}-javadoc.jar
+
+signing:
+  active: ALWAYS
+  armored: true
