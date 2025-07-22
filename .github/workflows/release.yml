@@ -7,7 +7,7 @@ on:
         description: 'Release version'
         required: true
       dry-run:
-        description: 'Perform a dry run (skip remote operations)'
+        description: 'Dry run'
         type: boolean
         required: true
         default: false
@@ -43,8 +43,11 @@ jobs:
           GH_PACKAGES_WRITE_TOKEN: ${{ secrets.GH_PACKAGES_WRITE_TOKEN }}
           IPREGISTRY_API_KEY: ${{ secrets.IPREGISTRY_API_KEY }}
           IPREGISTRY_DATASETS_SECRET_KEY: ${{ secrets.IPREGISTRY_DATASETS_SECRET_KEY }}
+
+      - name: Publish artifacts to staging
+        run: ./gradlew publish
           
-      - name: Release with JReleaser
+      - name: Deploy to Maven Central and Create GitHub Release
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
@@ -54,4 +57,11 @@ jobs:
           JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.GPG_PUBLIC_KEY }}
         run: |
           mkdir -p build/jreleaser
-          ./gradlew jreleaserFullRelease ${{ inputs.dry-run && '--dryrun' || '' }}
+          echo "=== Staging directory contents ==="
+          find build/staging-deploy -type f -ls || echo "No staging directory found"
+          echo "=== Running JReleaser Deploy ==="
+          ./gradlew jreleaserDeploy --stacktrace ${{ inputs.dry-run && '--dryrun' || '' }} || {
+            echo "=== JReleaser failed, checking logs ==="
+            find build/jreleaser -name "*.log" -exec cat {} \; || echo "No log files found"
+            exit 1
+          }

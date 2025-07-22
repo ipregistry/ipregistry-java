@@ -2,11 +2,18 @@ import java.text.SimpleDateFormat
 
 plugins {
     id 'java-library'
+    id 'maven-publish'
+    id 'signing'
     id 'org.jreleaser' version '1.16.0'
+}
+
+ext {
+    copyright = '2019-2025 Ipregistry'
 }
 
 group = 'co.ipregistry'
 version = '5.0.0'
+description = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
 
 repositories {
     mavenCentral()
@@ -103,4 +110,52 @@ test {
 
 integrationTest {
     useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'co.ipregistry'
+            artifactId = 'ipregistry-client'
+            from components.java
+            
+            pom {
+                name = 'Ipregistry Client'
+                description = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
+                url = 'https://github.com/ipregistry/ipregistry-java'
+                
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                
+                developers {
+                    developer {
+                        name = 'Ipregistry Team'
+                        organizationUrl = 'https://ipregistry.co'
+                    }
+                }
+                
+                scm {
+                    connection = 'scm:git:git://github.com/ipregistry/ipregistry-java.git'
+                    developerConnection = 'scm:git:ssh://github.com:ipregistry/ipregistry-java.git'
+                    url = 'https://github.com/ipregistry/ipregistry-java/tree/main'
+                }
+            }
+        }
+    }
+    
+    repositories {
+        maven {
+            url = layout.buildDirectory.dir('staging-deploy')
+        }
+    }
+}
+
+// No signing configuration in build.gradle - JReleaser will handle it
+
+jreleaser {
+    configFile = file('jreleaser.yml')
 }

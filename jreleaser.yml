@@ -8,8 +8,9 @@ project:
     - Ipregistry Team
   license: Apache-2.0
   inceptionYear: 2019
-  website: https://github.com/ipregistry/ipregistry-java
-  docsUrl: https://ipregistry.co/docs
+  links:
+    homepage: https://github.com/ipregistry/ipregistry-java
+    documentation: https://ipregistry.co/docs
   copyright: 2019-2025 Ipregistry
   vendor: Ipregistry
 
@@ -39,16 +40,10 @@ deploy:
         stagingRepositories:
           - build/staging-deploy
         applyMavenCentralRules: true
-        closeRepository: true
-        releaseRepository: true
-
-distributions:
-  ipregistry-client:
-    type: JAVA_BINARY
-    artifacts:
-      - path: build/libs/{{distributionName}}-{{projectVersion}}.jar
-      - path: build/libs/{{distributionName}}-{{projectVersion}}-sources.jar
-      - path: build/libs/{{distributionName}}-{{projectVersion}}-javadoc.jar
+        connectTimeout: 300
+        readTimeout: 1800
+        maxRetries: 60
+        retryDelay: 60
 
 signing:
   active: ALWAYS
