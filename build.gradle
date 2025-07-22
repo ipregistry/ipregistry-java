@@ -12,7 +12,7 @@ ext {
 }
 
 group = 'co.ipregistry'
-version = '5.0.0'
+version = '5.0.1'
 description = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
 
 repositories {
