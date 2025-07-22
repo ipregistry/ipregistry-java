@@ -46,6 +46,14 @@ public class IpInfo {
      * This constructor is used for JSON deserialization and the Builder pattern.
      */
     public IpInfo() {
+        this.carrier = new Carrier();
+        this.company = new Company();
+        this.connection = new Connection();
+        this.currency = new Currency();
+        this.location = new Location();
+        this.security = new Security();
+        this.timeZone = new TimeZone();
+        this.type = IpType.UNKNOWN;
     }
 
     /**

@@ -79,8 +79,8 @@ class IpregistryClientIntegrationTest {
         final IpregistryClient client = new IpregistryClient(apiKey);
         final IpInfo ipInfo = client.lookup("8.8.8.8", IpregistryOptions.filter("connection"));
 
-        Assertions.assertNull(ipInfo.getIp(), "8.8.8.8");
-        Assertions.assertEquals(ipInfo.getType(), IpType.UNKNOWN);
+        Assertions.assertNull(ipInfo.getIp());
+        Assertions.assertEquals(IpType.UNKNOWN, ipInfo.getType());
         Assertions.assertNotNull(ipInfo.getConnection());
         Assertions.assertNotNull(ipInfo.getCurrency());
         Assertions.assertNull(ipInfo.getHostname());
