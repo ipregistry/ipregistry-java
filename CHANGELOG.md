@@ -6,8 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [5.0.0] - 2025-07-22
 ### Changed
-- Require Java 17+.
+- **BREAKING:** Require Java 21+.
+- Fixed deprecated Gradle configurations.
+
+### Improved
+- Added professional, comprehensive javadoc documentation to all API model classes.
+
 ### Removed
 - Remove deprecated `IpregistryConfig#apiUrl`. Use `IpregistryConfig#baseUrl` instead.
 
@@ -141,7 +148,8 @@ https://github.com/ipregistry/ipregistry-java#caching
 ## [1.0.0] - 2019-07-03
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v4.0.0...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.7.0...v4.0.0
 [3.7.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.6.0...v3.7.0
 [3.6.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.5.0...v3.6.0
