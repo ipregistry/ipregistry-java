@@ -85,7 +85,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.13.4'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation 'org.mockito:mockito-core:5.18.0'
+    testImplementation 'org.mockito:mockito-core:5.19.0'
 
     integrationTestImplementation 'io.rest-assured:rest-assured:5.5.5'
     integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:5.13.4'
