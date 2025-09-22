@@ -74,8 +74,8 @@ configurations {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.40'
-    compileOnly 'org.projectlombok:lombok:1.18.40'
+    annotationProcessor 'org.projectlombok:lombok:1.18.42'
+    compileOnly 'org.projectlombok:lombok:1.18.42'
 
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.0'
     implementation 'com.google.guava:guava:33.4.8-jre'
