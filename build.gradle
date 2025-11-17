@@ -77,7 +77,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.42'
     compileOnly 'org.projectlombok:lombok:1.18.42'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.1'
     implementation 'com.google.guava:guava:33.5.0-jre'
     implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.5.1'
     implementation 'com.maxmind.db:maxmind-db:4.0.0'
