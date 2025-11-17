@@ -80,7 +80,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.20.0'
     implementation 'com.google.guava:guava:33.5.0-jre'
     implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.5.1'
-    implementation 'com.maxmind.db:maxmind-db:3.2.0'
+    implementation 'com.maxmind.db:maxmind-db:4.0.0'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.0.1'
