@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] - 2025-11-26
+### Changed
+- **BREAKING:** Require Java 25+.
+
 ## [5.0.1] - 2025-07-22
 
 Minor release to fix an issue in the new automated workflow.
@@ -152,7 +156,8 @@ https://github.com/ipregistry/ipregistry-java#caching
 ## [1.0.0] - 2019-07-03
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v5.0.1...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v6.0.0...HEAD
+[6.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v5.0.1...v6.0.0
 [5.0.1]: https://github.com/ipregistry/ipregistry-java/compare/v5.0.0...v5.0.1
 [5.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v4.0.0...v5.0.0
 [4.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v3.7.0...v4.0.0
