@@ -2,6 +2,7 @@ package co.ipregistry.datasets;
 
 import co.ipregistry.datasets.model.GeolocationData;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -13,9 +14,12 @@ public class IpregistryGeolocationDatasetTest {
 
     @Test
     public void test() throws IOException {
+        String secretKey = System.getenv("IPREGISTRY_DATASETS_SECRET_KEY");
+        Assumptions.assumeTrue(secretKey != null && !secretKey.isEmpty(),
+                "IPREGISTRY_DATASETS_SECRET_KEY environment variable not set");
+
         try (IpregistryGeolocationDataset dataset =
-                     IpregistryGeolocationDataset.builder(
-                             System.getenv("IPREGISTRY_DATASETS_SECRET_KEY")).build()) {
+                     IpregistryGeolocationDataset.builder(secretKey).build()) {
 
             Assertions.assertTrue(
                     dataset.getBuildDate().isAfter(
