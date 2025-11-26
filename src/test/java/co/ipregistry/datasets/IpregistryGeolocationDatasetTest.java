@@ -18,7 +18,7 @@ public class IpregistryGeolocationDatasetTest {
                              System.getenv("IPREGISTRY_DATASETS_SECRET_KEY")).build()) {
 
             Assertions.assertTrue(
-                    dataset.getBuildDate().toInstant().isAfter(
+                    dataset.getBuildDate().isAfter(
                             Instant.now().minus(2, ChronoUnit.DAYS)));
 
             GeolocationData data = dataset.lookup("8.8.8.8");

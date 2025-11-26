@@ -8,7 +8,7 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Date;
+import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -86,10 +86,10 @@ public class IpregistryDataset implements Closeable {
      *
      * @return when the dataset file in use was created.
      */
-    public Date getBuildDate() {
+    public Instant getBuildDate() {
         Reader readerInstance = reader.get();
         if (readerInstance != null) {
-            return readerInstance.getMetadata().getBuildDate();
+            return readerInstance.getMetadata().buildTime();
         }
         return null;
     }
