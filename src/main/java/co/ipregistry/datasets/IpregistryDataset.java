@@ -4,7 +4,7 @@ import com.maxmind.db.Reader;
 import lombok.Getter;
 
 import java.io.*;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -158,9 +158,9 @@ public class IpregistryDataset implements Closeable {
             final Path outputPath = outputDirectory2.resolve(remoteDatasetFileName + "_" + UUID.randomUUID());
 
             try (
-                    BufferedInputStream in = new BufferedInputStream(new URL(
+                    BufferedInputStream in = new BufferedInputStream(URI.create(
                             "https://download.ipregistry.co/" + remoteDatasetFileName + ".mmdb?key=" + secretKey
-                    ).openStream());
+                    ).toURL().openStream());
                     FileOutputStream out = new FileOutputStream(outputPath.toFile())) {
 
                 byte[] dataBuffer = new byte[1024];
