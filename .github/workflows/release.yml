@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Release version'
+        description: 'Release version (must match the version in build.gradle)'
         required: true
       dry-run:
         description: 'Dry run'
@@ -22,6 +22,18 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+
+      - name: Verify release version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          PROJECT_VERSION=$(grep -E "^version = " build.gradle | sed -E "s/version = '(.*)'/\1/")
+          echo "build.gradle version: $PROJECT_VERSION"
+          echo "requested version:    $INPUT_VERSION"
+          if [ "$PROJECT_VERSION" != "$INPUT_VERSION" ]; then
+            echo "::error::Requested version '$INPUT_VERSION' does not match build.gradle version '$PROJECT_VERSION'. Bump build.gradle (and README/CHANGELOG) and commit before releasing."
+            exit 1
+          fi
 
       - name: Setup Java
         uses: actions/setup-java@v5
