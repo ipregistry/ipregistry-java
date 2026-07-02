@@ -107,10 +107,14 @@ check.dependsOn integrationTest
 
 test {
     useJUnitPlatform()
+    // The geolocation dataset test loads a full .mmdb into heap (LoadingMode.MEMORY),
+    // which exceeds the Gradle test worker's default heap.
+    maxHeapSize = '6g'
 }
 
 integrationTest {
     useJUnitPlatform()
+    maxHeapSize = '6g'
 }
 
 publishing {
