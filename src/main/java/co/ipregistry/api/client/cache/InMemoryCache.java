@@ -22,7 +22,6 @@ import com.google.common.cache.CacheBuilder;
 import lombok.Builder;
 
 import java.time.Duration;
-import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -71,7 +70,7 @@ public class InMemoryCache implements IpregistryCache {
         final CacheBuilder<Object, Object> cacheBuilder = CacheBuilder.newBuilder();
         cacheBuilder.concurrencyLevel(concurrencyLevel);
         cacheBuilder.initialCapacity(initialCapacity);
-        cacheBuilder.expireAfterWrite(expireAfter, TimeUnit.MILLISECONDS);
+        cacheBuilder.expireAfterWrite(Duration.ofMillis(expireAfter));
         cacheBuilder.maximumSize(maximumSize);
 
         switch (referenceType) {
