@@ -24,7 +24,8 @@ java {
     withSourcesJar()
 
     toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
+        languageVersion = JavaLanguageVersion.of(
+                (project.findProperty('javaToolchainVersion') ?: '25') as String)
     }
 }
 
