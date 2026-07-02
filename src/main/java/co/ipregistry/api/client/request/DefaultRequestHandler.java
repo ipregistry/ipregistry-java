@@ -25,6 +25,7 @@ import co.ipregistry.api.client.model.RequesterIpInfo;
 import co.ipregistry.api.client.model.UserAgentList;
 import co.ipregistry.api.client.model.error.LookupError;
 import co.ipregistry.api.client.options.IpregistryOption;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.hc.client5.http.config.RequestConfig;
@@ -40,11 +41,10 @@ import org.apache.hc.core5.util.Timeout;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 
 /**
@@ -207,20 +207,9 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     @Override
     public UserAgentList parse(final String... userAgents) throws ApiException, ClientException {
-        final StringBuilder buffer = new StringBuilder();
-        final Iterator<String> iterator = Arrays.stream(userAgents).iterator();
-        while (iterator.hasNext()) {
-            buffer.append('"');
-            buffer.append(iterator.next());
-            buffer.append('"');
-            if (iterator.hasNext()) {
-                buffer.append(',');
-            }
-        }
-
         try {
             final Object result = Request.post(config.getBaseUrl() + "/user_agent")
-                    .bodyString("[" + buffer + "]", ContentType.APPLICATION_JSON)
+                    .bodyString(toJsonList(Arrays.asList(userAgents)), ContentType.APPLICATION_JSON)
                     .addHeader("authorization", "ApiKey " + config.getApiKey())
                     .connectTimeout(Timeout.ofMilliseconds(config.getConnectionTimeout()))
                     .responseTimeout(Timeout.ofMilliseconds(config.getSocketTimeout()))
@@ -246,11 +235,19 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
         }
     }
 
-    private String toJsonList(final Iterable<String> ips) {
-        return '[' + StreamSupport
-                .stream(ips.spliterator(), false)
-                .map(ip -> "\"" + ip + "\"")
-                .collect(Collectors.joining(",")) + ']';
+    /**
+     * Serializes the specified {@code values} into a JSON array, escaping each value so that
+     * characters such as double quotes, backslashes, and control characters produce a valid
+     * JSON body rather than a malformed or injectable one.
+     *
+     * @param values the values to serialize.
+     * @return a JSON array representation of the specified {@code values}.
+     * @throws JsonProcessingException if the values cannot be serialized.
+     */
+    String toJsonList(final Iterable<String> values) throws JsonProcessingException {
+        final List<String> list = new ArrayList<>();
+        values.forEach(list::add);
+        return objectMapper.writeValueAsString(list);
     }
 
     @Override

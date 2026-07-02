@@ -18,8 +18,11 @@ package co.ipregistry.api.client.request;
 
 import co.ipregistry.api.client.IpregistryConfig;
 import co.ipregistry.api.client.options.IpregistryOption;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 class DefaultRequestHandlerTest {
 
@@ -33,6 +36,28 @@ class DefaultRequestHandlerTest {
                 requestHandler.buildIpLookupUrl(
                         "8.8.8.8", new IpregistryOption("test", "[test]"));
         Assertions.assertEquals(config.getBaseUrl() + "/8.8.8.8?test=%5Btest%5D", url);
+    }
+
+    @Test
+    void testToJsonListEscapesSpecialCharacters() throws Exception {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+        final DefaultRequestHandler requestHandler =
+                new DefaultRequestHandler(config);
+
+        final String[] values = {
+                "Mozilla/5.0 \"quoted\"",
+                "back\\slash",
+                "line\nbreak",
+                "comma,and]bracket"
+        };
+
+        final String json = requestHandler.toJsonList(Arrays.asList(values));
+
+        // The produced body must be valid JSON that round-trips to the exact input values.
+        // The previous string-concatenation implementation produced malformed JSON for these inputs.
+        final String[] parsed = new ObjectMapper().readValue(json, String[].class);
+        Assertions.assertArrayEquals(values, parsed);
     }
 
 }
