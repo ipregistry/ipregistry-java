@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- `IpregistryClient` now implements `Closeable` to release the underlying HTTP connection pool.
+
+### Fixed
+- Escape JSON request bodies so that user-agent and IP values containing special characters (quotes, backslashes, control characters) no longer produce malformed requests.
+- Skip the remote API call in batch lookups when every requested IP is already served from the cache.
+- Bypass the cache for origin (requester) IP lookups to avoid returning data associated with a different IP.
+- Replace deprecated Guava `CacheBuilder#expireAfterWrite(long, TimeUnit)` usage with the `Duration` variant.
+
+### Changed
+- Upgrade dependencies: Jackson 2.22.0, Guava 33.6.0-jre, Apache HttpClient5 5.6.2, MaxMind DB 4.1.0, JUnit 6.1.1, Mockito 5.23.0, REST-assured 6.0.0, Lombok 1.18.46, and the Gradle wrapper to 9.6.1.
 
 ## [6.0.0] - 2025-11-26
 ### Changed
