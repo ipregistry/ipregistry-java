@@ -16,6 +16,8 @@
 
 package co.ipregistry.api.client.model.error;
 
+import java.util.Locale;
+
 
 /**
  * Enumerates error codes.
@@ -99,6 +101,26 @@ public enum ErrorCode {
     /**
      * No Autonomous System is currently announcing the specified IP address or IP prefix. This can happen with the Origin AS endpoint.
      */
-    UNKNOWN_ASN
+    UNKNOWN_ASN;
+
+    /**
+     * Returns the {@link ErrorCode} matching the specified raw API error code.
+     *
+     * @param code the raw error code as returned by the API (e.g. {@code "TOO_MANY_REQUESTS"}).
+     * @return the matching {@link ErrorCode}, or {@code null} if {@code code} is {@code null} or
+     * does not correspond to any known error code (for instance a code introduced after this
+     * client release).
+     */
+    public static ErrorCode fromCode(final String code) {
+        if (code == null) {
+            return null;
+        }
+
+        try {
+            return ErrorCode.valueOf(code.trim().toUpperCase(Locale.ROOT));
+        } catch (final IllegalArgumentException e) {
+            return null;
+        }
+    }
 
 }

@@ -165,6 +165,23 @@ Main subtypes are _ApiException_ and _ClientException_.
 
 Exceptions of type _ApiException_ include a code field that maps to the one described in the [Ipregistry documentation](https://ipregistry.co/docs/errors).
 
+In addition to the raw string `code`, an _ApiException_ exposes a typed `ErrorCode` via `getErrorCode()`, so you can branch on error conditions without string matching:
+
+```java
+try {
+    IpInfo info = ipregistry.lookup("8.8.8.8");
+} catch (ApiException e) {
+    ErrorCode code = e.getErrorCode(); // null if the raw code is not recognized
+    if (code == ErrorCode.INSUFFICIENT_CREDITS) {
+        // handle exhausted credits
+    } else if (code == ErrorCode.TOO_MANY_REQUESTS) {
+        // handle rate limiting
+    }
+} catch (ClientException e) {
+    // handle client-side/network error
+}
+```
+
 ## Filtering bots
 
 You might want to prevent Ipregistry API calls for crawlers or bots browsing your pages. 

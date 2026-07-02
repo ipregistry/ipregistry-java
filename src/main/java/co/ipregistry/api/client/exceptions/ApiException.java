@@ -16,6 +16,7 @@
 
 package co.ipregistry.api.client.exceptions;
 
+import co.ipregistry.api.client.model.error.ErrorCode;
 import lombok.Getter;
 
 
@@ -26,9 +27,15 @@ import lombok.Getter;
 public class ApiException extends IpregistryException {
 
     /**
-     * The API exception code.
+     * The raw API exception code as returned by the API.
      */
     private final String code;
+
+    /**
+     * The typed API error code, or {@code null} when {@link #code} does not match any known
+     * {@link ErrorCode} (for instance a code introduced after this client release).
+     */
+    private final ErrorCode errorCode;
 
     /**
      * The API exception message.
@@ -44,15 +51,16 @@ public class ApiException extends IpregistryException {
     /**
      * Creates a new instance.
      *
-     * @param errorCode an error code as described in our docs.
+     * @param code an error code as described in our docs.
      * @param message a message describing the error.
      * @param resolution explanation about how to fix the error.
      *
      * @see <a href="https://ipregistry.co/docs/errors">https://ipregistry.co/docs/errors</a>.
      */
-    public ApiException(final String errorCode, final String message, final String resolution) {
+    public ApiException(final String code, final String message, final String resolution) {
         super(message);
-        this.code = errorCode;
+        this.code = code;
+        this.errorCode = ErrorCode.fromCode(code);
         this.message = message;
         this.resolution = resolution;
     }
