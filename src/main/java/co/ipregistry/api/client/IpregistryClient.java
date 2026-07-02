@@ -126,6 +126,12 @@ public class IpregistryClient implements Closeable {
      * @throws ClientException if a client issue happens.
      */
     public IpInfo lookup(final String ip, final IpregistryOption... options) throws ApiException, ClientException {
+        // Origin (requester) IP lookups cannot be safely cached: the actual IP is only known from
+        // the response, so an empty cache key would risk returning data for a different requester.
+        if (ip == null || ip.isEmpty()) {
+            return requestHandler.lookup(ip, options);
+        }
+
         final String cacheKey = buildCacheKey(ip, options);
         IpInfo cacheValue = this.cache.get(cacheKey);
 

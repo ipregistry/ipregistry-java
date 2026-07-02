@@ -38,6 +38,7 @@ import co.ipregistry.api.client.cache.IpregistryCache;
 import co.ipregistry.api.client.exceptions.IpregistryException;
 import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
+import co.ipregistry.api.client.model.RequesterIpInfo;
 import co.ipregistry.api.client.request.DefaultRequestHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -162,6 +163,27 @@ class IpregistryClientTest {
         Assertions.assertEquals(2, response.size());
         Assertions.assertSame(ipdata8888, response.get(0));
         Assertions.assertSame(ipdata1111, response.get(1));
+    }
+
+    @Test
+    void testOriginIpLookupBypassesCache() throws IpregistryException {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+
+        final IpregistryCache cache = Mockito.spy(new InMemoryCache());
+        final DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
+
+        final RequesterIpInfo originInfo = new RequesterIpInfo();
+        Mockito.doReturn(originInfo).when(requestHandler).lookup("");
+
+        final IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
+
+        final RequesterIpInfo response = client.lookup();
+
+        // Origin lookups must never touch the cache, as they cannot be keyed by the actual IP.
+        Mockito.verify(cache, Mockito.never()).get(Mockito.anyString());
+        Mockito.verify(cache, Mockito.never()).put(Mockito.anyString(), Mockito.any(IpInfo.class));
+        Assertions.assertSame(originInfo, response);
     }
 
     @Test
