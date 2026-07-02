@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [6.1.0] - 2026-07-02
 ### Added
 - Asynchronous API: `lookupAsync`/`parseAsync` methods on `IpregistryClient` return a `CompletableFuture` and are backed by a virtual-thread-per-task executor by default. The executor is configurable via `IpregistryConfig#executor` (a caller-provided executor is not shut down by the client).
 - Support for a caller-provided `CloseableHttpClient` via new `IpregistryClient` and `DefaultRequestHandler` constructors, allowing full control over connection pooling, proxying, TLS, and metrics. An injected client is not closed by the Ipregistry client (the caller retains ownership).
