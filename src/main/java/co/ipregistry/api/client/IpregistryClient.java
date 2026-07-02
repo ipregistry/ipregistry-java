@@ -31,6 +31,10 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 /**
@@ -41,6 +45,10 @@ public class IpregistryClient implements Closeable {
     private final IpregistryCache cache;
 
     private final DefaultRequestHandler requestHandler;
+
+    private final ExecutorService executor;
+
+    private final boolean ownsExecutor;
 
 
     /**
@@ -95,6 +103,14 @@ public class IpregistryClient implements Closeable {
     public IpregistryClient(final IpregistryConfig config, final IpregistryCache cache, final DefaultRequestHandler requestHandler) {
         this.cache = cache;
         this.requestHandler = requestHandler;
+
+        if (config.getExecutor() != null) {
+            this.executor = config.getExecutor();
+            this.ownsExecutor = false;
+        } else {
+            this.executor = Executors.newVirtualThreadPerTaskExecutor();
+            this.ownsExecutor = true;
+        }
     }
 
     /**
@@ -246,8 +262,89 @@ public class IpregistryClient implements Closeable {
     }
 
     /**
-     * Releases the resources held by this client, notably the underlying HTTP connection pool.
-     * Once closed, the client must no longer be used.
+     * Asynchronous variant of {@link #lookup(IpregistryOption...)}.
+     *
+     * @param options the options to use when dispatching the request.
+     * @return a future completing with the data found for the origin IP address, or completing
+     * exceptionally with an {@link ApiException} or {@link ClientException}.
+     */
+    public CompletableFuture<RequesterIpInfo> lookupAsync(final IpregistryOption... options) {
+        return supplyAsync(() -> lookup(options));
+    }
+
+    /**
+     * Asynchronous variant of {@link #lookup(String, IpregistryOption...)}.
+     *
+     * @param ip      the IP address to lookup.
+     * @param options the options to use when dispatching the request.
+     * @return a future completing with the data found for the IP address, or completing
+     * exceptionally with an {@link ApiException} or {@link ClientException}.
+     */
+    public CompletableFuture<IpInfo> lookupAsync(final String ip, final IpregistryOption... options) {
+        return supplyAsync(() -> lookup(ip, options));
+    }
+
+    /**
+     * Asynchronous variant of {@link #lookup(InetAddress, IpregistryOption...)}.
+     *
+     * @param ip      the IP address to lookup.
+     * @param options the options to use when dispatching the request.
+     * @return a future completing with the data found for the IP address, or completing
+     * exceptionally with an {@link ApiException} or {@link ClientException}.
+     */
+    public CompletableFuture<IpInfo> lookupAsync(final InetAddress ip, final IpregistryOption... options) {
+        return supplyAsync(() -> lookup(ip, options));
+    }
+
+    /**
+     * Asynchronous variant of {@link #lookup(List, IpregistryOption...)}.
+     *
+     * @param ips     the IP addresses to lookup.
+     * @param options the options to use when dispatching the request.
+     * @return a future completing with the data found for the IP addresses, or completing
+     * exceptionally with an {@link ApiException} or {@link ClientException}.
+     */
+    public CompletableFuture<IpInfoList> lookupAsync(final List<String> ips, final IpregistryOption... options) {
+        return supplyAsync(() -> lookup(ips, options));
+    }
+
+    /**
+     * Asynchronous variant of {@link #parse(String...)}.
+     *
+     * @param userAgents the raw user-agent values.
+     * @return a future completing with the parsed user-agent data, or completing exceptionally with
+     * an {@link ApiException} or {@link ClientException}.
+     */
+    public CompletableFuture<UserAgentList> parseAsync(final String... userAgents) {
+        return supplyAsync(() -> parse(userAgents));
+    }
+
+    private <T> CompletableFuture<T> supplyAsync(final IpregistrySupplier<T> supplier) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                return supplier.get();
+            } catch (final IpregistryException e) {
+                throw new CompletionException(e);
+            }
+        }, executor);
+    }
+
+    /**
+     * A supplier whose computation may fail with an {@link IpregistryException}.
+     *
+     * @param <T> the type of the supplied result.
+     */
+    @FunctionalInterface
+    private interface IpregistrySupplier<T> {
+
+        T get() throws IpregistryException;
+
+    }
+
+    /**
+     * Releases the resources held by this client: the underlying HTTP connection pool and, when the
+     * client created it, the executor backing the asynchronous API. Once closed, the client must no
+     * longer be used.
      *
      * @throws IOException if closing the underlying request handler fails.
      */
@@ -259,6 +356,10 @@ public class IpregistryClient implements Closeable {
             throw e;
         } catch (final Exception e) {
             throw new IOException(e);
+        } finally {
+            if (ownsExecutor) {
+                executor.close();
+            }
         }
     }
 

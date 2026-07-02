@@ -35,6 +35,7 @@ package co.ipregistry.api.client;
 import co.ipregistry.api.client.cache.InMemoryCache;
 import co.ipregistry.api.client.cache.NoCache;
 import co.ipregistry.api.client.cache.IpregistryCache;
+import co.ipregistry.api.client.exceptions.ApiException;
 import co.ipregistry.api.client.exceptions.IpregistryException;
 import co.ipregistry.api.client.model.IpInfo;
 import co.ipregistry.api.client.model.IpInfoList;
@@ -48,6 +49,11 @@ import org.mockito.Mockito;
 import java.io.Closeable;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.RejectedExecutionException;
 
 class IpregistryClientTest {
 
@@ -216,6 +222,69 @@ class IpregistryClientTest {
 
         // The caller owns the injected client; closing the Ipregistry client must not close it.
         Mockito.verify(httpClient, Mockito.never()).close();
+    }
+
+    @Test
+    void testLookupAsyncReturnsValue() throws Exception {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+        final IpregistryCache cache = Mockito.spy(new InMemoryCache());
+        final DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
+
+        final IpInfo ipdata = new IpInfo();
+        Mockito.doReturn(ipdata).when(requestHandler).lookup("8.8.8.8");
+
+        try (IpregistryClient client = new IpregistryClient(config, cache, requestHandler)) {
+            final CompletableFuture<IpInfo> future = client.lookupAsync("8.8.8.8");
+            Assertions.assertSame(ipdata, future.get());
+        }
+    }
+
+    @Test
+    void testLookupAsyncCompletesExceptionallyWithApiException() throws Exception {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+        final IpregistryCache cache = Mockito.spy(new InMemoryCache());
+        final DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
+
+        Mockito.doThrow(new ApiException("INVALID_API_KEY", "bad key", "fix it"))
+                .when(requestHandler).lookup("8.8.8.8");
+
+        try (IpregistryClient client = new IpregistryClient(config, cache, requestHandler)) {
+            final CompletableFuture<IpInfo> future = client.lookupAsync("8.8.8.8");
+            final ExecutionException ex = Assertions.assertThrows(ExecutionException.class, future::get);
+            Assertions.assertInstanceOf(ApiException.class, ex.getCause());
+        }
+    }
+
+    @Test
+    void testInjectedExecutorNotClosedByClientClose() throws Exception {
+        final ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").executor(executor).build();
+        final DefaultRequestHandler requestHandler = Mockito.mock(DefaultRequestHandler.class);
+
+        final IpregistryClient client =
+                new IpregistryClient(config, NoCache.getInstance(), requestHandler);
+        client.close();
+
+        // A caller-provided executor remains owned by the caller and must not be shut down.
+        Assertions.assertFalse(executor.isShutdown());
+        executor.close();
+    }
+
+    @Test
+    void testOwnedExecutorShutDownOnClientClose() throws Exception {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+        final DefaultRequestHandler requestHandler = Mockito.mock(DefaultRequestHandler.class);
+
+        final IpregistryClient client =
+                new IpregistryClient(config, NoCache.getInstance(), requestHandler);
+        client.close();
+
+        // The default per-client executor is shut down on close, so further async calls are rejected.
+        Assertions.assertThrows(RejectedExecutionException.class, () -> client.lookupAsync("8.8.8.8"));
     }
 
 }

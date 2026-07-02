@@ -175,6 +175,35 @@ IpregistryClient ipregistry =
 
 When you supply your own client, you own its lifecycle: it is **not** closed when the Ipregistry client is closed, and the timeout/retry settings from `IpregistryConfig` are ignored in favor of your client's own configuration.
 
+## Asynchronous API
+
+Every lookup and parse method has an asynchronous variant returning a `CompletableFuture`, suitable for composing non-blocking pipelines:
+
+```java
+IpregistryClient ipregistry = new IpregistryClient("YOUR_API_KEY");
+
+ipregistry.lookupAsync("8.8.8.8")
+        .thenAccept(info -> System.out.println(info.getLocation().getCountry().getName()))
+        .exceptionally(error -> {
+            error.getCause().printStackTrace(); // ApiException or ClientException
+            return null;
+        });
+```
+
+The futures are backed by a virtual-thread-per-task executor (Java 21+), so thousands of concurrent lookups are cheap. A failed request completes the future exceptionally with the same `ApiException`/`ClientException` thrown by the synchronous API (wrapped in a `CompletionException`, so unwrap via `getCause()`).
+
+To use your own executor, set it on the configuration. You then own its lifecycle: it is not shut down when the client is closed.
+
+```java
+IpregistryConfig config =
+        IpregistryConfig.builder()
+                .apiKey("YOUR_API_KEY")
+                .executor(myExecutorService)
+                .build();
+```
+
+Reactive users can bridge these futures directly, for example with `Mono.fromFuture(...)` (Reactor) or `Single.fromCompletionStage(...)` (RxJava).
+
 ## Errors
 
 All Ipregistry exceptions inherit the _IpregistryException_ class.

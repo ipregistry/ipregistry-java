@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Asynchronous API: `lookupAsync`/`parseAsync` methods on `IpregistryClient` return a `CompletableFuture` and are backed by a virtual-thread-per-task executor by default. The executor is configurable via `IpregistryConfig#executor` (a caller-provided executor is not shut down by the client).
 - Support for a caller-provided `CloseableHttpClient` via new `IpregistryClient` and `DefaultRequestHandler` constructors, allowing full control over connection pooling, proxying, TLS, and metrics. An injected client is not closed by the Ipregistry client (the caller retains ownership).
 - Typed error codes: `ApiException#getErrorCode()` (and `Error#getErrorCode()`) now return a strongly typed `ErrorCode` enum in addition to the raw string `code`, allowing callers to branch on error conditions without string matching. Unrecognized codes return `null` while the raw code remains available.
 - Automatic retries with exponential backoff for transient network errors and 5xx server responses, configurable via `IpregistryConfig` (`retryMaxAttempts`, `retryInterval`, `retryOnServerError`, `retryOnTooManyRequests`). Retries on 429 Too Many Requests are disabled by default and honor the `Retry-After` header when enabled.

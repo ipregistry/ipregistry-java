@@ -20,6 +20,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 
+import java.util.concurrent.ExecutorService;
+
 
 /**
  * Configuration settings for the Ipregistry API client.
@@ -51,9 +53,11 @@ public class IpregistryConfig {
      * @param retryInterval the base backoff interval, in milliseconds
      * @param retryOnServerError whether to retry on 5xx server errors
      * @param retryOnTooManyRequests whether to retry on 429 Too Many Requests
+     * @param executor the executor backing the asynchronous API, or {@code null} to use a per-client default
      */
     public IpregistryConfig(String apiKey, String baseUrl, int connectionKeepAlive, int connectionTimeout, int socketTimeout,
-                            int retryMaxAttempts, long retryInterval, boolean retryOnServerError, boolean retryOnTooManyRequests) {
+                            int retryMaxAttempts, long retryInterval, boolean retryOnServerError, boolean retryOnTooManyRequests,
+                            ExecutorService executor) {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;
         this.connectionKeepAlive = connectionKeepAlive;
@@ -63,6 +67,7 @@ public class IpregistryConfig {
         this.retryInterval = retryInterval;
         this.retryOnServerError = retryOnServerError;
         this.retryOnTooManyRequests = retryOnTooManyRequests;
+        this.executor = executor;
     }
 
     /**
@@ -132,5 +137,13 @@ public class IpregistryConfig {
      */
     @Builder.Default
     private final boolean retryOnTooManyRequests = false;
+
+    /**
+     * The executor backing the asynchronous {@code lookupAsync}/{@code parseAsync} methods. When left
+     * {@code null} (the default), each {@link IpregistryClient} creates and owns a virtual-thread-per-task
+     * executor that is shut down when the client is closed. When a custom executor is supplied, the caller
+     * retains ownership and it is not shut down by the client.
+     */
+    private final ExecutorService executor;
 
 }
