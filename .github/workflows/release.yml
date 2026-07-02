@@ -47,7 +47,7 @@ jobs:
       - name: Publish artifacts to staging
         run: ./gradlew publish
           
-      - name: Deploy to Maven Central and Create GitHub Release
+      - name: Deploy to Maven Central
         env:
           JRELEASER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
@@ -65,3 +65,23 @@ jobs:
             find build/jreleaser -name "*.log" -exec cat {} \; || echo "No log files found"
             exit 1
           }
+
+      - name: Create GitHub release
+        if: ${{ !inputs.dry-run }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(grep -E "^version = " build.gradle | sed -E "s/version = '(.*)'/\1/")
+          echo "Creating GitHub release for version: $VERSION"
+
+          # Extract the CHANGELOG.md section for this version as the release notes.
+          awk -v ver="$VERSION" 'index($0, "## [" ver "]") == 1 {f=1; next} f && /^## \[/ {f=0} f' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "Release $VERSION" > release-notes.md
+          fi
+
+          if gh release view "$VERSION" >/dev/null 2>&1; then
+            gh release edit "$VERSION" --target "$GITHUB_SHA" --title "$VERSION" --notes-file release-notes.md
+          else
+            gh release create "$VERSION" --target "$GITHUB_SHA" --title "$VERSION" --notes-file release-notes.md
+          fi
