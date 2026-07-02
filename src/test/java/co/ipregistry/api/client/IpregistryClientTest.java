@@ -42,6 +42,7 @@ import co.ipregistry.api.client.model.RequesterIpInfo;
 import co.ipregistry.api.client.request.DefaultRequestHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.mockito.Mockito;
 
 import java.io.Closeable;
@@ -200,6 +201,21 @@ class IpregistryClientTest {
         client.close();
 
         Mockito.verify(requestHandler).close();
+    }
+
+    @Test
+    void testInjectedHttpClientNotClosedByClientClose() throws Exception {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+        final CloseableHttpClient httpClient = Mockito.mock(CloseableHttpClient.class);
+
+        final IpregistryClient client =
+                new IpregistryClient(config, NoCache.getInstance(), httpClient);
+
+        client.close();
+
+        // The caller owns the injected client; closing the Ipregistry client must not close it.
+        Mockito.verify(httpClient, Mockito.never()).close();
     }
 
 }

@@ -157,6 +157,24 @@ IpregistryConfig config =
                 .build();
 ```
 
+## Custom HTTP client
+
+By default, the client manages its own Apache HttpClient 5 instance (connection pool, timeouts, retries). To take full control — connection pool sizing, a proxy, custom TLS, or metrics — provide your own `CloseableHttpClient`:
+
+```java
+CloseableHttpClient httpClient = HttpClients.custom()
+        // ... your connection manager, proxy, TLS, retry strategy, etc.
+        .build();
+
+IpregistryConfig config =
+        IpregistryConfig.builder().apiKey("YOUR_API_KEY").build();
+
+IpregistryClient ipregistry =
+        new IpregistryClient(config, NoCache.getInstance(), httpClient);
+```
+
+When you supply your own client, you own its lifecycle: it is **not** closed when the Ipregistry client is closed, and the timeout/retry settings from `IpregistryConfig` are ignored in favor of your client's own configuration.
+
 ## Errors
 
 All Ipregistry exceptions inherit the _IpregistryException_ class.

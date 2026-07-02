@@ -19,8 +19,10 @@ package co.ipregistry.api.client.request;
 import co.ipregistry.api.client.IpregistryConfig;
 import co.ipregistry.api.client.options.IpregistryOption;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 
@@ -58,6 +60,19 @@ class DefaultRequestHandlerTest {
         // The previous string-concatenation implementation produced malformed JSON for these inputs.
         final String[] parsed = new ObjectMapper().readValue(json, String[].class);
         Assertions.assertArrayEquals(values, parsed);
+    }
+
+    @Test
+    void testInjectedHttpClientIsNotClosed() throws Exception {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+        final CloseableHttpClient httpClient = Mockito.mock(CloseableHttpClient.class);
+
+        final DefaultRequestHandler requestHandler = new DefaultRequestHandler(config, httpClient);
+        requestHandler.close();
+
+        // A caller-provided client remains owned by the caller and must not be closed by the handler.
+        Mockito.verify(httpClient, Mockito.never()).close();
     }
 
 }

@@ -58,6 +58,8 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     private final CloseableHttpClient httpClient;
 
+    private final boolean ownsHttpClient;
+
     private final ObjectMapper objectMapper;
 
 
@@ -67,7 +69,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
      * @param config the configuration instance to use.
      */
     public DefaultRequestHandler(final IpregistryConfig config) {
-        this(config, new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false));
+        this(config, defaultObjectMapper());
     }
 
     /**
@@ -77,9 +79,53 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
      * @param objectMapper the object mapper instance used for unmarshalling responses.
      */
     public DefaultRequestHandler(final IpregistryConfig config, final ObjectMapper objectMapper) {
+        this(config, objectMapper, buildDefaultHttpClient(config), true);
+    }
+
+    /**
+     * Creates a {@code DefaultRequestHandler} using a caller-provided {@link CloseableHttpClient}.
+     * <p>
+     * The caller keeps ownership of the supplied client: it is <em>not</em> closed when this handler
+     * (or the enclosing {@link co.ipregistry.api.client.IpregistryClient}) is closed. The client's own
+     * request configuration and retry strategy are used; the timeout and retry settings from
+     * {@code config} are ignored.
+     *
+     * @param config     the configuration instance (used for the API key and base URL).
+     * @param httpClient the HTTP client to use for dispatching requests.
+     */
+    public DefaultRequestHandler(final IpregistryConfig config, final CloseableHttpClient httpClient) {
+        this(config, defaultObjectMapper(), httpClient, false);
+    }
+
+    /**
+     * Creates a {@code DefaultRequestHandler} using a caller-provided {@link CloseableHttpClient} and
+     * {@link ObjectMapper}.
+     * <p>
+     * The caller keeps ownership of the supplied client: it is <em>not</em> closed when this handler
+     * (or the enclosing {@link co.ipregistry.api.client.IpregistryClient}) is closed.
+     *
+     * @param config       the configuration instance (used for the API key and base URL).
+     * @param objectMapper the object mapper instance used for unmarshalling responses.
+     * @param httpClient   the HTTP client to use for dispatching requests.
+     */
+    public DefaultRequestHandler(final IpregistryConfig config, final ObjectMapper objectMapper,
+                                 final CloseableHttpClient httpClient) {
+        this(config, objectMapper, httpClient, false);
+    }
+
+    private DefaultRequestHandler(final IpregistryConfig config, final ObjectMapper objectMapper,
+                                  final CloseableHttpClient httpClient, final boolean ownsHttpClient) {
         this.config = config;
         this.objectMapper = objectMapper;
+        this.httpClient = httpClient;
+        this.ownsHttpClient = ownsHttpClient;
+    }
 
+    private static ObjectMapper defaultObjectMapper() {
+        return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    }
+
+    private static CloseableHttpClient buildDefaultHttpClient(final IpregistryConfig config) {
         final RequestConfig requestConfig =
                 RequestConfig.custom()
                         .setConnectionKeepAlive(TimeValue.ofMilliseconds(config.getConnectionKeepAlive()))
@@ -87,7 +133,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
                         .setResponseTimeout(config.getSocketTimeout(), TimeUnit.MILLISECONDS)
                         .build();
 
-        this.httpClient = HttpClients.custom()
+        return HttpClients.custom()
                 .setDefaultRequestConfig(requestConfig)
                 .setRetryStrategy(new IpregistryRetryStrategy(
                         config.getRetryMaxAttempts(),
@@ -257,7 +303,11 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
     @Override
     public void close() throws IOException {
-        httpClient.close();
+        // Only close the HTTP client if this handler created it; a caller-provided client
+        // remains under the caller's ownership.
+        if (ownsHttpClient) {
+            httpClient.close();
+        }
     }
 
 }

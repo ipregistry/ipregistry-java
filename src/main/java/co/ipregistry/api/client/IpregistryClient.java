@@ -24,6 +24,7 @@ import co.ipregistry.api.client.exceptions.IpregistryException;
 import co.ipregistry.api.client.model.*;
 import co.ipregistry.api.client.options.IpregistryOption;
 import co.ipregistry.api.client.request.DefaultRequestHandler;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -68,6 +69,20 @@ public class IpregistryClient implements Closeable {
      */
     public IpregistryClient(final IpregistryConfig config, final IpregistryCache cache) {
         this(config, cache, new DefaultRequestHandler(config));
+    }
+
+    /**
+     * Creates a new client instance using a caller-provided {@link CloseableHttpClient}.
+     * <p>
+     * The caller keeps ownership of the supplied HTTP client: it is <em>not</em> closed when this
+     * client is closed. Use this to fully control connection pooling, proxying, TLS, or metrics.
+     *
+     * @param config     the configuration instance to use.
+     * @param cache      the cache instance to use.
+     * @param httpClient the HTTP client to use for dispatching requests.
+     */
+    public IpregistryClient(final IpregistryConfig config, final IpregistryCache cache, final CloseableHttpClient httpClient) {
+        this(config, cache, new DefaultRequestHandler(config, httpClient));
     }
 
     /**
