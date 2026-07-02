@@ -63,7 +63,7 @@ public class Error {
     /**
      * Returns the typed {@link ErrorCode} for this error.
      *
-     * @return the {@link ErrorCode} matching {@link #getCode()}, or {@code null} if the code is
+     * @return the {@link ErrorCode} matching the raw {@code code}, or {@code null} if the code is
      * {@code null} or not recognized.
      */
     public ErrorCode getErrorCode() {
