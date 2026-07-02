@@ -47,13 +47,22 @@ public class IpregistryConfig {
      * @param connectionKeepAlive connection keep-alive timeout
      * @param connectionTimeout connection timeout
      * @param socketTimeout socket timeout
+     * @param retryMaxAttempts the maximum number of automatic retries
+     * @param retryInterval the base backoff interval, in milliseconds
+     * @param retryOnServerError whether to retry on 5xx server errors
+     * @param retryOnTooManyRequests whether to retry on 429 Too Many Requests
      */
-    public IpregistryConfig(String apiKey, String baseUrl, int connectionKeepAlive, int connectionTimeout, int socketTimeout) {
+    public IpregistryConfig(String apiKey, String baseUrl, int connectionKeepAlive, int connectionTimeout, int socketTimeout,
+                            int retryMaxAttempts, long retryInterval, boolean retryOnServerError, boolean retryOnTooManyRequests) {
         this.apiKey = apiKey;
         this.baseUrl = baseUrl;
         this.connectionKeepAlive = connectionKeepAlive;
         this.connectionTimeout = connectionTimeout;
         this.socketTimeout = socketTimeout;
+        this.retryMaxAttempts = retryMaxAttempts;
+        this.retryInterval = retryInterval;
+        this.retryOnServerError = retryOnServerError;
+        this.retryOnTooManyRequests = retryOnTooManyRequests;
     }
 
     /**
@@ -93,5 +102,35 @@ public class IpregistryConfig {
      */
     @Builder.Default
     private final int socketTimeout = 15000;
+
+    /**
+     * The maximum number of times a failed request is automatically retried (in addition to the
+     * initial attempt). Set to {@code 0} to disable retries entirely. Defaults to 3.
+     */
+    @Builder.Default
+    private final int retryMaxAttempts = 3;
+
+    /**
+     * The base backoff interval in milliseconds used between retries. Successive retries use an
+     * exponentially increasing delay ({@code retryInterval * 2^(attempt - 1)}). When a 429 response
+     * carries a {@code Retry-After} header, that value takes precedence. Defaults to 1000 milliseconds.
+     */
+    @Builder.Default
+    private final long retryInterval = 1000;
+
+    /**
+     * Whether requests failing with a 5xx server error (or a transient network error) should be
+     * retried automatically. Defaults to {@code true}.
+     */
+    @Builder.Default
+    private final boolean retryOnServerError = true;
+
+    /**
+     * Whether requests failing with a 429 Too Many Requests response should be retried automatically.
+     * Ipregistry does not rate limit by default (it is opt-in per API key), so a 429 usually reflects
+     * a deliberately configured limit; retrying is therefore disabled by default. Defaults to {@code false}.
+     */
+    @Builder.Default
+    private final boolean retryOnTooManyRequests = false;
 
 }

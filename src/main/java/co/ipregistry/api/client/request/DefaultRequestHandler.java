@@ -89,6 +89,11 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
 
         this.httpClient = HttpClients.custom()
                 .setDefaultRequestConfig(requestConfig)
+                .setRetryStrategy(new IpregistryRetryStrategy(
+                        config.getRetryMaxAttempts(),
+                        config.getRetryInterval(),
+                        config.isRetryOnServerError(),
+                        config.isRetryOnTooManyRequests()))
                 .build();
     }
 

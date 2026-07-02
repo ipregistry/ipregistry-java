@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Automatic retries with exponential backoff for transient network errors and 5xx server responses, configurable via `IpregistryConfig` (`retryMaxAttempts`, `retryInterval`, `retryOnServerError`, `retryOnTooManyRequests`). Retries on 429 Too Many Requests are disabled by default and honor the `Retry-After` header when enabled.
 - `IpregistryClient` now implements `Closeable` to release the underlying HTTP connection pool.
 
 ### Fixed

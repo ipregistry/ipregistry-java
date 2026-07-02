@@ -140,6 +140,23 @@ InMemoryCache cache =
 
 You can also provide your own cache implementation by implementing the _IpregistryCache_ interface.
 
+## Retries
+
+Failed requests are automatically retried with an exponential backoff. By default, up to 3 retries are performed on transient network errors and 5xx server responses.
+
+Because Ipregistry does not rate limit by default (rate limiting is opt-in per API key), retries on _429 Too Many Requests_ responses are **disabled by default**. Enable them if your API key is configured with a rate limit and you want the client to wait and retry (honoring the `Retry-After` header when present):
+
+```java
+IpregistryConfig config =
+        IpregistryConfig.builder()
+                .apiKey("YOUR_API_KEY")
+                .retryMaxAttempts(3)          // 0 disables retries entirely
+                .retryInterval(1000)          // base backoff in milliseconds
+                .retryOnServerError(true)     // retry on 5xx (default: true)
+                .retryOnTooManyRequests(true) // retry on 429 (default: false)
+                .build();
+```
+
 ## Errors
 
 All Ipregistry exceptions inherit the _IpregistryException_ class.
