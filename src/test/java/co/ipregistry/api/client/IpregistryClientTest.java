@@ -141,6 +141,30 @@ class IpregistryClientTest {
     }
 
     @Test
+    void testBatchRequestAllCachedSkipsApiCall() throws IpregistryException {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+
+        final IpregistryCache cache = Mockito.spy(new InMemoryCache());
+        final DefaultRequestHandler requestHandler = Mockito.spy(new DefaultRequestHandler(config));
+
+        final IpInfo ipdata8888 = new IpInfo();
+        final IpInfo ipdata1111 = new IpInfo();
+        cache.put("8.8.8.8", ipdata8888);
+        cache.put("1.1.1.1", ipdata1111);
+
+        final IpregistryClient client = new IpregistryClient(config, cache, requestHandler);
+
+        final IpInfoList response = client.lookup(Arrays.asList("8.8.8.8", "1.1.1.1"));
+
+        // Every IP was cached, so no API call must be dispatched (avoids a wasted request/credits).
+        Mockito.verify(requestHandler, Mockito.never()).lookup(Mockito.anyList());
+        Assertions.assertEquals(2, response.size());
+        Assertions.assertSame(ipdata8888, response.get(0));
+        Assertions.assertSame(ipdata1111, response.get(1));
+    }
+
+    @Test
     void testCloseClosesRequestHandler() throws Exception {
         final IpregistryConfig config =
                 IpregistryConfig.builder().apiKey("test").build();

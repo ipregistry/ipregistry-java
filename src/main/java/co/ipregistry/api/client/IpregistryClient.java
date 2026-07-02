@@ -181,7 +181,9 @@ public class IpregistryClient implements Closeable {
             }
         }
 
-        final IpInfoList freshIpData = requestHandler.lookup(cacheMisses, options);
+        final IpInfoList freshIpData = cacheMisses.isEmpty()
+                ? new IpInfoList(new Object[0])
+                : requestHandler.lookup(cacheMisses, options);
 
         final Object[] result = new Object[ips.size()];
 
