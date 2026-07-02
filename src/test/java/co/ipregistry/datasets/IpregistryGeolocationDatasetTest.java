@@ -19,7 +19,9 @@ public class IpregistryGeolocationDatasetTest {
                 "IPREGISTRY_DATASETS_SECRET_KEY environment variable not set");
 
         try (IpregistryGeolocationDataset dataset =
-                     IpregistryGeolocationDataset.builder(secretKey).build()) {
+                     IpregistryGeolocationDataset.builder(secretKey)
+                             .loadingMode(LoadingMode.MEMORY_MAPPED)
+                             .build()) {
 
             Assertions.assertTrue(
                     dataset.getBuildDate().isAfter(
