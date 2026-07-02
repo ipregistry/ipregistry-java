@@ -25,6 +25,8 @@ import co.ipregistry.api.client.model.*;
 import co.ipregistry.api.client.options.IpregistryOption;
 import co.ipregistry.api.client.request.DefaultRequestHandler;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ import java.util.List;
 /**
  * An {@code IpregistryClient} can be used to send requests to the Ipregistry API and retrieve their responses as objects.
  */
-public class IpregistryClient {
+public class IpregistryClient implements Closeable {
 
     private final IpregistryCache cache;
 
@@ -218,6 +220,23 @@ public class IpregistryClient {
      */
     public UserAgentList parse(final String... userAgents) throws ApiException, ClientException {
         return requestHandler.parse(userAgents);
+    }
+
+    /**
+     * Releases the resources held by this client, notably the underlying HTTP connection pool.
+     * Once closed, the client must no longer be used.
+     *
+     * @throws IOException if closing the underlying request handler fails.
+     */
+    @Override
+    public void close() throws IOException {
+        try {
+            requestHandler.close();
+        } catch (final IOException e) {
+            throw e;
+        } catch (final Exception e) {
+            throw new IOException(e);
+        }
     }
 
 }

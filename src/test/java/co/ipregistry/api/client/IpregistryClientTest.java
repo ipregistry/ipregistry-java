@@ -43,6 +43,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.io.Closeable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -137,6 +138,22 @@ class IpregistryClientTest {
         Mockito.verify(cache, Mockito.times(3)).put(Mockito.anyString(), Mockito.any(IpInfo.class));
         Mockito.verify(requestHandler).lookup(Mockito.anyList());
         Mockito.verify(requestHandler, Mockito.never()).lookup(Mockito.anyString());
+    }
+
+    @Test
+    void testCloseClosesRequestHandler() throws Exception {
+        final IpregistryConfig config =
+                IpregistryConfig.builder().apiKey("test").build();
+
+        final DefaultRequestHandler requestHandler = Mockito.mock(DefaultRequestHandler.class);
+        final IpregistryClient client =
+                new IpregistryClient(config, NoCache.getInstance(), requestHandler);
+
+        Assertions.assertInstanceOf(Closeable.class, client);
+
+        client.close();
+
+        Mockito.verify(requestHandler).close();
     }
 
 }
