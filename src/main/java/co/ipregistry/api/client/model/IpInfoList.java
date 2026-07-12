@@ -18,7 +18,7 @@ package co.ipregistry.api.client.model;
 
 import co.ipregistry.api.client.exceptions.IpInfoException;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import tools.jackson.databind.annotation.JsonDeserialize;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

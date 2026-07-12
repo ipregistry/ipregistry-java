@@ -12,7 +12,7 @@ ext {
 }
 
 group = 'co.ipregistry'
-version = '6.1.0'
+version = '7.0.0'
 description = 'Official Java client for Ipregistry, a fast, reliable IP geolocation and threat data API.'
 
 repositories {
@@ -78,7 +78,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.46'
     compileOnly 'org.projectlombok:lombok:1.18.46'
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.22.0'
+    implementation 'tools.jackson.core:jackson-databind:3.1.2'
     implementation 'com.google.guava:guava:33.6.0-jre'
     implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.6.2'
     implementation 'com.maxmind.db:maxmind-db:4.1.0'

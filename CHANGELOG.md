@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.0.0] - 2026-07-13
+### Changed
+- **Breaking:** migrate from Jackson 2 to Jackson 3 (`tools.jackson.core:jackson-databind` 3.1.2). Model annotations keep the stable `com.fasterxml.jackson.annotation` package, so the data classes remain readable by both Jackson generations, but parsing now uses Jackson 3: the `DefaultRequestHandler` constructors accept a `tools.jackson.databind.ObjectMapper` and `JsonProcessingException` is replaced by the unchecked `tools.jackson.core.JacksonException`.
+
 ## [6.1.0] - 2026-07-02
 ### Added
 - Asynchronous API: `lookupAsync`/`parseAsync` methods on `IpregistryClient` return a `CompletableFuture` and are backed by a virtual-thread-per-task executor by default. The executor is configurable via `IpregistryConfig#executor` (a caller-provided executor is not shut down by the client).
@@ -173,7 +177,9 @@ https://github.com/ipregistry/ipregistry-java#caching
 ## [1.0.0] - 2019-07-03
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v6.0.0...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v7.0.0...HEAD
+[7.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v6.1.0...v7.0.0
+[6.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v6.0.0...v6.1.0
 [6.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v5.0.1...v6.0.0
 [5.0.1]: https://github.com/ipregistry/ipregistry-java/compare/v5.0.0...v5.0.1
 [5.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v4.0.0...v5.0.0

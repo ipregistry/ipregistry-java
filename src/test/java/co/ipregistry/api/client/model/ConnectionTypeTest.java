@@ -16,8 +16,7 @@
 package co.ipregistry.api.client.model;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +29,7 @@ class ConnectionTypeTest {
     }
 
     @Test
-    void testFromCalledOnJacksonDeserialization() throws JsonProcessingException {
+    void testFromCalledOnJacksonDeserialization() {
         final ObjectMapper mapper = new ObjectMapper();
         final Connection connection = mapper.readValue("{\n" +
                 "    \"asn\" : 42,\n" +

@@ -18,19 +18,16 @@ package co.ipregistry.api.client.model;
 
 import co.ipregistry.api.client.exceptions.IpInfoException;
 import co.ipregistry.api.client.model.error.LookupError;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.ObjectCodec;
-import com.fasterxml.jackson.core.TreeNode;
-import com.fasterxml.jackson.databind.DeserializationContext;
-import com.fasterxml.jackson.databind.JsonDeserializer;
-
-import java.io.IOException;
+import tools.jackson.core.JsonParser;
+import tools.jackson.databind.DeserializationContext;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ValueDeserializer;
 
 
 /**
  * Implementation used to deserialize an {@link UserAgentList}.
  */
-public class UserAgentListDeserializer extends JsonDeserializer<Object> {
+public class UserAgentListDeserializer extends ValueDeserializer<Object> {
 
     /**
      * Creates a new instance.
@@ -40,19 +37,18 @@ public class UserAgentListDeserializer extends JsonDeserializer<Object> {
     }
 
     @Override
-    public UserAgentList deserialize(final JsonParser parser, final DeserializationContext context) throws IOException {
-        final ObjectCodec codec = parser.getCodec();
-        final TreeNode treeNode = codec.readTree(parser).get("results");
+    public UserAgentList deserialize(final JsonParser parser, final DeserializationContext context) {
+        final JsonNode results = context.readTree(parser).get("results");
 
-        final Object[] objects = new Object[treeNode.size()];
+        final Object[] objects = new Object[results.size()];
 
-        for (int i = 0; i < treeNode.size(); i++) {
-            final TreeNode userAgentOrLookupError = treeNode.get(i);
+        for (int i = 0; i < results.size(); i++) {
+            final JsonNode userAgentOrLookupError = results.get(i);
 
             if (userAgentOrLookupError.get("code") == null) {
-                objects[i] = codec.treeToValue(userAgentOrLookupError, UserAgent.class);
+                objects[i] = context.readTreeAsValue(userAgentOrLookupError, UserAgent.class);
             } else {
-                final LookupError lookupError = codec.treeToValue(userAgentOrLookupError, LookupError.class);
+                final LookupError lookupError = context.readTreeAsValue(userAgentOrLookupError, LookupError.class);
                 objects[i] =
                         new IpInfoException(
                                 lookupError.getCode(),

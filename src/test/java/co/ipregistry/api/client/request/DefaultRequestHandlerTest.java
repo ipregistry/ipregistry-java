@@ -18,7 +18,7 @@ package co.ipregistry.api.client.request;
 
 import co.ipregistry.api.client.IpregistryConfig;
 import co.ipregistry.api.client.options.IpregistryOption;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.databind.ObjectMapper;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

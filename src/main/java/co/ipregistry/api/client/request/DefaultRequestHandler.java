@@ -25,9 +25,10 @@ import co.ipregistry.api.client.model.RequesterIpInfo;
 import co.ipregistry.api.client.model.UserAgentList;
 import co.ipregistry.api.client.model.error.LookupError;
 import co.ipregistry.api.client.options.IpregistryOption;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 import org.apache.hc.client5.http.config.RequestConfig;
 import org.apache.hc.client5.http.fluent.Request;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -122,7 +123,7 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
     }
 
     private static ObjectMapper defaultObjectMapper() {
-        return new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        return JsonMapper.builder().disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES).build();
     }
 
     private static CloseableHttpClient buildDefaultHttpClient(final IpregistryConfig config) {
@@ -293,9 +294,9 @@ public class DefaultRequestHandler implements IpregistryRequestHandler {
      *
      * @param values the values to serialize.
      * @return a JSON array representation of the specified {@code values}.
-     * @throws JsonProcessingException if the values cannot be serialized.
+     * @throws JacksonException if the values cannot be serialized.
      */
-    String toJsonList(final Iterable<String> values) throws JsonProcessingException {
+    String toJsonList(final Iterable<String> values) throws JacksonException {
         final List<String> list = new ArrayList<>();
         values.forEach(list::add);
         return objectMapper.writeValueAsString(list);
