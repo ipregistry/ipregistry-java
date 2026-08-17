@@ -51,6 +51,12 @@ public class Connection {
     private String domain;
 
     /**
+     * Whether the IP address is announced via anycast, i.e. simultaneously from multiple locations.
+     */
+    @JsonProperty("is_anycast")
+    private boolean anycast;
+
+    /**
      * The name of the organization or ISP that owns the IP address.
      */
     @JsonProperty("organization")
