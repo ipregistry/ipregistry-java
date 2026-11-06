@@ -6,8 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [7.1.0] - 2026-11-06
 ### Added
 - New field `Connection.isAnycast()` (JSON `connection.is_anycast`): whether the IP address is announced via anycast, i.e. simultaneously from multiple locations.
+
+### Changed
+- Upgrade Jackson to 3.1.8, the latest patch of the 3.1 LTS line that Spring Boot 4.1 manages.
+- Upgrade maxmind-db to 4.2.0 (offline datasets): malformed or oversized records now fail with `InvalidDatabaseException`, and databases larger than 2 GiB decode correctly.
+- Upgrade Guava to 33.8.0.
+
+### Security
+- Upgrade Apache HttpClient to 5.6.5, which fixes a pooled connection leak on responses with an invalid `Content-Encoding` (GHSA-hjcp-jmpx-g3qm).
 
 ## [7.0.0] - 2026-07-13
 ### Changed
@@ -179,7 +189,8 @@ https://github.com/ipregistry/ipregistry-java#caching
 ## [1.0.0] - 2019-07-03
 - First public release.
 
-[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v7.0.0...HEAD
+[Unreleased]: https://github.com/ipregistry/ipregistry-java/compare/v7.1.0...HEAD
+[7.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v7.0.0...v7.1.0
 [7.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v6.1.0...v7.0.0
 [6.1.0]: https://github.com/ipregistry/ipregistry-java/compare/v6.0.0...v6.1.0
 [6.0.0]: https://github.com/ipregistry/ipregistry-java/compare/v5.0.1...v6.0.0
