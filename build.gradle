@@ -4,7 +4,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
-    id 'org.jreleaser' version '1.25.0'
+    id 'org.jreleaser' version '1.27.0'
 }
 
 ext {
@@ -75,22 +75,21 @@ configurations {
 }
 
 dependencies {
-    annotationProcessor 'org.projectlombok:lombok:1.18.46'
-    compileOnly 'org.projectlombok:lombok:1.18.46'
+    annotationProcessor 'org.projectlombok:lombok:1.18.48'
+    compileOnly 'org.projectlombok:lombok:1.18.48'
 
-    implementation 'tools.jackson.core:jackson-databind:3.1.2'
-    implementation 'com.google.guava:guava:33.6.0-jre'
-    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.6.2'
-    implementation 'com.maxmind.db:maxmind-db:4.1.0'
+    implementation 'tools.jackson.core:jackson-databind:3.1.8'
+    implementation 'com.google.guava:guava:33.8.0-jre'
+    implementation 'org.apache.httpcomponents.client5:httpclient5-fluent:5.6.5'
+    implementation 'com.maxmind.db:maxmind-db:4.2.0'
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:6.1.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.1.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:6.1.3'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.1.3'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-    testImplementation 'org.mockito:mockito-core:5.23.0'
+    testImplementation 'org.mockito:mockito-core:5.24.0'
 
-    integrationTestImplementation 'io.rest-assured:rest-assured:6.0.0'
-    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:6.1.1'
-    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.1.1'
+    integrationTestImplementation 'org.junit.jupiter:junit-jupiter-api:6.1.3'
+    integrationTestRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:6.1.3'
     integrationTestRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
