@@ -47,4 +47,6 @@ deploy:
 
 signing:
   active: ALWAYS
-  armored: true
+  pgp:
+    active: ALWAYS
+    armored: true
