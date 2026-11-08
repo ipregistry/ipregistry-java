@@ -4,6 +4,9 @@ import java.text.SimpleDateFormat
 buildscript {
     dependencies {
         constraints {
+            classpath('org.apache.tika:tika-core:3.3.3') {
+                because 'CVE-2025-66516 (GHSA-f58c-gq56-vjjf), JReleaser 1.27.0 pins 2.9.4 and only uses Tika.detect and MediaType'
+            }
             classpath('org.codehaus.plexus:plexus-utils:3.6.2') {
                 because 'CVE-2025-67030 (GHSA-6fmv-xxpf-w3cw), pulled in at 3.2.1 by maven-model'
             }
