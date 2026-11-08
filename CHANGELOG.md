@@ -6,8 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [7.2.0] - 2026-11-08
 ### Added
 - New field `Security.isResidentialProxy()` (JSON `security.is_residential_proxy`): whether the IP address is a node of a residential proxy network.
+
+### Changed
+- `Security`'s all-arguments constructor takes the new flag, after `relay`; code calling it positionally must add it.
 
 ## [7.1.0] - 2026-11-06
 ### Added
