@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
       matrix:
         distribution: [ 'zulu' ]
-        java: [ '25', '26' ]
+        java: [ '25', '27' ]
 
     steps:
       - uses: actions/checkout@v7
