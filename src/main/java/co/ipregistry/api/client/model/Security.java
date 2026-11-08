@@ -84,6 +84,13 @@ public class Security {
     private boolean relay;
 
     /**
+     * Indicates if the IP address is a node of a residential proxy network.
+     * Returns true if the IP is a residential connection through which a proxy network routes third-party traffic.
+     */
+    @JsonProperty("is_residential_proxy")
+    private boolean residentialProxy;
+
+    /**
      * Indicates if the IP address is part of the Tor network.
      * Returns true if the IP is associated with Tor infrastructure (relays, bridges, etc.).
      */
